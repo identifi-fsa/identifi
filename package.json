@@ -9,12 +9,17 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "expo": "^31.0.2",
     "native-base": "^2.8.1",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
     "react-native-swiper": "^1.5.13",
-    "react-swiper": "^0.1.5"
+    "react-redux": "^5.1.1",
+    "react-swiper": "^0.1.5",
+    "redux": "^4.0.1",
+    "redux-devtools-extension": "^2.13.5",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0"

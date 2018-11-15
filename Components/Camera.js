@@ -12,13 +12,14 @@ import {
   Button
 } from 'native-base'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import axios from 'axios'
 
 class CameraComponent extends Component {
   state = {
     hasCameraPermission: null,
     type: Camera.Constants.Type.back,
     imageUri: null,
-    label: null
+    imageData: null
   }
 
   //look at Expo camera docs
@@ -54,24 +55,46 @@ class CameraComponent extends Component {
             }
           ]
         }
-        console.log('awaiting google')
-        const key = `<PLACE_KEY_HERE>`
-        const response = await fetch(
-          `https://vision.googleapis.com/v1/images:annotate?key=${key}`,
-          {
-            method: 'POST',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
+        console.log('fetch google vision initiated')
+
+        const fetchGoogleVision = async () => {
+          try {
+            const response = await fetch(
+              `https://jubjub-server.herokuapp.com/api/visions`,
+              {
+                method: 'POST',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+              }
+            )
+            const parsed = await response.json()
+            console.log('parsed vision received', parsed)
+          } catch (err) {
+            console.log('error in google vision request', err)
           }
-        )
-        const parsed = await response.json()
-        console.log('parsed', parsed)
-        this.setState({
-          label: parsed.responses[0].labelAnnotations[0].description
-        })
+        }
+        console.log('fetch google vision invoked')
+        fetchGoogleVision()
+
+        // const response = await fetch(
+        //   `https://vision.googleapis.com/v1/images:annotate?key=${key}`,
+        //   {
+        //     method: 'POST',
+        //     headers: {
+        //       Accept: 'application/json',
+        //       'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(body)
+        //   }
+        // )
+        // const parsed = await response.json()
+        // console.log('parsed', parsed)
+        // this.setState({
+        //   label: parsed.responses[0].labelAnnotations[0].description
+        // })
       }
     }
   }
