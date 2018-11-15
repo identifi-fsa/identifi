@@ -17,9 +17,8 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
+    "permissions": ["CAMERA", "VIBRATE"],
     "ios": {
       "supportsTablet": true
     }
