@@ -1,19 +1,31 @@
 import React from 'react'
-import { Platform, StyleSheet, Text, View, FlatList } from 'react-native'
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  TouchableOpacity
+} from 'react-native'
 import { connect } from 'react-redux'
 import { Container, Content, Header } from 'native-base'
 import { fetchRecent, fetchNearby } from '../store/places-reducer'
 import SinglePlace from './SinglePlace'
 
 class Places extends React.Component {
-  async componentDidMount() {
-    let lat = this.props.location.coords.latitude
-    let lng = this.props.location.coords.longitude
-    await this.props.fetchRecent()
-    // await this.props.fetchNearby(lat, lng)
+  state = {
+    data: this.props.recent
   }
-  render() {
-    let data = []
+
+  recentButton = () => {
+    let recent = this.props.recent[0]
+    this.setState({
+      data: recent
+    })
+  }
+
+  nearbyButton = () => {
+    let nearby = []
     if (this.props.nearby.length) {
       let results = this.props.nearby[0].results
       results.forEach(place => {
@@ -28,10 +40,25 @@ class Places extends React.Component {
         if (place.rating) placeObj.rating = place.rating
         if (place.photos) placeObj.photo = place.photos[0].photo_reference
         if (place.photos) placeObj.price_level = place.price_level
-        data.push(placeObj)
+        nearby.push(placeObj)
       })
     }
-    console.log(data)
+    this.setState({
+      data: nearby
+    })
+  }
+
+  async componentDidMount() {
+    let lat = this.props.location.coords.latitude
+    let lng = this.props.location.coords.longitude
+    await this.props.fetchRecent()
+    await this.props.fetchNearby(lat, lng)
+    let recent = this.props.recent[0]
+    this.setState({
+      data: recent
+    })
+  }
+  render() {
     return (
       <View>
         <Header
@@ -57,29 +84,31 @@ class Places extends React.Component {
               flexDirection: 'row'
             }}
           >
-            <View
+            <TouchableOpacity
               style={{
                 width: '50%',
                 zIndex: 100,
                 alignItems: 'center'
               }}
+              onPress={this.recentButton}
             >
               <Text>RECENT</Text>
-            </View>
-            <View
+            </TouchableOpacity>
+            <TouchableOpacity
               style={{
                 width: '50%',
                 zIndex: 100,
                 alignItems: 'center'
               }}
+              onPress={this.nearbyButton}
             >
               <Text>NEARBY</Text>
-            </View>
+            </TouchableOpacity>
           </View>
         </Header>
         <View style={styles.cardContainer}>
           <FlatList
-            data={data}
+            data={this.state.data}
             renderItem={({ item }) => <SinglePlace data={item} />}
           />
         </View>

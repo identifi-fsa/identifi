@@ -19,7 +19,8 @@ class CameraComponent extends Component {
     hasCameraPermission: null,
     type: Camera.Constants.Type.back,
     imageUri: null,
-    imageData: null
+    imageData: null,
+    text: null
   }
   cancelButton = () => {
     console.log('heyyy')
@@ -48,13 +49,9 @@ class CameraComponent extends Component {
               },
               features: [
                 {
-                  type: 'WEB_DETECTION',
-                  maxResults: 5
+                  type: 'DOCUMENT_TEXT_DETECTION',
+                  maxResults: 1
                 }
-                // {
-                //   type: 'TEXT_DETECTION',
-                //   maxResults: 5
-                // }
               ]
             }
           ]
@@ -83,30 +80,31 @@ class CameraComponent extends Component {
         // console.log('fetch google vision invoked')
         // fetchGoogleVision()
 
-        // let key = 'AIzaSyASmyqgTjTGcX1UoyVUf_gEsT7Vfazz4Tg'
-
-        // const response = await fetch(
-        //   `https://vision.googleapis.com/v1/images:annotate?key=${key}`,
-        //   {
-        //     method: 'POST',
-        //     headers: {
-        //       Accept: 'application/json',
-        //       'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(body)
-        //   }
-        // )
-        // const parsed = await response.json()
-        // console.log('parsed', parsed)
-        // this.setState({
-        //   label: parsed.responses[0].labelAnnotations[0].description
-        // })
+        const response = await fetch(
+          `https://vision.googleapis.com/v1/images:annotate?key=${key}`,
+          {
+            method: 'POST',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+          }
+        )
+        const parsed = await response.json()
+        // console.log(
+        //   'parsed text',
+        //   parsed.responses[0].textAnnotations[0].description
+        console.log('parsed logo', parsed)
+        this.setState({
+          text: parsed.responses[0].textAnnotations[0].description
+        })
       }
     }
   }
 
   render() {
-    console.log('current State Image URI', this.state.imageUri)
+    console.log('current State Image URI', this.state.text)
     const { hasCameraPermission } = this.state
 
     //if user has not set permission yet

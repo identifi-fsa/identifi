@@ -12,11 +12,10 @@ export default class SinglePlace extends Component {
     let name
     let type
     let vicinity
-
     if (this.props.data) {
-      icon = this.props.data.icon
+      // icon = this.props.data.icon
       name = this.props.data.name
-      vicinity = this.props.data.vicinity
+      // vicinity = this.props.data.vicinity
     }
     return (
       <View style={styles.cardContainer}>
