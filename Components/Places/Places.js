@@ -1,21 +1,88 @@
 import React from 'react'
-import { Platform, StyleSheet, Text, View } from 'react-native'
+import { Platform, StyleSheet, Text, View, FlatList } from 'react-native'
 import { connect } from 'react-redux'
-import { Container, Content } from 'native-base'
+import { Container, Content, Header } from 'native-base'
 import { fetchRecent, fetchNearby } from '../store/places-reducer'
+import SinglePlace from './SinglePlace'
 
 class Places extends React.Component {
   async componentDidMount() {
     let lat = this.props.location.coords.latitude
     let lng = this.props.location.coords.longitude
     await this.props.fetchRecent()
-    await this.props.fetchNearby(lat, lng)
+    // await this.props.fetchNearby(lat, lng)
   }
   render() {
-    console.log('nearby!!!', this.props.nearby)
+    let data = []
+    if (this.props.nearby.length) {
+      let results = this.props.nearby[0].results
+      results.forEach(place => {
+        let placeObj = {}
+        placeObj.lat = place.geometry.location.lat
+        placeObj.lng = place.geometry.location.lng
+        placeObj.icon = place.icon
+        placeObj.place_id = place.place_id
+        placeObj.name = place.name
+        placeObj.types = place.types
+        placeObj.vicinity = place.vicinity
+        if (place.rating) placeObj.rating = place.rating
+        if (place.photos) placeObj.photo = place.photos[0].photo_reference
+        if (place.photos) placeObj.price_level = place.price_level
+        data.push(placeObj)
+      })
+    }
+    console.log(data)
     return (
       <View>
-        <Text>Hey</Text>
+        <Header
+          searchBar
+          rounded
+          style={{
+            backgroundColor: 'transparent',
+            height: 70,
+            zIndex: 100,
+            alignItems: 'center',
+            display: 'flex',
+            flexDirection: 'row'
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: 'white',
+              height: 35,
+              width: '60%',
+              zIndex: 100,
+              alignItems: 'center',
+              display: 'flex',
+              flexDirection: 'row'
+            }}
+          >
+            <View
+              style={{
+                width: '50%',
+                zIndex: 100,
+                alignItems: 'center'
+              }}
+            >
+              <Text>RECENT</Text>
+            </View>
+            <View
+              style={{
+                width: '50%',
+                zIndex: 100,
+                alignItems: 'center'
+              }}
+            >
+              <Text>NEARBY</Text>
+            </View>
+          </View>
+        </Header>
+        <View style={styles.cardContainer}>
+          <FlatList
+            data={data}
+            renderItem={({ item }) => <SinglePlace data={item} />}
+          />
+        </View>
       </View>
     )
   }
@@ -39,3 +106,19 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Places)
+
+const styles = StyleSheet.create({
+  cardContainer: {
+    flex: 1,
+    width: '95%',
+    backgroundColor: '#9DD6EB',
+    borderWidth: 1,
+    borderColor: 'black',
+    alignItems: 'center'
+  },
+  text: {
+    color: 'white',
+    fontSize: 30,
+    fontWeight: 'bold'
+  }
+})

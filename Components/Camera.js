@@ -127,11 +127,12 @@ class CameraComponent extends Component {
               searchBar
               rounded
               style={{
-                position: 'absolute',
+                height: 70,
+                // position: 'absolute',
                 backgroundColor: 'transparent',
-                left: 0,
-                top: 0,
-                right: 0,
+                // left: 0,
+                // top: 0,
+                // right: 0,
                 zIndex: 100,
                 alignItems: 'center'
               }}
