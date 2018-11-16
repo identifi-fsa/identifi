@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import { Camera, Permissions } from 'expo'
 
 import {
@@ -21,7 +21,10 @@ class CameraComponent extends Component {
     imageUri: null,
     imageData: null
   }
-
+  cancelButton = () => {
+    console.log('heyyy')
+    this.setState({ imageUri: null })
+  }
   //look at Expo camera docs
   async componentDidMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA)
@@ -31,16 +34,17 @@ class CameraComponent extends Component {
   async takePicture() {
     console.log('picture initiated')
     if (this.camera) {
-      let { base64 } = await this.camera.takePictureAsync({
+      let photo = await this.camera.takePictureAsync({
         base64: true
       })
       console.log('after take picture async')
-      if (base64) {
+      this.setState({ imageUri: photo.uri })
+      if (photo.base64) {
         const body = {
           requests: [
             {
               image: {
-                content: base64
+                content: photo.base64
               },
               features: [
                 {
@@ -57,27 +61,29 @@ class CameraComponent extends Component {
         }
         console.log('fetch google vision initiated')
 
-        const fetchGoogleVision = async () => {
-          try {
-            const response = await fetch(
-              `https://jubjub-server.herokuapp.com/api/visions`,
-              {
-                method: 'POST',
-                headers: {
-                  Accept: 'application/json',
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(body)
-              }
-            )
-            const parsed = await response.json()
-            console.log('parsed vision received', parsed)
-          } catch (err) {
-            console.log('error in google vision request', err)
-          }
-        }
-        console.log('fetch google vision invoked')
-        fetchGoogleVision()
+        // const fetchGoogleVision = async () => {
+        //   try {
+        //     const response = await fetch(
+        //       `https://jubjub-server.herokuapp.com/api/visions`,
+        //       {
+        //         method: 'POST',
+        //         headers: {
+        //           Accept: 'application/json',
+        //           'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify(body)
+        //       }
+        //     )
+        //     const parsed = await response.json()
+        //     console.log('parsed vision received', parsed)
+        //   } catch (err) {
+        //     console.log('error in google vision request', err)
+        //   }
+        // }
+        // console.log('fetch google vision invoked')
+        // fetchGoogleVision()
+
+        // let key = 'AIzaSyASmyqgTjTGcX1UoyVUf_gEsT7Vfazz4Tg'
 
         // const response = await fetch(
         //   `https://vision.googleapis.com/v1/images:annotate?key=${key}`,
@@ -100,7 +106,7 @@ class CameraComponent extends Component {
   }
 
   render() {
-    console.log('current State', this.state)
+    console.log('current State Image URI', this.state.imageUri)
     const { hasCameraPermission } = this.state
 
     //if user has not set permission yet
@@ -115,98 +121,90 @@ class CameraComponent extends Component {
     } else {
       return (
         <View style={{ flex: 1 }}>
-          <Camera
-            style={{ flex: 1, justifyContent: 'space-between' }}
-            //this is setting camera to the back camera
-            type={this.state.type}
-            ref={ref => {
-              this.camera = ref
-            }}
-          >
-            <Header
-              searchBar
-              rounded
-              style={{
-                height: 70,
-                // position: 'absolute',
-                backgroundColor: 'transparent',
-                // left: 0,
-                // top: 0,
-                // right: 0,
-                zIndex: 100,
-                alignItems: 'center'
+          {this.state.imageUri ? (
+            <View style={styles.latestImageContainer}>
+              <Image
+                style={styles.latestImage}
+                resizeMode={'cover'}
+                source={{ uri: this.state.imageUri }}
+              />
+              <TouchableOpacity
+                style={styles.cancelButtonContainer}
+                onPress={this.cancelButton}
+              >
+                <MaterialCommunityIcons
+                  name="trash-can-outline"
+                  style={{ color: '#ec0606', fontSize: 50 }}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.submitButtonContainer}>
+                <MaterialCommunityIcons
+                  name="send"
+                  style={{
+                    color: '#00f25a',
+                    fontSize: 50,
+                    alignSelf: 'flex-end'
+                  }}
+                />
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <Camera
+              style={{ flex: 1, justifyContent: 'space-between' }}
+              //this is setting camera to the back camera
+              type={this.state.type}
+              ref={ref => {
+                this.camera = ref
               }}
             >
-              {/* <View style={{ flexDirection: 'row', flex: 4 }}>
-                <Icon name="logo-snapchat" style={{ color: 'white' }} />
-                <Item style={{ backgroundColor: 'transparent' }}>
-                  <Icon
-                    name="ios-search"
-                    style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}
-                  />
-
-                  <Input placeholder="Search" placeholderTextColor="white" />
-                </Item>
-              </View>
+              <Header
+                searchBar
+                rounded
+                style={{
+                  height: 70,
+                  // position: 'absolute',
+                  backgroundColor: 'transparent',
+                  // left: 0,
+                  // top: 0,
+                  // right: 0,
+                  zIndex: 100,
+                  alignItems: 'center'
+                }}
+              />
 
               <View
                 style={{
                   flexDirection: 'row',
-                  flex: 2,
-                  justifyContent: 'space-around'
+                  justifyContent: 'space-between',
+                  paddingHorizontal: 10,
+                  marginBottom: 15,
+                  alignItems: 'flex-end'
                 }}
               >
-                <Icon
-                  name="ios-flash"
-                  style={{ color: 'white', fontWeight: 'bold' }}
+                <MaterialCommunityIcons
+                  name="message-reply"
+                  style={{ color: 'white', fontSize: 36 }}
                 />
-                <Icon
-                  onPress={() => {
-                    this.setState({
-                      type:
-                        this.state.type === Camera.Constants.Type.back
-                          ? Camera.Constants.Type.front
-                          : Camera.Constants.Type.back
-                    })
-                  }}
-                  name="ios-reverse-camera"
-                  style={{ color: 'white', fontWeight: 'bold' }}
-                />
-              </View> */}
-            </Header>
 
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingHorizontal: 10,
-                marginBottom: 15,
-                alignItems: 'flex-end'
-              }}
-            >
-              <MaterialCommunityIcons
-                name="message-reply"
-                style={{ color: 'white', fontSize: 36 }}
-              />
-
-              <View style={{ alignItems: 'center' }}>
-                <TouchableOpacity onPress={this.takePicture.bind(this)}>
-                  <MaterialCommunityIcons
-                    name="circle-outline"
-                    style={{ color: 'white', fontSize: 100 }}
+                <View style={{ alignItems: 'center' }}>
+                  <TouchableOpacity onPress={this.takePicture.bind(this)}>
+                    <MaterialCommunityIcons
+                      name="circle-outline"
+                      style={{ color: 'white', fontSize: 100 }}
+                    />
+                  </TouchableOpacity>
+                  <Icon
+                    name="ios-images"
+                    style={{ color: 'white', fontSize: 36 }}
                   />
-                </TouchableOpacity>
-                <Icon
-                  name="ios-images"
+                </View>
+                <MaterialCommunityIcons
+                  name="google-circles-communities"
                   style={{ color: 'white', fontSize: 36 }}
                 />
               </View>
-              <MaterialCommunityIcons
-                name="google-circles-communities"
-                style={{ color: 'white', fontSize: 36 }}
-              />
-            </View>
-          </Camera>
+            </Camera>
+          )}
         </View>
       )
     }
@@ -219,5 +217,41 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  latestImageContainer: {
+    display: 'flex',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    position: 'relative'
+  },
+  latestImage: {
+    width: '100%',
+    height: '100%',
+    alignSelf: 'center'
+  },
+  cancelButtonContainer: {
+    bottom: 50,
+    left: 50,
+    height: 50,
+    width: '30%',
+    zIndex: 100,
+    position: 'absolute',
+    alignContent: 'center'
+  },
+  submitButtonContainer: {
+    bottom: 50,
+    right: 50,
+    height: 50,
+    width: '30%',
+    zIndex: 100,
+    position: 'absolute',
+    alignContent: 'center'
+  },
+  text: {
+    margin: 'auto',
+    color: 'white',
+    alignContent: 'center'
   }
 })
