@@ -8,25 +8,29 @@ export default class SinglePlace extends Component {
   }
 
   render() {
-    let icon
+    let image_url
     let name
-    let type
-    let vicinity
+    let address
     if (this.props.data) {
-      // icon = this.props.data.icon
+      image_url = this.props.data.image_url
       name = this.props.data.name
-      // vicinity = this.props.data.vicinity
+      if (this.props.data.location) {
+        address = this.props.data.location.display_address
+      }
     }
     return (
       <View style={styles.cardContainer}>
         <View style={styles.cardIconContainer}>
           <View style={styles.cardIcon}>
-            <Image style={{ width: 40, height: 40 }} source={{ uri: icon }} />
+            <Image
+              style={{ width: 40, height: 40 }}
+              source={{ uri: image_url }}
+            />
           </View>
         </View>
         <View style={styles.cardDesc}>
           <Text>{name}</Text>
-          <Text>{vicinity}</Text>
+          <Text>{address}</Text>
         </View>
       </View>
     )
