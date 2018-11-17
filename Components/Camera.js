@@ -90,7 +90,7 @@ class CameraComponent extends Component {
         // console.log('fetch google vision invoked')
         // fetchGoogleVision()
 
-        // let key = not this time!
+        let key = 'AIzaSyDI-JSD9wYmv80injSuhzuYlhq97H_ghuw'
 
         const response = await fetch(
           `https://vision.googleapis.com/v1/images:annotate?key=${key}`,
@@ -107,7 +107,7 @@ class CameraComponent extends Component {
         // console.log(
         //   'parsed text',
         //   parsed.responses[0].textAnnotations[0].description
-        // console.log('parsed logo', parsed)
+        // console.log('parsed', parsed)
         this.setState({
           text: parsed.responses[0].textAnnotations[0].description
         })

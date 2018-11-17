@@ -53,14 +53,14 @@ class Places extends React.Component {
     let lng = this.props.location.coords.longitude
     await this.props.fetchRecent()
     await this.props.fetchNearby(lat, lng)
-    console.log('NEARBYYY', this.props.nearby)
+    console.log('NEARBYYY', this.props.nearby[0])
     let recent = this.props.recent[0]
     this.setState({
       data: recent
     })
   }
   render() {
-    return (
+    return this.state.data ? (
       <View>
         <Header
           searchBar
@@ -114,6 +114,8 @@ class Places extends React.Component {
           />
         </View>
       </View>
+    ) : (
+      <View />
     )
   }
 }
