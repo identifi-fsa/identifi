@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import { Camera, Permissions } from 'expo'
 import { connect } from 'react-redux'
+import ResultModal from './ResultModal'
 
 import {
   Container,
@@ -21,12 +22,19 @@ class CameraComponent extends Component {
     hasCameraPermission: null,
     type: Camera.Constants.Type.back,
     imageUri: null,
+    base64: null,
     imageData: null,
-    text: null
+    text: null,
+    resultModal: false
   }
   cancelButton = () => {
-    console.log('heyyy')
     this.setState({ imageUri: null })
+  }
+  submitPicture = () => {
+    this.setState({ imageUri: null, resultModal: true })
+  }
+  closeResultModal = () => {
+    this.setState({ resultModal: false })
   }
   //look at Expo camera docs
   async componentDidMount() {
@@ -41,7 +49,7 @@ class CameraComponent extends Component {
         base64: true
       })
       console.log('after take picture async')
-      this.setState({ imageUri: photo.uri })
+      this.setState({ imageUri: photo.uri, base64: photo.base64 })
       if (photo.base64) {
         const body = {
           requests: [
@@ -82,7 +90,7 @@ class CameraComponent extends Component {
         // console.log('fetch google vision invoked')
         // fetchGoogleVision()
 
-        // let key = 'NICE TRY, MY GUY'
+        let key = 'AIzaSyCTeeYgDD1f7pjpWEPIBlvWxnfVTBIfMoA'
 
         const response = await fetch(
           `https://vision.googleapis.com/v1/images:annotate?key=${key}`,
@@ -103,17 +111,10 @@ class CameraComponent extends Component {
         this.setState({
           text: parsed.responses[0].textAnnotations[0].description
         })
-        // console.log('PARSED RES: ', parsed.responses[0].textAnnotations[0])
-        // console.log(
-        //   'here is what we found: ',
-        //   this.compareNearbyToText(this.state.text)
-        // )
         console.log(
           'here is what we found: ',
           this.compareToHash(this.state.text)
         )
-
-        console.log('end of camera func')
       }
     }
   }
@@ -149,6 +150,7 @@ class CameraComponent extends Component {
       // console.log('nearbyPlace: ', nearbyPlace)
       if (modifiedText === nearbyPlace) {
         console.log('found exact match')
+        this.setState({ imageData: nearby[i] })
         return nearby[i]
       }
     }
@@ -185,6 +187,7 @@ class CameraComponent extends Component {
         } //EDGE CASE - if there are same amount of occurances for more than one index, it will take the closest place
       }
       console.log(`key ${index} has the largest value`)
+      this.setState({ imageData: nearby[index] })
       return nearby[index]
     } else {
       return 'Not found. Please take a better picture. Totally not our fault'
@@ -192,7 +195,7 @@ class CameraComponent extends Component {
   }
 
   render() {
-    // console.log('current State Image URI', this.state.text)
+    console.log('current State Image Data', this.state.imageData)
     const { hasCameraPermission } = this.state
 
     //if user has not set permission yet
@@ -223,7 +226,10 @@ class CameraComponent extends Component {
                   style={{ color: '#ec0606', fontSize: 50 }}
                 />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.submitButtonContainer}>
+              <TouchableOpacity
+                style={styles.submitButtonContainer}
+                onPress={this.submitPicture}
+              >
                 <MaterialCommunityIcons
                   name="send"
                   style={{
@@ -291,6 +297,11 @@ class CameraComponent extends Component {
               </View>
             </Camera>
           )}
+          <ResultModal
+            visibility={this.state.resultModal}
+            closeModal={this.closeResultModal}
+            data={this.state.imageData}
+          />
         </View>
       )
     }

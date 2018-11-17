@@ -28,6 +28,7 @@ export default class App extends React.Component {
       location: null,
       errorMessage: null,
       outerScrollEnabled: true
+      // pageIndex: 1,
     }
   }
 
@@ -71,6 +72,7 @@ export default class App extends React.Component {
               showsPagination={false}
               index={1}
               scrollEnabled={this.state.outerScrollEnabled}
+              // dot={{ color: 'white' }}
             >
               <View style={styles.slideDefault}>
                 {this.state.location && (
