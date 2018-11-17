@@ -1,8 +1,10 @@
 import axios from 'axios'
+import { hasAction } from 'expo/build/StoreReview'
 
 export const placesState = {
   recent: [],
-  nearby: []
+  nearby: [],
+  hashMap: {}
 }
 
 const GET_RECENT = 'GET_RECENT'
@@ -35,6 +37,7 @@ export const fetchNearby = (lat, lng) => async dispatch => {
     const { data } = await axios.get(
       `https://jubjub-server.herokuapp.com/api/places/nearby/${lat}/${lng}`
     )
+    // console.log('THIS IS DATA', data)
     const action = getNearby(data)
     dispatch(action)
   } catch (err) {
@@ -47,7 +50,51 @@ const placesReducer = (state = placesState, action) => {
     case GET_RECENT:
       return { ...state, recent: [action.recent] }
     case GET_NEARBY:
-      return { ...state, nearby: [action.nearby] }
+      let hashMap = {}
+      let narrowedDownData = []
+      let results = action.nearby.results
+
+      for (let i = 0; i < results.length; i++) {
+        let placeObj = {}
+        placeObj.lat = results[i].geometry.location.lat
+        placeObj.lng = results[i].geometry.location.lng
+        placeObj.icon = results[i].icon
+        placeObj.place_id = results[i].place_id
+        placeObj.name = results[i].name
+        placeObj.types = results[i].types
+        placeObj.vicinity = results[i].vicinity
+        if (results[i].rating) placeObj.rating = results[i].rating
+        if (results[i].photos)
+          placeObj.photo = results[i].photos[0].photo_reference
+        if (results[i].photos) placeObj.price_level = results[i].price_level
+        narrowedDownData.push(placeObj)
+
+        const splitNameArr = results[i].name.toLowerCase().split(' ')
+        splitNameArr.forEach(word => {
+          if (hashMap[word]) {
+            hashMap[word].push(i)
+          } else {
+            hashMap[word] = [i]
+          }
+        })
+      }
+      // We can delete the commented out lines below. Just here in case we want to remove the hashMap part
+
+      // results.forEach(place => {
+      //   let placeObj = {}
+      //   placeObj.lat = place.geometry.location.lat
+      //   placeObj.lng = place.geometry.location.lng
+      //   placeObj.icon = place.icon
+      //   placeObj.place_id = place.place_id
+      //   placeObj.name = place.name
+      //   placeObj.types = place.types
+      //   placeObj.vicinity = place.vicinity
+      //   if (place.rating) placeObj.rating = place.rating
+      //   if (place.photos) placeObj.photo = place.photos[0].photo_reference
+      //   if (place.photos) placeObj.price_level = place.price_level
+      //   narrowedDownData.push(placeObj)
+      // })
+      return { ...state, nearby: narrowedDownData, hashMap: hashMap }
     default:
       return state
   }

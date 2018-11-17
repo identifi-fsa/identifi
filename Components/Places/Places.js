@@ -25,26 +25,26 @@ class Places extends React.Component {
   }
 
   nearbyButton = () => {
-    let nearby = []
-    if (this.props.nearby.length) {
-      let results = this.props.nearby[0].results
-      results.forEach(place => {
-        let placeObj = {}
-        placeObj.lat = place.geometry.location.lat
-        placeObj.lng = place.geometry.location.lng
-        placeObj.icon = place.icon
-        placeObj.place_id = place.place_id
-        placeObj.name = place.name
-        placeObj.types = place.types
-        placeObj.vicinity = place.vicinity
-        if (place.rating) placeObj.rating = place.rating
-        if (place.photos) placeObj.photo = place.photos[0].photo_reference
-        if (place.photos) placeObj.price_level = place.price_level
-        nearby.push(placeObj)
-      })
-    }
+    // let nearby = []
+    // if (this.props.nearby.length) {
+    //   let results = this.props.nearby[0].results
+    //   results.forEach(place => {
+    //     let placeObj = {}
+    //     placeObj.lat = place.geometry.location.lat
+    //     placeObj.lng = place.geometry.location.lng
+    //     placeObj.icon = place.icon
+    //     placeObj.place_id = place.place_id
+    //     placeObj.name = place.name
+    //     placeObj.types = place.types
+    //     placeObj.vicinity = place.vicinity
+    //     if (place.rating) placeObj.rating = place.rating
+    //     if (place.photos) placeObj.photo = place.photos[0].photo_reference
+    //     if (place.photos) placeObj.price_level = place.price_level
+    //     nearby.push(placeObj)
+    //   })
+    // }
     this.setState({
-      data: nearby
+      data: this.props.nearby
     })
   }
 
@@ -53,6 +53,7 @@ class Places extends React.Component {
     let lng = this.props.location.coords.longitude
     await this.props.fetchRecent()
     await this.props.fetchNearby(lat, lng)
+    console.log('NEARBYYY', this.props.nearby)
     let recent = this.props.recent[0]
     this.setState({
       data: recent

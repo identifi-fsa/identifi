@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import { Camera, Permissions } from 'expo'
+import { connect } from 'react-redux'
 
 import {
   Container,
@@ -13,6 +14,7 @@ import {
 } from 'native-base'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import axios from 'axios'
+import { getNearby } from './store/places-reducer'
 
 class CameraComponent extends Component {
   state = {
@@ -80,6 +82,8 @@ class CameraComponent extends Component {
         // console.log('fetch google vision invoked')
         // fetchGoogleVision()
 
+        // let key = 'NICE TRY, MY GUY'
+
         const response = await fetch(
           `https://vision.googleapis.com/v1/images:annotate?key=${key}`,
           {
@@ -95,16 +99,100 @@ class CameraComponent extends Component {
         // console.log(
         //   'parsed text',
         //   parsed.responses[0].textAnnotations[0].description
-        console.log('parsed logo', parsed)
+        // console.log('parsed logo', parsed)
         this.setState({
           text: parsed.responses[0].textAnnotations[0].description
         })
+        // console.log('PARSED RES: ', parsed.responses[0].textAnnotations[0])
+        // console.log(
+        //   'here is what we found: ',
+        //   this.compareNearbyToText(this.state.text)
+        // )
+        console.log(
+          'here is what we found: ',
+          this.compareToHash(this.state.text)
+        )
+
+        console.log('end of camera func')
       }
     }
   }
 
+  compareNearbyToText(text) {
+    //this method is currently unused. Using compareToHash instead
+    for (let i = 0; i < this.props.nearby.length; i++) {
+      let modifiedText = text.slice(0, -1).toLowerCase()
+      let nearbyPlace = this.props.nearby[i].name.toLowerCase()
+      // console.log('modifiedtext: ', modifiedText)
+      // console.log('nearbyPlace: ', nearbyPlace)
+      if (modifiedText === nearbyPlace) {
+        return this.props.nearby[i]
+      }
+    }
+    return 'Nothing found'
+  }
+
+  compareToHash(text) {
+    const hashMap = this.props.hashMap
+    const nearby = this.props.nearby
+    let index = 0
+    const countObj = {} //create object that will store occurances
+
+    //1 - first, check to see if theres an exact match
+    for (let i = 0; i < nearby.length; i++) {
+      let modifiedText = text
+        .replace(/\n/g, ' ')
+        .slice(0, -1)
+        .toLowerCase()
+      let nearbyPlace = nearby[i].name.toLowerCase()
+      // console.log('modifiedtext: ', modifiedText)
+      // console.log('nearbyPlace: ', nearbyPlace)
+      if (modifiedText === nearbyPlace) {
+        console.log('found exact match')
+        return nearby[i]
+      }
+    }
+
+    //2 - if no exact match, check for best match
+    //replace \n with spaces, remove last char, make lowercase, split text up by space
+    let wordsToSearch = text
+      .replace(/\n/g, ' ')
+      .slice(0, -1)
+      .toLowerCase()
+      .split(' ')
+
+    console.log('we will be searching these words', wordsToSearch)
+    //for each word, check if in hashMap, if it is, add or increment in countObj
+    wordsToSearch.forEach(word => {
+      if (hashMap[word]) {
+        hashMap[word].forEach(index => {
+          if (!countObj[index]) {
+            countObj[index] = 1
+          } else {
+            countObj[index] = countObj[index] + 1
+          }
+        })
+      }
+    })
+
+    // console.log('HASH MAP', hashMap)
+    // console.log('here is the Count Obj', countObj)
+    if (Object.keys(countObj).length !== 0) {
+      //find the key with the largest value. That is the index we will use
+      for (key in countObj) {
+        if (countObj[key] > index) {
+          index = key
+        } //EDGE CASE - if there are same amount of occurances for more than one index, it will take the closest place
+      }
+      console.log(`key ${index} has the largest value`)
+      return nearby[index]
+    } else {
+      return 'Not found. Please take a better picture. Totally not our fault'
+    }
+  }
+
   render() {
-    console.log('current State Image URI', this.state.text)
+    // console.log('current State Image URI', this.state.text)
     const { hasCameraPermission } = this.state
 
     //if user has not set permission yet
@@ -208,7 +296,14 @@ class CameraComponent extends Component {
     }
   }
 }
-export default CameraComponent
+// export default CameraComponent
+
+const mapStateToProps = state => ({
+  nearby: state.places.nearby,
+  hashMap: state.places.hashMap
+})
+
+export default connect(mapStateToProps)(CameraComponent)
 
 const styles = StyleSheet.create({
   container: {
