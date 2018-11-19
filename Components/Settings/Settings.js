@@ -1,12 +1,19 @@
 import React from 'react'
 import { Platform, StyleSheet, Text, View, Image } from 'react-native'
 import SettingsList from 'react-native-settings-list'
+import Email from './SettingsModals/Email'
 
 class Settings extends React.Component {
-  constructor() {
-    super()
-    this.onValueChange = this.onValueChange.bind(this)
-    this.state = { switchValue: false }
+  state = {
+    emailViz: false,
+    phoneViz: false,
+    name: false,
+    passwordViz: false,
+    logoutViz: false
+  }
+
+  toggleEmail = () => {
+    this.setState({ emailViz: !this.state.emailViz })
   }
   render() {
     var bgColor = '#DCE3F4'
@@ -71,7 +78,7 @@ class Settings extends React.Component {
               }
               title="Email"
               titleInfo="Auto Populate Email"
-              onPress={() => alert('Route To Email Page')}
+              onPress={() => this.toggleEmail()}
             />
             <SettingsList.Item
               icon={
@@ -107,6 +114,7 @@ class Settings extends React.Component {
             />
           </SettingsList>
         </View>
+        <Email visibility={this.state.emailViz} toggle={this.toggleEmail} />
       </View>
     )
   }
