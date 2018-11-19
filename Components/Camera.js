@@ -17,7 +17,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import axios from 'axios'
 import { getNearby } from './store/places-reducer'
 
-let displayDelayCount = 0
 let displayTimeout
 
 class CameraComponent extends Component {
@@ -29,7 +28,8 @@ class CameraComponent extends Component {
     imageData: null,
     text: null,
     resultModal: false,
-    loading: false
+    loading: false,
+    displayDelayCount: 0
   }
 
   cancelButton = () => {
@@ -41,18 +41,24 @@ class CameraComponent extends Component {
     this.setState({ loading: true })
     if (this.state.imageData) {
       this.displayResult(this.state.imageData)
-      this.setState({ loading: false })
-      displayDelayCount = 0
+      this.setState({ loading: false, displayDelayCount: 0 })
       clearTimeout(displayTimeout)
     } else {
-      displayDelayCount++
-      console.log('TRYING AGAIN IN 1 SECOND... count: ', displayDelayCount)
+      this.setState({ displayDelayCount: displayDelayCount + 1 })
+      console.log(
+        'TRYING AGAIN IN 1 SECOND... count: ',
+        this.state.displayDelayCount
+      )
       displayTimeout = setTimeout(() => {
-        if (displayDelayCount >= 8) {
-          this.setState({ loading: false })
+        if (this.state.displayDelayCount >= 8) {
+          this.setState({
+            loading: false,
+            displayDelayCount: 0,
+            imageUri: null
+          })
           console.log('No match found. Please take a better picture next time')
           alert('No match found. Please take a better picture next time')
-        } else if (displayDelayCount >= 4) {
+        } else if (this.state.displayDelayCount >= 4) {
           console.log('Taking longer than expected....')
           this.submitPicture()
         } else {
@@ -126,7 +132,7 @@ class CameraComponent extends Component {
         // console.log('fetch google vision invoked')
         // fetchGoogleVision()
 
-        let key = '<LOL!!!>'
+        let key = 'NOPE'
 
         const response = await fetch(
           `https://vision.googleapis.com/v1/images:annotate?key=${key}`,
@@ -155,20 +161,6 @@ class CameraComponent extends Component {
     }
   }
 
-  compareNearbyToText(text) {
-    //this method is currently unused. Using compareToHash instead
-    for (let i = 0; i < this.props.nearby.length; i++) {
-      let modifiedText = text.slice(0, -1).toLowerCase()
-      let nearbyPlace = this.props.nearby[i].name.toLowerCase()
-      // console.log('modifiedtext: ', modifiedText)
-      // console.log('nearbyPlace: ', nearbyPlace)
-      if (modifiedText === nearbyPlace) {
-        return this.props.nearby[i]
-      }
-    }
-    return 'Nothing found'
-  }
-
   compareToHash(text) {
     const hashMap = this.props.hashMap
     const nearby = this.props.nearby
@@ -182,8 +174,6 @@ class CameraComponent extends Component {
         .slice(0, -1)
         .toLowerCase()
       let nearbyPlace = nearby[i].name.toLowerCase()
-      // console.log('modifiedtext: ', modifiedText)
-      // console.log('nearbyPlace: ', nearbyPlace)
       if (modifiedText === nearbyPlace) {
         console.log('found exact match')
         this.setState({ imageData: nearby[i] })
@@ -213,8 +203,8 @@ class CameraComponent extends Component {
       }
     })
 
-    // console.log('HASH MAP', hashMap)
-    // console.log('here is the Count Obj', countObj)
+    console.log('HASH MAP', hashMap)
+    console.log('here is the Count Obj', countObj)
     if (Object.keys(countObj).length !== 0) {
       //find the key with the largest value. That is the index we will use
       for (key in countObj) {
