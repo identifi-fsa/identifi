@@ -91,7 +91,11 @@ class CameraComponent extends Component {
         base64: true
       })
       console.log('after take picture async')
-      this.setState({ imageUri: photo.uri, base64: photo.base64 })
+      this.setState({
+        imageUri: photo.uri,
+        base64: photo.base64,
+        imageData: null
+      })
       if (photo.base64) {
         const body = {
           requests: [
