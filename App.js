@@ -4,6 +4,7 @@ import { Container, Content } from 'native-base'
 import Swiper from 'react-native-swiper'
 import Camera from './Components/Camera'
 import Places from './Components/Places/Places'
+import Settings from './Components/Settings/Settings'
 import { Constants, Location, Permissions } from 'expo'
 import { connect, Provider } from 'react-redux'
 import store from './Components/store/index'
@@ -82,8 +83,8 @@ export default class App extends React.Component {
               <View style={{ flex: 1 }}>
                 <Camera />
               </View>
-              <View style={styles.slideDefault}>
-                <Text style={styles.text}>User Page</Text>
+              <View style={{ flex: 1 }}>
+                <Settings />
               </View>
             </Swiper>
           </Content>

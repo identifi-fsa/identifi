@@ -854,7 +854,7 @@ export const fetchNearby = (lat, lng) => async dispatch => {
       `https://jubjub-server.herokuapp.com/api/places/nearby/${lat}/${lng}`
     )
     // console.log('THIS IS DATA', dummyData.businesses)
-    const action = getNearby(dummyData.businesses)
+    const action = getNearby(data.businesses)
     dispatch(action)
   } catch (err) {
     console.log(err)

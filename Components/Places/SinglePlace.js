@@ -23,7 +23,7 @@ export default class SinglePlace extends Component {
         <View style={styles.cardIconContainer}>
           <View style={styles.cardIcon}>
             <Image
-              style={{ width: 40, height: 40 }}
+              style={{ width: 90, height: 90 }}
               source={{ uri: image_url }}
             />
           </View>

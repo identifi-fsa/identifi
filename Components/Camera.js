@@ -25,13 +25,24 @@ class CameraComponent extends Component {
     base64: null,
     imageData: null,
     text: null,
-    resultModal: false
+    resultModal: false,
+    loading: false
   }
   cancelButton = () => {
     this.setState({ imageUri: null })
   }
-  submitPicture = () => {
+  submitPicture = async () => {
+    this.setState({ loading: true })
+    //if we find the place... load result
+    //else throw alert error
+
     this.setState({ imageUri: null, resultModal: true })
+    //   await this.state.imageData
+    //   if (this.state.imageData) {
+    //     this.setState({ imageUri: null, resultModal: true })
+    //   } else {
+    //     alert('this picture wasnt valid')
+    //   }
   }
   closeResultModal = () => {
     this.setState({ resultModal: false })
@@ -90,7 +101,7 @@ class CameraComponent extends Component {
         // console.log('fetch google vision invoked')
         // fetchGoogleVision()
 
-        // let key = 'got me, but thats the last time'
+        let key = '<LOL!!!>'
 
         const response = await fetch(
           `https://vision.googleapis.com/v1/images:annotate?key=${key}`,
@@ -274,7 +285,7 @@ class CameraComponent extends Component {
                 }}
               >
                 <MaterialCommunityIcons
-                  name="message-reply"
+                  name="crosshairs-gps"
                   style={{ color: 'white', fontSize: 36 }}
                 />
 
@@ -282,13 +293,17 @@ class CameraComponent extends Component {
                   <TouchableOpacity onPress={this.takePicture.bind(this)}>
                     <MaterialCommunityIcons
                       name="circle-outline"
-                      style={{ color: 'white', fontSize: 100 }}
+                      style={{
+                        color: 'white',
+                        fontSize: 100,
+                        marginBottom: 50
+                      }}
                     />
                   </TouchableOpacity>
-                  <Icon
+                  {/* <Icon
                     name="ios-images"
                     style={{ color: 'white', fontSize: 36 }}
-                  />
+                  /> */}
                 </View>
                 <MaterialCommunityIcons
                   name="google-circles-communities"
