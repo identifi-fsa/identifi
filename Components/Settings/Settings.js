@@ -2,19 +2,37 @@ import React from 'react'
 import { Platform, StyleSheet, Text, View, Image } from 'react-native'
 import SettingsList from 'react-native-settings-list'
 import Email from './SettingsModals/Email'
+import Name from './SettingsModals/Name'
+import PhoneNumber from './SettingsModals/PhoneNumber'
 
 class Settings extends React.Component {
   state = {
     emailViz: false,
     phoneViz: false,
-    name: false,
+    nameViz: false,
     passwordViz: false,
     logoutViz: false
+  }
+  toggleName = () => {
+    this.setState({ nameViz: !this.state.nameViz })
   }
 
   toggleEmail = () => {
     this.setState({ emailViz: !this.state.emailViz })
   }
+
+  togglePhone = () => {
+    this.setState({ phoneViz: !this.state.phoneViz })
+  }
+
+  togglePassword = () => {
+    this.setState({ passwordViz: !this.state.passwordViz })
+  }
+
+  togglePassword = () => {
+    this.setState({ logoutViz: !this.state.logoutViz })
+  }
+
   render() {
     var bgColor = '#DCE3F4'
     return (
@@ -67,7 +85,7 @@ class Settings extends React.Component {
               title="Name"
               titleInfo="Auto Populate UserName"
               //titleInfoStyle={styles.titleInfoStyle}
-              onPress={() => alert('Route to Name Page')}
+              onPress={() => this.toggleName()}
             />
             <SettingsList.Item
               icon={
@@ -89,7 +107,7 @@ class Settings extends React.Component {
               }
               title="Password"
               titleInfo="***********"
-              onPress={() => alert('Route To Password Page')}
+              onPress={() => this.togglePassword()}
             />
             <SettingsList.Item
               icon={
@@ -100,7 +118,7 @@ class Settings extends React.Component {
               }
               title="Phone Number"
               titleInfo="Auto Populate Number"
-              onPress={() => alert('Route To Phone Number Page')}
+              onPress={() => this.togglePhone()}
             />
             <SettingsList.Item
               icon={
@@ -114,7 +132,16 @@ class Settings extends React.Component {
             />
           </SettingsList>
         </View>
+        <Name visibility={this.state.nameViz} toggle={this.toggleName} />
         <Email visibility={this.state.emailViz} toggle={this.toggleEmail} />
+        <PhoneNumber
+          visibility={this.state.phoneViz}
+          toggle={this.togglePhone}
+        />
+        <PhoneNumber
+          visibility={this.state.passwordViz}
+          toggle={this.togglePassword}
+        />
       </View>
     )
   }
