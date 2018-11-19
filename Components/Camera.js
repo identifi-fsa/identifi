@@ -17,6 +17,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import axios from 'axios'
 import { getNearby } from './store/places-reducer'
 
+let displayDelayCount = 0
+let displayTimeout
+
 class CameraComponent extends Component {
   state = {
     hasCameraPermission: null,
@@ -28,22 +31,44 @@ class CameraComponent extends Component {
     resultModal: false,
     loading: false
   }
+
   cancelButton = () => {
     this.setState({ imageUri: null })
   }
-  submitPicture = async () => {
-    this.setState({ loading: true })
-    //if we find the place... load result
-    //else throw alert error
 
-    this.setState({ imageUri: null, resultModal: true })
-    //   await this.state.imageData
-    //   if (this.state.imageData) {
-    //     this.setState({ imageUri: null, resultModal: true })
-    //   } else {
-    //     alert('this picture wasnt valid')
-    //   }
+  submitPicture = async () => {
+    console.log('PICTURE SUBMITTED')
+    this.setState({ loading: true })
+    if (this.state.imageData) {
+      this.displayResult(this.state.imageData)
+      this.setState({ loading: false })
+      displayDelayCount = 0
+      clearTimeout(displayTimeout)
+    } else {
+      displayDelayCount++
+      console.log('TRYING AGAIN IN 1 SECOND... count: ', displayDelayCount)
+      displayTimeout = setTimeout(() => {
+        if (displayDelayCount >= 8) {
+          this.setState({ loading: false })
+          console.log('No match found. Please take a better picture next time')
+          alert('No match found. Please take a better picture next time')
+        } else if (displayDelayCount >= 4) {
+          console.log('Taking longer than expected....')
+          this.submitPicture()
+        } else {
+          this.submitPicture()
+        }
+      }, 1000)
+    }
   }
+
+  displayResult = () => {
+    this.setState({ imageUri: null, resultModal: true })
+    // check if this is the correct restaurant
+    // if this is correct, CALL THUNK to add to DB
+    // if this is incorrect, ERROR
+  }
+
   closeResultModal = () => {
     this.setState({ resultModal: false })
   }
