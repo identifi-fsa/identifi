@@ -294,6 +294,7 @@ class CameraComponent extends Component {
                 }}
               />
 
+              {/* Navigator buttons */}
               <View
                 style={{
                   flexDirection: 'row',
@@ -306,6 +307,7 @@ class CameraComponent extends Component {
                 <MaterialCommunityIcons
                   name="crosshairs-gps"
                   style={{ color: 'white', fontSize: 36 }}
+                  onPress={this.props.goToPlaces}
                 />
 
                 <View style={{ alignItems: 'center' }}>
@@ -327,6 +329,7 @@ class CameraComponent extends Component {
                 <MaterialCommunityIcons
                   name="google-circles-communities"
                   style={{ color: 'white', fontSize: 36 }}
+                  onPress={this.props.goToSettings}
                 />
               </View>
             </Camera>

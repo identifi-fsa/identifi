@@ -1,10 +1,18 @@
 import React from 'react'
-import { Platform, StyleSheet, Text, View, Image } from 'react-native'
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity
+} from 'react-native'
 import SettingsList from 'react-native-settings-list'
 import Email from './SettingsModals/Email'
 import Name from './SettingsModals/Name'
 import PhoneNumber from './SettingsModals/PhoneNumber'
 import Password from './SettingsModals/Password'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 class Settings extends React.Component {
   state = {
@@ -144,6 +152,45 @@ class Settings extends React.Component {
           visibility={this.state.passwordViz}
           toggle={this.togglePassword}
         />
+
+        {/* Navigator buttons */}
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            paddingHorizontal: 10,
+            marginBottom: 15,
+            alignItems: 'flex-end'
+          }}
+        >
+          <MaterialCommunityIcons
+            name="crosshairs-gps"
+            style={{ color: 'white', fontSize: 36 }}
+            onPress={this.props.goToPlaces}
+          />
+
+          <View style={{ alignItems: 'center' }}>
+            <TouchableOpacity onPress={this.props.goToCamera}>
+              <MaterialCommunityIcons
+                name="circle-outline"
+                style={{
+                  color: 'white',
+                  fontSize: 60,
+                  marginBottom: 5
+                }}
+              />
+            </TouchableOpacity>
+            {/* <Icon
+                    name="ios-images"
+                    style={{ color: 'white', fontSize: 36 }}
+                  /> */}
+          </View>
+          <MaterialCommunityIcons
+            name="google-circles-communities"
+            style={{ color: 'white', fontSize: 36 }}
+            onPress={this.props.goToSettings}
+          />
+        </View>
       </View>
     )
   }
