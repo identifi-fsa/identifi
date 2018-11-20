@@ -16,6 +16,7 @@ import {
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import axios from 'axios'
 import { getNearby } from './store/places-reducer'
+import LoadingScreen from './ResultLoadingScreen'
 
 let displayTimeout
 
@@ -44,7 +45,7 @@ class CameraComponent extends Component {
       this.setState({ loading: false, displayDelayCount: 0 })
       clearTimeout(displayTimeout)
     } else {
-      this.setState({ displayDelayCount: displayDelayCount + 1 })
+      this.setState({ displayDelayCount: this.state.displayDelayCount + 1 })
       console.log(
         'TRYING AGAIN IN 1 SECOND... count: ',
         this.state.displayDelayCount
@@ -57,7 +58,7 @@ class CameraComponent extends Component {
             imageUri: null
           })
           console.log('No match found. Please take a better picture next time')
-          alert('No match found. Please take a better picture next time')
+          // alert('No match found. Please take a better picture next time')
         } else if (this.state.displayDelayCount >= 4) {
           console.log('Taking longer than expected....')
           this.submitPicture()
@@ -225,7 +226,7 @@ class CameraComponent extends Component {
   }
 
   render() {
-    console.log('current State Image Data', this.state.imageData)
+    console.log('current State Image Data', this.state.loading)
     const { hasCameraPermission } = this.state
 
     //if user has not set permission yet
@@ -336,6 +337,7 @@ class CameraComponent extends Component {
             closeModal={this.closeResultModal}
             data={this.state.imageData}
           />
+          <LoadingScreen visibility={this.state.loading} />
         </View>
       )
     }
