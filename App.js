@@ -1,12 +1,12 @@
 import React from 'react'
-import { Platform, StyleSheet, Text, View } from 'react-native'
+import { Platform, StyleSheet, View } from 'react-native'
 import { Container, Content } from 'native-base'
 import Swiper from 'react-native-swiper'
 import Camera from './Components/Camera'
 import Places from './Components/Places/Places'
 import Settings from './Components/Settings/Settings'
 import { Constants, Location, Permissions } from 'expo'
-import { connect, Provider } from 'react-redux'
+import { Provider } from 'react-redux'
 import store from './Components/store/index'
 
 const styles = StyleSheet.create({
