@@ -44,7 +44,7 @@ class CameraComponent extends Component {
       this.setState({ loading: false, displayDelayCount: 0 })
       clearTimeout(displayTimeout)
     } else {
-      this.setState({ displayDelayCount: displayDelayCount + 1 })
+      this.setState({ displayDelayCount: this.state.displayDelayCount + 1 })
       console.log(
         'TRYING AGAIN IN 1 SECOND... count: ',
         this.state.displayDelayCount
@@ -136,7 +136,7 @@ class CameraComponent extends Component {
         // console.log('fetch google vision invoked')
         // fetchGoogleVision()
 
-        let key = 'NOPE'
+        let key = 'AIzaSyBSHdWwlSe6xZ0U6dYy3osqRo6248mhpaU'
 
         const response = await fetch(
           `https://vision.googleapis.com/v1/images:annotate?key=${key}`,
@@ -211,7 +211,7 @@ class CameraComponent extends Component {
     console.log('here is the Count Obj', countObj)
     if (Object.keys(countObj).length !== 0) {
       //find the key with the largest value. That is the index we will use
-      for (key in countObj) {
+      for (let key in countObj) {
         if (countObj[key] > index) {
           index = key
         } //EDGE CASE - if there are same amount of occurances for more than one index, it will take the closest place
