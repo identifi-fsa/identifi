@@ -1,37 +1,56 @@
 import React, { Component } from 'react'
-import { Platform, StyleSheet, Text, View, Image } from 'react-native'
-import { Container, Content, Card, CardItem, Body } from 'native-base'
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import ResultModal from '../ResultModal'
 
 export default class SinglePlace extends Component {
-  constructor(props) {
-    super(props)
+  state = {
+    resultModal: false
+  }
+
+  displayResult = () => {
+    this.setState({ resultModal: true })
+  }
+
+  closeResultModal = () => {
+    this.setState({ resultModal: false })
   }
 
   render() {
-    let image_url
+    let imageUrl
     let name
     let address
+    let isClosed
     if (this.props.data) {
-      image_url = this.props.data.image_url
+      imageUrl = this.props.data.image_url
       name = this.props.data.name
+      isClosed = this.props.data.isClosed ? 'Closed' : 'Open'
       if (this.props.data.location) {
         address = this.props.data.location.display_address
       }
     }
     return (
-      <View style={styles.cardContainer}>
-        <View style={styles.cardIconContainer}>
-          <View style={styles.cardIcon}>
-            <Image
-              style={{ width: 90, height: 90 }}
-              source={{ uri: image_url }}
-            />
+      <View>
+        <TouchableOpacity onPress={this.displayResult}>
+          <View style={styles.cardContainer}>
+            <View style={styles.cardIconContainer}>
+              <Image
+                // style={{ width: 90, height: 90 }}
+                style={styles.cardIcon}
+                source={{ uri: imageUrl }}
+              />
+            </View>
+            <View style={styles.cardDesc}>
+              <Text style={styles.nameText}>{name}</Text>
+              <Text>{address}</Text>
+              <Text>Currently {isClosed}</Text>
+            </View>
           </View>
-        </View>
-        <View style={styles.cardDesc}>
-          <Text>{name}</Text>
-          <Text>{address}</Text>
-        </View>
+        </TouchableOpacity>
+        <ResultModal
+          visibility={this.state.resultModal}
+          closeModal={this.closeResultModal}
+          data={this.props.data}
+        />
       </View>
     )
   }
@@ -39,14 +58,13 @@ export default class SinglePlace extends Component {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    width: '100%',
+    width: '99%',
     height: 100,
-    backgroundColor: '#9DD6EB',
-    borderWidth: 1,
-    borderColor: 'black',
+    backgroundColor: 'white',
+    justifyContent: 'space-between',
     flexDirection: 'row',
+    borderWidth: 1,
     alignItems: 'center'
-    // paddingLeft: '2.5%'
   },
   cardIconContainer: {
     display: 'flex',
@@ -54,26 +72,26 @@ const styles = StyleSheet.create({
     width: '25%',
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: 'black'
+    marginLeft: '2.5%'
   },
   cardIcon: {
-    height: 90,
-    width: 90,
-    borderWidth: 1,
-    borderColor: 'black'
+    height: 85,
+    width: 85
   },
   cardDesc: {
-    width: '75%',
+    width: '70%',
     height: 90,
-    backgroundColor: '#9DD6EB',
-    borderWidth: 1,
-    borderColor: 'black',
+    backgroundColor: 'white',
+    justifyContent: 'center',
     flexDirection: 'column'
   },
   text: {
     color: 'white',
     fontSize: 30,
     fontWeight: 'bold'
+  },
+  nameText: {
+    fontWeight: 'bold',
+    fontSize: 18
   }
 })

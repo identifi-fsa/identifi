@@ -26,27 +26,79 @@ class Places extends React.Component {
   }
 
   nearbyButton = () => {
-    // let nearby = []
-    // if (this.props.nearby.length) {
-    //   let results = this.props.nearby[0].results
-    //   results.forEach(place => {
-    //     let placeObj = {}
-    //     placeObj.lat = place.geometry.location.lat
-    //     placeObj.lng = place.geometry.location.lng
-    //     placeObj.icon = place.icon
-    //     placeObj.place_id = place.place_id
-    //     placeObj.name = place.name
-    //     placeObj.types = place.types
-    //     placeObj.vicinity = place.vicinity
-    //     if (place.rating) placeObj.rating = place.rating
-    //     if (place.photos) placeObj.photo = place.photos[0].photo_reference
-    //     if (place.photos) placeObj.price_level = place.price_level
-    //     nearby.push(placeObj)
-    //   })
-    // }
     this.setState({
       data: this.props.nearby
     })
+  }
+
+  getRecentButtonColor = () => {
+    if (this.state.data === this.props.recent[0]) {
+      return {
+        width: '50%',
+        zIndex: 100,
+        alignItems: 'center',
+        borderColor: 'red',
+        borderWidth: 2,
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'center'
+      }
+    } else {
+      return {
+        width: '50%',
+        zIndex: 100,
+        alignItems: 'center',
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'center'
+      }
+    }
+  }
+
+  getNearbyButtonColor = () => {
+    if (this.state.data === this.props.nearby) {
+      return {
+        width: '50%',
+        zIndex: 100,
+        alignItems: 'center',
+        borderColor: 'red',
+        borderWidth: 2,
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'center'
+      }
+    } else {
+      return {
+        width: '50%',
+        zIndex: 100,
+        alignItems: 'center',
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'center'
+      }
+    }
+  }
+
+  getNearbyButtonTextColor = () => {
+    if (this.state.data === this.props.nearby) {
+      return {
+        color: 'red',
+        fontWeight: 'bold'
+      }
+    } else {
+      return {}
+    }
+  }
+
+  getRecentButtonTextColor = () => {
+    if (this.state.data === this.props.recent[0]) {
+      return {
+        color: 'red',
+        fontWeight: 'bold'
+      }
+    } else {
+      return {}
+    }
   }
 
   async componentDidMount() {
@@ -54,10 +106,9 @@ class Places extends React.Component {
     let lng = this.props.location.coords.longitude
     await this.props.fetchRecent()
     await this.props.fetchNearby(lat, lng)
-    console.log('NEARBYYY', this.props.nearby[0])
-    let recent = this.props.recent[0]
+    let nearby = this.props.nearby
     this.setState({
-      data: recent
+      data: nearby
     })
   }
   render() {
@@ -87,24 +138,16 @@ class Places extends React.Component {
             }}
           >
             <TouchableOpacity
-              style={{
-                width: '50%',
-                zIndex: 100,
-                alignItems: 'center'
-              }}
+              style={this.getRecentButtonColor()}
               onPress={this.recentButton}
             >
-              <Text>RECENT</Text>
+              <Text style={this.getRecentButtonTextColor()}>RECENT</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={{
-                width: '50%',
-                zIndex: 100,
-                alignItems: 'center'
-              }}
+              style={this.getNearbyButtonColor()}
               onPress={this.nearbyButton}
             >
-              <Text>NEARBY</Text>
+              <Text style={this.getNearbyButtonTextColor()}>NEARBY</Text>
             </TouchableOpacity>
           </View>
         </Header>
@@ -126,7 +169,7 @@ class Places extends React.Component {
         >
           <MaterialCommunityIcons
             name="crosshairs-gps"
-            style={{ color: 'white', fontSize: 36 }}
+            style={{ color: 'black', fontSize: 36 }}
             onPress={this.props.goToPlaces}
           />
 
@@ -135,7 +178,7 @@ class Places extends React.Component {
               <MaterialCommunityIcons
                 name="circle-outline"
                 style={{
-                  color: 'white',
+                  color: 'black',
                   fontSize: 60,
                   marginBottom: 5
                 }}
@@ -148,7 +191,7 @@ class Places extends React.Component {
           </View>
           <MaterialCommunityIcons
             name="google-circles-communities"
-            style={{ color: 'white', fontSize: 36 }}
+            style={{ color: 'black', fontSize: 36 }}
             onPress={this.props.goToSettings}
           />
         </View>
@@ -181,10 +224,7 @@ export default connect(
 const styles = StyleSheet.create({
   cardContainer: {
     flex: 1,
-    width: '95%',
-    backgroundColor: '#9DD6EB',
-    borderWidth: 1,
-    borderColor: 'black',
+    width: '100%',
     alignItems: 'center'
   },
   text: {

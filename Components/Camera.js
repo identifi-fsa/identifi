@@ -71,9 +71,6 @@ class CameraComponent extends Component {
 
   displayResult = () => {
     this.setState({ imageUri: null, resultModal: true })
-    // check if this is the correct restaurant
-    // if this is correct, CALL THUNK to add to DB
-    // if this is incorrect, ERROR
   }
 
   closeResultModal = () => {
