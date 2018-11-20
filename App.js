@@ -28,8 +28,8 @@ export default class App extends React.Component {
     this.state = {
       location: null,
       errorMessage: null,
-      outerScrollEnabled: true
-      // pageIndex: 1,
+      outerScrollEnabled: true,
+      pageIndex: 1
     }
   }
 
@@ -57,6 +57,24 @@ export default class App extends React.Component {
     this.setState({ location })
   }
 
+  goToPlaces = () => {
+    this.setState({
+      pageIndex: 0
+    })
+  }
+
+  goToCamera = () => {
+    this.setState({
+      pageIndex: 1
+    })
+  }
+
+  goToSettings = () => {
+    this.setState({
+      pageIndex: 2
+    })
+  }
+
   render() {
     let text = 'Waiting..'
     if (this.state.errorMessage) {
@@ -71,20 +89,32 @@ export default class App extends React.Component {
             <Swiper
               loop={false}
               showsPagination={false}
-              index={1}
+              index={this.state.pageIndex}
               scrollEnabled={this.state.outerScrollEnabled}
               // dot={{ color: 'white' }}
             >
               <View style={styles.slideDefault}>
                 {this.state.location && (
-                  <Places location={this.state.location} />
+                  <Places
+                    location={this.state.location}
+                    goToPlaces={this.goToPlaces}
+                    goToCamera={this.goToCamera}
+                    goToSettings={this.goToSettings}
+                  />
                 )}
               </View>
               <View style={{ flex: 1 }}>
-                <Camera />
+                <Camera
+                  goToPlaces={this.goToPlaces}
+                  goToSettings={this.goToSettings}
+                />
               </View>
               <View style={{ flex: 1 }}>
-                <Settings />
+                <Settings
+                  goToPlaces={this.goToPlaces}
+                  goToCamera={this.goToCamera}
+                  goToSettings={this.goToSettings}
+                />
               </View>
             </Swiper>
           </Content>

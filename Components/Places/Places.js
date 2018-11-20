@@ -11,6 +11,7 @@ import { connect } from 'react-redux'
 import { Container, Content, Header } from 'native-base'
 import { fetchRecent, fetchNearby } from '../store/places-reducer'
 import SinglePlace from './SinglePlace'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 class Places extends React.Component {
   state = {
@@ -111,6 +112,44 @@ class Places extends React.Component {
           <FlatList
             data={this.state.data}
             renderItem={({ item }) => <SinglePlace data={item} />}
+          />
+        </View>
+        {/* Navigator buttons */}
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            paddingHorizontal: 10,
+            marginBottom: 15,
+            alignItems: 'flex-end'
+          }}
+        >
+          <MaterialCommunityIcons
+            name="crosshairs-gps"
+            style={{ color: 'white', fontSize: 36 }}
+            onPress={this.props.goToPlaces}
+          />
+
+          <View style={{ alignItems: 'center' }}>
+            <TouchableOpacity onPress={this.props.goToCamera}>
+              <MaterialCommunityIcons
+                name="circle-outline"
+                style={{
+                  color: 'white',
+                  fontSize: 60,
+                  marginBottom: 5
+                }}
+              />
+            </TouchableOpacity>
+            {/* <Icon
+                    name="ios-images"
+                    style={{ color: 'white', fontSize: 36 }}
+                  /> */}
+          </View>
+          <MaterialCommunityIcons
+            name="google-circles-communities"
+            style={{ color: 'white', fontSize: 36 }}
+            onPress={this.props.goToSettings}
           />
         </View>
       </View>
