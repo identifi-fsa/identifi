@@ -4,6 +4,7 @@ import SettingsList from 'react-native-settings-list'
 import Email from './SettingsModals/Email'
 import Name from './SettingsModals/Name'
 import PhoneNumber from './SettingsModals/PhoneNumber'
+import Password from './SettingsModals/Password'
 
 class Settings extends React.Component {
   state = {
@@ -26,10 +27,11 @@ class Settings extends React.Component {
   }
 
   togglePassword = () => {
+    console.log('passsword')
     this.setState({ passwordViz: !this.state.passwordViz })
   }
 
-  togglePassword = () => {
+  toggleLogout = () => {
     this.setState({ logoutViz: !this.state.logoutViz })
   }
 
@@ -138,7 +140,7 @@ class Settings extends React.Component {
           visibility={this.state.phoneViz}
           toggle={this.togglePhone}
         />
-        <PhoneNumber
+        <Password
           visibility={this.state.passwordViz}
           toggle={this.togglePassword}
         />
