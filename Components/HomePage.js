@@ -56,26 +56,12 @@ export default class HomePage extends Component {
     this.setState({ location })
   }
 
-  goToPlaces = () => {
-    this.setState({
-      pageIndex: 0
-    })
-  }
-
-  goToCamera = () => {
-    this.setState({
-      pageIndex: 1
-    })
-  }
-
-  goToSettings = () => {
-    this.setState({
-      pageIndex: 2
-    })
+  changePage = refScroll => {
+    this.refs.sliderX.scrollBy(refScroll)
   }
 
   render() {
-    let text = 'Waiting..'
+    let text = 'Waiting...'
     if (this.state.errorMessage) {
       text = this.state.errorMessage
     } else if (this.state.location) {
@@ -88,30 +74,21 @@ export default class HomePage extends Component {
           showsPagination={false}
           index={this.state.pageIndex}
           scrollEnabled={this.state.outerScrollEnabled}
-          // dot={{ color: 'white' }}
+          ref="sliderX"
         >
           <View style={styles.slideDefault}>
             {this.state.location && (
               <Places
                 location={this.state.location}
-                goToPlaces={this.goToPlaces}
-                goToCamera={this.goToCamera}
-                goToSettings={this.goToSettings}
+                changePage={refScroll => this.changePage(refScroll)}
               />
             )}
           </View>
           <View style={{ flex: 1 }}>
-            <Camera
-              goToPlaces={this.goToPlaces}
-              goToSettings={this.goToSettings}
-            />
+            <Camera changePage={refScroll => this.changePage(refScroll)} />
           </View>
           <View style={{ flex: 1 }}>
-            <Settings
-              goToPlaces={this.goToPlaces}
-              goToCamera={this.goToCamera}
-              goToSettings={this.goToSettings}
-            />
+            <Settings changePage={refScroll => this.changePage(refScroll)} />
           </View>
         </Swiper>
       </Content>

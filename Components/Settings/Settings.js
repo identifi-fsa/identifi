@@ -166,11 +166,11 @@ class Settings extends React.Component {
           <MaterialCommunityIcons
             name="crosshairs-gps"
             style={{ color: 'white', fontSize: 36 }}
-            onPress={this.props.goToPlaces}
+            onPress={() => this.props.changePage(-2)}
           />
 
           <View style={{ alignItems: 'center' }}>
-            <TouchableOpacity onPress={this.props.goToCamera}>
+            <TouchableOpacity onPress={() => this.props.changePage(-1)}>
               <MaterialCommunityIcons
                 name="circle-outline"
                 style={{
@@ -188,7 +188,6 @@ class Settings extends React.Component {
           <MaterialCommunityIcons
             name="google-circles-communities"
             style={{ color: 'white', fontSize: 36 }}
-            onPress={this.props.goToSettings}
           />
         </View>
       </View>
