@@ -8,6 +8,7 @@ export default class SinglePlace extends Component {
   }
 
   displayResult = () => {
+    //thunk it up here
     this.setState({ resultModal: true })
   }
 
@@ -46,6 +47,7 @@ export default class SinglePlace extends Component {
             </View>
           </View>
         </TouchableOpacity>
+
         <ResultModal
           visibility={this.state.resultModal}
           closeModal={this.closeResultModal}

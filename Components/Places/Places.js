@@ -178,7 +178,7 @@ class Places extends React.Component {
               <MaterialCommunityIcons
                 name="circle-outline"
                 style={{
-                  color: '#F0F0F0',
+                  color: 'black',
                   fontSize: 60,
                   marginBottom: 5
                 }}

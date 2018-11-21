@@ -165,7 +165,7 @@ class Settings extends React.Component {
         >
           <MaterialCommunityIcons
             name="crosshairs-gps"
-            style={{ color: 'white', fontSize: 36 }}
+            style={{ color: 'black', fontSize: 36 }}
             onPress={() => this.props.changePage(-2)}
           />
 
@@ -174,7 +174,7 @@ class Settings extends React.Component {
               <MaterialCommunityIcons
                 name="circle-outline"
                 style={{
-                  color: 'white',
+                  color: 'black',
                   fontSize: 60,
                   marginBottom: 5
                 }}
