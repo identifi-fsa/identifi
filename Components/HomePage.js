@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Platform, StyleSheet, Text, View } from 'react-native'
 import { Constants, Location, Permissions } from 'expo'
 import Camera from './Camera'
-import { Container, Content } from 'native-base'
+import { Content } from 'native-base'
 import Swiper from 'react-native-swiper'
 import Places from './Places/Places'
 import Settings from './Settings/Settings'
@@ -11,8 +11,8 @@ const styles = StyleSheet.create({
   slideDefault: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#9DD6EB'
+    alignItems: 'center'
+    // backgroundColor: '#9DD6EB' // <-- was creating a blue background
   },
   text: {
     color: 'white',
