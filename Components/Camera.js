@@ -18,6 +18,9 @@ import axios from 'axios'
 import { getNearby } from './store/places-reducer'
 import LoadingScreen from './ResultLoadingScreen'
 
+import Auth from './Auth/Auth'
+import { me } from './store/auth-reducer'
+
 let displayTimeout
 
 class CameraComponent extends Component {
@@ -347,10 +350,20 @@ class CameraComponent extends Component {
 
 const mapStateToProps = state => ({
   nearby: state.places.nearby,
-  hashMap: state.places.hashMap
+  hashMap: state.places.hashMap,
+  user: state.auth
 })
 
-export default connect(mapStateToProps)(CameraComponent)
+const mapDispatchToProps = dispatch => {
+  return {
+    loadInitialUserData: () => dispatch(me())
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CameraComponent)
 
 const styles = StyleSheet.create({
   container: {
