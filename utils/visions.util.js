@@ -1,6 +1,4 @@
 export const compareToHash = (text, hashMap, nearby) => {
-  // const hashMap = this.props.hashMap
-  // const nearby = this.props.nearby
   let index = 0
   const countObj = {} //create object that will store occurances
 
@@ -13,7 +11,6 @@ export const compareToHash = (text, hashMap, nearby) => {
     let nearbyPlace = nearby[i].name.toLowerCase()
     if (modifiedText === nearbyPlace) {
       console.log('found exact match')
-      // this.setState({ imageData: nearby[i] })
       return nearby[i]
     }
   }
