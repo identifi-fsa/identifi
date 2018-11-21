@@ -187,7 +187,7 @@ class Settings extends React.Component {
           </View>
           <MaterialCommunityIcons
             name="google-circles-communities"
-            style={{ color: 'white', fontSize: 36 }}
+            style={{ color: 'red', fontSize: 36 }}
             onPress={this.props.goToSettings}
           />
         </View>

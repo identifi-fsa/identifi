@@ -39,7 +39,7 @@ class ResultModal extends Component {
             <View style={styles.yelpContainerHeader}>
               <Text style={styles.boldWhiteText}>{`Powered By   `}</Text>
               <Image
-                style={{ height: 40, zIndex: 100 }}
+                style={{ height: 30, zIndex: 100 }}
                 source={require('../assets/yelp.png')}
               />
             </View>
@@ -163,8 +163,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    borderColor: 'black',
-    borderWidth: 2,
+    // borderColor: 'black',
+    // borderWidth: 2,
     backgroundColor: 'black'
   },
   poweredByContainer: {
