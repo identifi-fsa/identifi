@@ -169,7 +169,8 @@ class Places extends React.Component {
         >
           <MaterialCommunityIcons
             name="crosshairs-gps"
-            style={{ color: 'black', fontSize: 36 }}
+            style={{ color: 'red', fontSize: 36 }}
+            onPress={this.props.goToPlaces}
           />
 
           <View style={{ alignItems: 'center' }}>
@@ -177,7 +178,7 @@ class Places extends React.Component {
               <MaterialCommunityIcons
                 name="circle-outline"
                 style={{
-                  color: 'black',
+                  color: '#F0F0F0',
                   fontSize: 60,
                   marginBottom: 5
                 }}
