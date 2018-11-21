@@ -252,7 +252,7 @@ class CameraComponent extends Component {
                 <MaterialCommunityIcons
                   name="crosshairs-gps"
                   style={{ color: 'white', fontSize: 36 }}
-                  onPress={this.props.goToPlaces}
+                  onPress={() => this.props.changePage(-1)}
                 />
 
                 <View style={{ alignItems: 'center' }}>
@@ -274,7 +274,7 @@ class CameraComponent extends Component {
                 <MaterialCommunityIcons
                   name="google-circles-communities"
                   style={{ color: 'white', fontSize: 36 }}
-                  onPress={this.props.goToSettings}
+                  onPress={() => this.props.changePage(1)}
                 />
               </View>
             </Camera>

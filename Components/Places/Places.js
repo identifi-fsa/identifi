@@ -174,7 +174,7 @@ class Places extends React.Component {
           />
 
           <View style={{ alignItems: 'center' }}>
-            <TouchableOpacity onPress={this.props.goToCamera}>
+            <TouchableOpacity onPress={() => this.props.changePage(1)}>
               <MaterialCommunityIcons
                 name="circle-outline"
                 style={{
@@ -191,8 +191,8 @@ class Places extends React.Component {
           </View>
           <MaterialCommunityIcons
             name="google-circles-communities"
-            style={{ color: '#F0F0F0', fontSize: 36 }}
-            onPress={this.props.goToSettings}
+            style={{ color: 'black', fontSize: 36 }}
+            onPress={() => this.props.changePage(2)}
           />
         </View>
       </View>
