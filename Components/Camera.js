@@ -168,7 +168,6 @@ class CameraComponent extends Component {
   }
 
   render() {
-    console.log('current State Image Data', this.state.loading)
     const { hasCameraPermission } = this.state
 
     //if user has not set permission yet

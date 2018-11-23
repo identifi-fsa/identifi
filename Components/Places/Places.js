@@ -100,11 +100,7 @@ class Places extends React.Component {
     }
   }
 
-  async componentDidMount() {
-    // let lat = this.props.location.coords.latitude
-    // let lng = this.props.location.coords.longitude
-    // await this.props.fetchRecent()
-    // await this.props.fetchNearby(lat, lng)
+  componentDidMount() {
     let nearby = this.props.nearby
     this.setState({
       data: nearby

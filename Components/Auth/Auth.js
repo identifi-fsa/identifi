@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10,
-    backgroundColor: '#32FA8F'
+    backgroundColor: 'red'
   },
   signUpButton: {
     flex: 1,

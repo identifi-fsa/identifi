@@ -12,7 +12,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
-    // backgroundColor: '#9DD6EB' // <-- was creating a blue background
   },
   text: {
     color: 'white',
@@ -25,36 +24,10 @@ export default class HomePage extends Component {
   constructor() {
     super()
     this.state = {
-      // location: this.props.location,
-      //errorMessage: this.props.errorMessage,
       outerScrollEnabled: true,
       pageIndex: 1
     }
   }
-
-  // componentDidMount() {
-  //   if (Platform.OS === 'android' && !Constants.isDevice) {
-  //     this.setState({
-  //       errorMessage:
-  //         'Oops, this will not work on Sketch in an Android emulator. Try it on your device!'
-  //     })
-  //   } else {
-  //     this._getLocationAsync()
-  //   }
-  // }
-
-  // _getLocationAsync = async () => {
-  //   let { status } = await Permissions.askAsync(Permissions.LOCATION)
-  //   if (status !== 'granted') {
-  //     this.setState({
-  //       errorMessage: 'Permission to access location was denied'
-  //     })
-  //   }
-
-  //   let location = await Location.getCurrentPositionAsync({})
-  //   console.log('location', location.coords.latitude, location.coords.longitude)
-  //   this.setState({ location })
-  // }
 
   changePage = refScroll => {
     this.refs.sliderX.scrollBy(refScroll)
@@ -77,12 +50,7 @@ export default class HomePage extends Component {
           ref="sliderX"
         >
           <View style={styles.slideDefault}>
-            {this.state.location && (
-              <Places
-                location={this.state.location}
-                changePage={refScroll => this.changePage(refScroll)}
-              />
-            )}
+            <Places changePage={refScroll => this.changePage(refScroll)} />
           </View>
           <View style={{ flex: 1 }}>
             <Camera changePage={refScroll => this.changePage(refScroll)} />

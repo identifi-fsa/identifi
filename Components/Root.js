@@ -53,7 +53,7 @@ class Root extends Component {
   }
 
   render() {
-    console.log('this is the most up to date state', this.state)
+    // console.log('this is the most up to date state', this.state)
     if (!this.state.data) {
       //render splash screen
       return <Splash />
