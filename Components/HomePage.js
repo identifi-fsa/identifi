@@ -25,36 +25,36 @@ export default class HomePage extends Component {
   constructor() {
     super()
     this.state = {
-      location: null,
-      errorMessage: null,
+      // location: this.props.location,
+      //errorMessage: this.props.errorMessage,
       outerScrollEnabled: true,
       pageIndex: 1
     }
   }
 
-  componentDidMount() {
-    if (Platform.OS === 'android' && !Constants.isDevice) {
-      this.setState({
-        errorMessage:
-          'Oops, this will not work on Sketch in an Android emulator. Try it on your device!'
-      })
-    } else {
-      this._getLocationAsync()
-    }
-  }
+  // componentDidMount() {
+  //   if (Platform.OS === 'android' && !Constants.isDevice) {
+  //     this.setState({
+  //       errorMessage:
+  //         'Oops, this will not work on Sketch in an Android emulator. Try it on your device!'
+  //     })
+  //   } else {
+  //     this._getLocationAsync()
+  //   }
+  // }
 
-  _getLocationAsync = async () => {
-    let { status } = await Permissions.askAsync(Permissions.LOCATION)
-    if (status !== 'granted') {
-      this.setState({
-        errorMessage: 'Permission to access location was denied'
-      })
-    }
+  // _getLocationAsync = async () => {
+  //   let { status } = await Permissions.askAsync(Permissions.LOCATION)
+  //   if (status !== 'granted') {
+  //     this.setState({
+  //       errorMessage: 'Permission to access location was denied'
+  //     })
+  //   }
 
-    let location = await Location.getCurrentPositionAsync({})
-    console.log('location', location.coords.latitude, location.coords.longitude)
-    this.setState({ location })
-  }
+  //   let location = await Location.getCurrentPositionAsync({})
+  //   console.log('location', location.coords.latitude, location.coords.longitude)
+  //   this.setState({ location })
+  // }
 
   changePage = refScroll => {
     this.refs.sliderX.scrollBy(refScroll)

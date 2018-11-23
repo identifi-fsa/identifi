@@ -62,7 +62,7 @@ class SignupForm extends React.Component {
             <TextInput
               style={styles.input}
               placeholder={`First Name`}
-              placeholderTextColor="#2f95dc"
+              placeholderTextColor="black"
               value={this.state.firstName}
               onChangeText={this.firstNameChangeHandler}
               keyboardType="default"
@@ -76,7 +76,7 @@ class SignupForm extends React.Component {
             <TextInput
               style={styles.input}
               placeholder={`Last Name`}
-              placeholderTextColor="#2f95dc"
+              placeholderTextColor="black"
               value={this.state.lastName}
               onChangeText={this.lastNameChangeHandler}
               keyboardType="default"
@@ -89,7 +89,7 @@ class SignupForm extends React.Component {
             <TextInput
               style={styles.input}
               placeholder={`Email`}
-              placeholderTextColor="#2f95dc"
+              placeholderTextColor="black"
               value={this.state.email}
               onChangeText={this.emailChangeHandler}
               keyboardType="email-address"
@@ -101,7 +101,7 @@ class SignupForm extends React.Component {
             <TextInput
               style={styles.input}
               placeholder={`Password`}
-              placeholderTextColor="#2f95dc"
+              placeholderTextColor="black"
               value={this.state.password}
               onChangeText={this.passwordChangeHandler}
               keyboardType="default"
@@ -154,7 +154,7 @@ export default connected
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    backgroundColor: '#2f95dc',
+    backgroundColor: 'black',
     justifyContent: 'center',
     height: '100%'
   },
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     width: '70%',
     fontSize: 14,
     backgroundColor: 'white',
-    color: '#2f95dc',
+    color: 'black',
     paddingLeft: 10
   },
   inputContainer: {
@@ -214,6 +214,6 @@ const styles = StyleSheet.create({
   },
   space: {
     height: '20%',
-    backgroundColor: '#2f95dc'
+    backgroundColor: 'black'
   }
 })

@@ -17,8 +17,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import axios from 'axios'
 import { getNearby } from './store/places-reducer'
 import LoadingScreen from './ResultLoadingScreen'
-import Auth from './Auth/Auth'
-import { me } from './store/auth-reducer'
 
 let displayTimeout
 

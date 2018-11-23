@@ -83,7 +83,7 @@ export default Auth
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#2f95dc',
+    backgroundColor: 'black',
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   signUpButton: {
     flex: 1,
     height: 25,
-    borderColor: '#32FA8F',
+    borderColor: 'red',
     borderWidth: 1,
     width: '75%',
     alignItems: 'center',
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   signUpButtonText: {
-    color: '#2f95dc',
+    color: 'red',
     fontWeight: 'bold'
   }
 })

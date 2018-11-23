@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  Platform,
   StyleSheet,
   Text,
   View,
@@ -8,7 +7,7 @@ import {
   TouchableOpacity
 } from 'react-native'
 import { connect } from 'react-redux'
-import { Container, Content, Header } from 'native-base'
+import { Header } from 'native-base'
 import { fetchRecent, fetchNearby } from '../store/places-reducer'
 import SinglePlace from './SinglePlace'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -102,10 +101,10 @@ class Places extends React.Component {
   }
 
   async componentDidMount() {
-    let lat = this.props.location.coords.latitude
-    let lng = this.props.location.coords.longitude
-    await this.props.fetchRecent()
-    await this.props.fetchNearby(lat, lng)
+    // let lat = this.props.location.coords.latitude
+    // let lng = this.props.location.coords.longitude
+    // await this.props.fetchRecent()
+    // await this.props.fetchNearby(lat, lng)
     let nearby = this.props.nearby
     this.setState({
       data: nearby
