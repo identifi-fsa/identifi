@@ -148,10 +148,6 @@ class CameraComponent extends Component {
           }
         )
         const parsed = await response.json()
-        // console.log(
-        //   'parsed text',
-        //   parsed.responses[0].textAnnotations[0].description
-        // console.log('parsed', parsed)
         this.setState({
           text: parsed.responses[0].textAnnotations[0].description
         })
