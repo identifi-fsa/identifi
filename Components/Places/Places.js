@@ -10,6 +10,7 @@ import { connect } from 'react-redux'
 import { Header } from 'native-base'
 import { fetchRecent, fetchNearby } from '../store/places-reducer'
 import SinglePlace from './SinglePlace'
+import SinglePlaceRecent from './SinglePlaceRecent'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 class Places extends React.Component {
@@ -19,7 +20,7 @@ class Places extends React.Component {
   }
 
   recentButton = () => {
-    let recent = this.props.recent[0]
+    let recent = this.props.recent
     this.setState({
       view: 'recent',
       data: recent
@@ -106,6 +107,7 @@ class Places extends React.Component {
   componentDidMount() {
     let nearby = this.props.nearby
     this.setState({
+      view: 'nearby',
       data: nearby
     })
   }

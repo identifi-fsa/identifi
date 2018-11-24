@@ -31,18 +31,15 @@ export default class SinglePlaceRecent extends Component {
     }
     return (
       <View>
-        <TouchableOpacity onPress={this.displayResult}>
+        <Text>TESTING</Text>
+        {/* <TouchableOpacity onPress={this.displayResult}>
           <View style={styles.cardContainer}>
             <View style={styles.cardIconContainer}>
-              <Image
-                // style={{ width: 90, height: 90 }}
-                style={styles.cardIcon}
-                source={{ uri: imageUrl }}
-              />
+              <Image style={styles.cardIcon} source={{ uri: imageUrl }} />
             </View>
             <View style={styles.cardDesc}>
               <Text style={styles.nameText}>{name}</Text>
-              <Text>{address}</Text>
+              <Text>{createdAt}</Text>
               <Text>Currently {isClosed}</Text>
             </View>
           </View>
@@ -52,7 +49,7 @@ export default class SinglePlaceRecent extends Component {
           visibility={this.state.resultModal}
           closeModal={this.closeResultModal}
           data={this.props.data}
-        />
+        /> */}
       </View>
     )
   }

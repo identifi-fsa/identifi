@@ -8,7 +8,6 @@ export default class SinglePlace extends Component {
   }
 
   displayResult = () => {
-    //thunk it up here
     this.setState({ resultModal: true })
   }
 
