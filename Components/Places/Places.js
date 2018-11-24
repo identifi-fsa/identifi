@@ -14,18 +14,21 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 class Places extends React.Component {
   state = {
+    view: '',
     data: this.props.recent
   }
 
   recentButton = () => {
     let recent = this.props.recent[0]
     this.setState({
+      view: 'recent',
       data: recent
     })
   }
 
   nearbyButton = () => {
     this.setState({
+      view: 'nearby',
       data: this.props.nearby
     })
   }
@@ -147,10 +150,17 @@ class Places extends React.Component {
           </View>
         </Header>
         <View style={styles.cardContainer}>
-          <FlatList
-            data={this.state.data}
-            renderItem={({ item }) => <SinglePlace data={item} />}
-          />
+          {this.state.view === 'nearby' ? (
+            <FlatList
+              data={this.state.data}
+              renderItem={({ item }) => <SinglePlace data={item} />}
+            />
+          ) : (
+            <FlatList
+              data={this.state.data}
+              renderItem={({ item }) => <SinglePlaceRecent data={item} />}
+            />
+          )}
         </View>
         {/* Navigator buttons */}
         <View
