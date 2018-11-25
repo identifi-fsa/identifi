@@ -14,7 +14,7 @@ export const compareToHash = async (text, hashMap, nearby) => {
     if (modifiedText === nearbyPlace) {
       console.log('found exact match')
       console.log('THIS IS THE EXACT MATCH: ', nearby[i])
-      // await postToDb(nearby[i])
+      await postToDb(nearby[i])
       return nearby[i]
     }
   }
@@ -53,7 +53,7 @@ export const compareToHash = async (text, hashMap, nearby) => {
     console.log(`key ${index} has the largest value`)
     // this.setState({ imageData: nearby[index] })
     console.log('THIS IS THE BEST MATCH: ', nearby[index])
-    // await postToDb(nearby[index])
+    await postToDb(nearby[index])
     return nearby[index]
   }
 }
