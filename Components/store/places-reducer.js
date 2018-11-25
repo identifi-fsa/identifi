@@ -4,11 +4,13 @@ import { hasAction } from 'expo/build/StoreReview'
 export const placesState = {
   recent: [],
   nearby: [],
-  hashMap: {}
+  hashMap: {},
+  recentPlaceView: {}
 }
 
 const GET_RECENT = 'GET_RECENT'
 const GET_NEARBY = 'GET_NEARBY'
+const GET_RECENT_PLACE_VIEW = 'GET_RECENT_PLACE_VIEW'
 
 export const getRecent = recent => ({
   type: GET_RECENT,
@@ -20,6 +22,12 @@ export const getNearby = nearby => ({
   nearby
 })
 
+export const getRecentPlaceView = recentInfo => ({
+  type: GET_RECENT_PLACE_VIEW,
+  recentInfo
+})
+
+//THUNK ACTION CREATORS
 export const fetchRecent = () => async dispatch => {
   try {
     const { data } = await axios.get(
@@ -44,9 +52,26 @@ export const fetchNearby = (lat, lng) => async dispatch => {
   }
 }
 
+export const getRecentInfo = yelpId => async dispatch => {
+  try {
+    const { data } = await axios.get(
+      `https://jubjub-server.herokuapp.com/api/places/recent/${yelpId}`
+    )
+    const action = getRecentPlaceView(data)
+    dispatch(action)
+  } catch (err) {
+    console.error('ERROR IN REDUCER: ', err)
+  }
+}
+
 const placesReducer = (state = placesState, action) => {
   switch (action.type) {
     case GET_RECENT:
+      action.recent.sort(function(a, b) {
+        let textA = a.dateVisited.toUpperCase()
+        let textB = b.dateVisited.toUpperCase()
+        return textA < textB ? 1 : textA > textB ? -1 : 0
+      })
       return { ...state, recent: [action.recent] }
     case GET_NEARBY:
       let hashMap = {}
@@ -63,6 +88,8 @@ const placesReducer = (state = placesState, action) => {
         })
       }
       return { ...state, nearby: results, hashMap: hashMap }
+    case GET_RECENT_PLACE_VIEW:
+      return { ...state, recentPlaceView: action.recentInfo }
     default:
       return state
   }

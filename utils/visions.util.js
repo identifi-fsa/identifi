@@ -1,4 +1,6 @@
-export const compareToHash = (text, hashMap, nearby) => {
+import axios from 'axios'
+
+export const compareToHash = async (text, hashMap, nearby) => {
   let index = 0
   const countObj = {} //create object that will store occurances
 
@@ -11,6 +13,8 @@ export const compareToHash = (text, hashMap, nearby) => {
     let nearbyPlace = nearby[i].name.toLowerCase()
     if (modifiedText === nearbyPlace) {
       console.log('found exact match')
+      console.log('THIS IS THE EXACT MATCH: ', nearby[i])
+      await postToDb(nearby[i])
       return nearby[i]
     }
   }
@@ -48,6 +52,21 @@ export const compareToHash = (text, hashMap, nearby) => {
     }
     console.log(`key ${index} has the largest value`)
     // this.setState({ imageData: nearby[index] })
+    console.log('THIS IS THE BEST MATCH: ', nearby[index])
+    await postToDb(nearby[index])
     return nearby[index]
+  }
+}
+
+//POST route to database
+const postToDb = async placeObj => {
+  try {
+    console.log('Posting to DB...')
+    await axios.post(
+      'https://jubjub-server.herokuapp.com/api/places/recent',
+      placeObj
+    )
+  } catch (err) {
+    console.err('COULD NOT SAVE TO DB - visions.util.js... ', err)
   }
 }

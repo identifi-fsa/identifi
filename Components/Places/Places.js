@@ -10,28 +10,31 @@ import { connect } from 'react-redux'
 import { Header } from 'native-base'
 import { fetchRecent, fetchNearby } from '../store/places-reducer'
 import SinglePlace from './SinglePlace'
+import SinglePlaceRecent from './SinglePlaceRecent'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 class Places extends React.Component {
   state = {
+    view: '',
     data: this.props.recent
   }
 
   recentButton = () => {
-    let recent = this.props.recent[0]
     this.setState({
-      data: recent
+      view: 'recent',
+      data: this.props.recent
     })
   }
 
   nearbyButton = () => {
     this.setState({
+      view: 'nearby',
       data: this.props.nearby
     })
   }
 
   getRecentButtonColor = () => {
-    if (this.state.data === this.props.recent[0]) {
+    if (this.state.data === this.props.recent) {
       return {
         width: '50%',
         zIndex: 100,
@@ -90,7 +93,7 @@ class Places extends React.Component {
   }
 
   getRecentButtonTextColor = () => {
-    if (this.state.data === this.props.recent[0]) {
+    if (this.state.data === this.props.recent) {
       return {
         color: 'red',
         fontWeight: 'bold'
@@ -103,6 +106,7 @@ class Places extends React.Component {
   componentDidMount() {
     let nearby = this.props.nearby
     this.setState({
+      view: 'nearby',
       data: nearby
     })
   }
@@ -147,10 +151,17 @@ class Places extends React.Component {
           </View>
         </Header>
         <View style={styles.cardContainer}>
-          <FlatList
-            data={this.state.data}
-            renderItem={({ item }) => <SinglePlace data={item} />}
-          />
+          {this.state.view === 'nearby' ? (
+            <FlatList
+              data={this.state.data}
+              renderItem={({ item }) => <SinglePlace data={item} />}
+            />
+          ) : (
+            <FlatList
+              data={this.state.data[0]}
+              renderItem={({ item }) => <SinglePlaceRecent data={item} />}
+            />
+          )}
         </View>
         {/* Navigator buttons */}
         <View
