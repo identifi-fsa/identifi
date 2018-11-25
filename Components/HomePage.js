@@ -29,6 +29,14 @@ export default class HomePage extends Component {
     }
   }
 
+  async componentDidMount() {
+    try {
+      await this.props.fetchRecent()
+    } catch (err) {
+      console.err('Could not fetch Recent Places (HomePage.js)...', err)
+    }
+  }
+
   changePage = refScroll => {
     this.refs.sliderX.scrollBy(refScroll)
   }

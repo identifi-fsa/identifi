@@ -31,7 +31,6 @@ class Root extends Component {
     let lng = this.state.location.coords.longitude
 
     console.log('lat, and lng', lat, lng)
-    await this.props.fetchRecent()
     await this.props.fetchNearby(lat, lng)
     let nearby = this.props.nearby
     this.setState({
@@ -62,8 +61,9 @@ class Root extends Component {
     } else {
       return (
         <HomePage
-        // errorMessage={this.state.errorMessage}
-        // location={this.state.location}
+          fetchRecent={() => this.props.fetchRecent()}
+          // errorMessage={this.state.errorMessage}
+          // location={this.state.location}
         />
       )
     }
