@@ -15,7 +15,7 @@ import {
 } from 'native-base'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import axios from 'axios'
-import { getNearby } from './store/places-reducer'
+import { fetchRecent } from './store/places-reducer'
 import LoadingScreen from './ResultLoadingScreen'
 
 let displayTimeout
@@ -158,7 +158,14 @@ class CameraComponent extends Component {
           this.props.nearby
         )
         console.log('THE RESPONSE: ', res)
-        if (res) this.setState({ imageData: res })
+        if (res) {
+          this.setState({ imageData: res })
+          try {
+            await this.props.fetchRecent()
+          } catch (err) {
+            console.err('Failed to fetchRecent (Camera.js)...', err)
+          }
+        }
       }
     }
   }
@@ -293,7 +300,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    loadInitialUserData: () => dispatch(me())
+    loadInitialUserData: () => dispatch(me()),
+    fetchRecent: () => dispatch(fetchRecent())
   }
 }
 
