@@ -20,10 +20,9 @@ class Places extends React.Component {
   }
 
   recentButton = () => {
-    let recent = this.props.recent
     this.setState({
       view: 'recent',
-      data: recent
+      data: this.props.recent
     })
   }
 
@@ -35,7 +34,7 @@ class Places extends React.Component {
   }
 
   getRecentButtonColor = () => {
-    if (this.state.data === this.props.recent[0]) {
+    if (this.state.data === this.props.recent) {
       return {
         width: '50%',
         zIndex: 100,
@@ -94,7 +93,7 @@ class Places extends React.Component {
   }
 
   getRecentButtonTextColor = () => {
-    if (this.state.data === this.props.recent[0]) {
+    if (this.state.data === this.props.recent) {
       return {
         color: 'red',
         fontWeight: 'bold'
@@ -159,7 +158,7 @@ class Places extends React.Component {
             />
           ) : (
             <FlatList
-              data={this.state.data}
+              data={this.state.data[0]}
               renderItem={({ item }) => <SinglePlaceRecent data={item} />}
             />
           )}

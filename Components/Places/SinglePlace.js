@@ -28,6 +28,7 @@ export default class SinglePlace extends Component {
         address = this.props.data.location.display_address
       }
     }
+
     return (
       <View>
         <TouchableOpacity onPress={this.displayResult}>
