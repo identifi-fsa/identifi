@@ -67,6 +67,11 @@ export const getRecentInfo = yelpId => async dispatch => {
 const placesReducer = (state = placesState, action) => {
   switch (action.type) {
     case GET_RECENT:
+      action.recent.sort(function(a, b) {
+        let textA = a.dateVisited.toUpperCase()
+        let textB = b.dateVisited.toUpperCase()
+        return textA < textB ? 1 : textA > textB ? -1 : 0
+      })
       return { ...state, recent: [action.recent] }
     case GET_NEARBY:
       let hashMap = {}

@@ -151,13 +151,13 @@ class CameraComponent extends Component {
         this.setState({
           text: parsed.responses[0].textAnnotations[0].description
         })
-        console.log('here is what we found: ')
-        const res = compareToHash(
+
+        const res = await compareToHash(
           this.state.text,
           this.props.hashMap,
           this.props.nearby
         )
-
+        console.log('THE RESPONSE: ', res)
         if (res) this.setState({ imageData: res })
       }
     }
