@@ -86,7 +86,9 @@ class CameraComponent extends Component {
     console.log('picture initiated')
     if (this.camera) {
       let photo = await this.camera.takePictureAsync({
-        base64: true
+        base64: true,
+        exif: true,
+        quality: 0.1
       })
       console.log('after take picture async')
       this.setState({
@@ -112,51 +114,32 @@ class CameraComponent extends Component {
         }
         console.log('fetch google vision initiated')
 
-        // const fetchGoogleVision = async () => {
-        //   try {
-        //     const response = await fetch(
-        //       `https://jubjub-server.herokuapp.com/api/visions`,
-        //       {
-        //         method: 'POST',
-        //         headers: {
-        //           Accept: 'application/json',
-        //           'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify(body)
-        //       }
-        //     )
-        //     const parsed = await response.json()
-        //     console.log('parsed vision received', parsed)
-        //   } catch (err) {
-        //     console.log('error in google vision request', err)
-        //   }
-        // }
-        // console.log('fetch google vision invoked')
-        // fetchGoogleVision()
-
-        let key = 'AIzaSyBSHdWwlSe6xZ0U6dYy3osqRo6248mhpaU'
-
         const response = await fetch(
-          `https://vision.googleapis.com/v1/images:annotate?key=${key}`,
+          `https://jubjub-server.herokuapp.com/api/visions/`,
           {
             method: 'POST',
             headers: {
               Accept: 'application/json',
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify(body)
+            body: JSON.stringify(photo)
           }
         )
+
         const parsed = await response.json()
-        this.setState({
-          text: parsed.responses[0].textAnnotations[0].description
-        })
+
+        if (parsed) {
+          this.setState({
+            text: parsed
+          })
+        }
 
         const res = await compareToHash(
           this.state.text,
           this.props.hashMap,
           this.props.nearby
         )
+
         console.log('THE RESPONSE: ', res)
         if (res) {
           this.setState({ imageData: res })
