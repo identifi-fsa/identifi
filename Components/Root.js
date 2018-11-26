@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { Platform, StyleSheet, Text, View } from 'react-native'
+import { Platform, StyleSheet, Text, View, AsyncStorage } from 'react-native'
 import { Constants, Location, Permissions } from 'expo'
 import { connect } from 'react-redux'
 import HomePage from './HomePage'
 import Auth from './Auth/Auth'
 import Splash from './Screens/Splash'
-import { me } from './store/auth-reducer'
+import { me, asyncStorageLookup } from './store/auth-reducer'
 import { fetchRecent, fetchNearby } from './store/places-reducer'
 
 class Root extends Component {
@@ -25,8 +25,6 @@ class Root extends Component {
       await this._getLocationAsync()
     }
 
-    // let lat = this.props.location.coords.latitude
-    // let lng = this.props.location.coords.longitude
     let lat = this.state.location.coords.latitude
     let lng = this.state.location.coords.longitude
 
@@ -36,6 +34,8 @@ class Root extends Component {
     this.setState({
       data: nearby
     })
+    //check to see if the user already has logged in or not
+    await this._checkUser()
   }
 
   _getLocationAsync = async () => {
@@ -50,11 +50,20 @@ class Root extends Component {
     console.log('location', location.coords.latitude, location.coords.longitude)
     this.setState({ location })
   }
+  _checkUser = async () => {
+    try {
+      const val = await AsyncStorage.getItem('USERID')
+      console.log('inside the checkuser', val)
+      if (val !== null) {
+        this.props.asyncCheck(val)
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   render() {
-    // console.log('this is the most up to date state', this.state)
     if (!this.state.data) {
-      //render splash screen
       return <Splash />
     } else if (!this.props.user.id) {
       return <Auth />
@@ -64,8 +73,6 @@ class Root extends Component {
           fetchRecent={() => this.props.fetchRecent()}
           lat={this.state.location.coords.latitude}
           lng={this.state.location.coords.longitude}
-          // errorMessage={this.state.errorMessage}
-          // location={this.state.location}
         />
       )
     }
@@ -83,6 +90,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loadInitialUserData: () => dispatch(me()),
+    asyncCheck: id => dispatch(asyncStorageLookup(id)),
     fetchRecent: () => dispatch(fetchRecent()),
     fetchNearby: (lat, lng) => dispatch(fetchNearby(lat, lng))
   }

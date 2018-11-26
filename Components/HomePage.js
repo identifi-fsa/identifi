@@ -58,6 +58,7 @@ export default class HomePage extends Component {
           index={this.state.pageIndex}
           scrollEnabled={this.state.outerScrollEnabled}
           ref="sliderX"
+          bounces={false}
         >
           <View style={styles.slideDefault}>
             <Places

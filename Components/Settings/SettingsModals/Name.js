@@ -8,34 +8,41 @@ import {
   TouchableOpacity
 } from 'react-native'
 import { connect } from 'react-redux'
+import { putUser } from '../../store/auth-reducer'
 
 class Name extends React.Component {
   state = {
-    firstName: '',
-    lastName: ''
+    firstName: this.props.first,
+    lastName: this.props.last
   }
 
   putName = () => {
-    // this.updateName(this.state.name)
+    this.props.updateName('name', this.state.name)
     this.props.toggle()
   }
 
-  NameChangeHandler = event => {
+  firstNameChangeHandler = event => {
     this.setState({
-      name: event
+      firstName: event
+    })
+  }
+
+  lastNameChangeHandler = event => {
+    this.setState({
+      lastName: event
     })
   }
 
   render() {
-    console.log('Name', this.props)
     return (
       <Modal visible={this.props.visibility}>
         <View style={styles.container}>
           <View style={styles.inputContainer}>
+            <Text style={styles.inputLabel}>Enter First Name</Text>
             <TextInput
               style={styles.input}
-              placeholder={`First Name`}
-              placeholderTextColor="#2f95dc"
+              placeholder={this.state.firstName}
+              placeholderTextColor="black"
               value={this.state.firstName}
               onChangeText={this.firstNameChangeHandler}
               keyboardType="default"
@@ -43,10 +50,11 @@ class Name extends React.Component {
               textContentType="givenName"
               autoFocus={true}
             />
+            <Text style={styles.inputLabel}>Enter Last Name</Text>
             <TextInput
               style={styles.input}
-              placeholder={`Last Name`}
-              placeholderTextColor="#2f95dc"
+              placeholder={this.state.lastName}
+              placeholderTextColor="black"
               value={this.state.lastName}
               onChangeText={this.lastNameChangeHandler}
               keyboardType="default"
@@ -66,7 +74,7 @@ class Name extends React.Component {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={this.putName}
-                disabled={!this.state.Name}
+                disabled={!this.state.firstName || !this.state.lastName}
                 style={styles.submitButtonContainer}
               >
                 <View>
@@ -85,7 +93,7 @@ class Name extends React.Component {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    backgroundColor: 'lightgray',
+    backgroundColor: 'black',
     justifyContent: 'center',
     height: '100%'
   },
@@ -94,7 +102,7 @@ const styles = StyleSheet.create({
     width: '70%',
     fontSize: 15,
     backgroundColor: 'white',
-    color: '#2f95dc',
+    color: 'black',
     paddingLeft: 10
   },
   inputContainer: {
@@ -117,7 +125,8 @@ const styles = StyleSheet.create({
     height: 100,
     width: '70%',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 50
   },
   buttonText: {
     color: 'white',
@@ -149,18 +158,13 @@ const styles = StyleSheet.create({
   }
 })
 
-// const mapStateToProps = state => {
-//   return {
-//     name: state.user.name
-//   }
-// }
+const mapDispatchToProps = dispatch => {
+  return {
+    updateName: (field, name) => dispatch(putUser(field, name))
+  }
+}
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     updateName: name => dispatch(updateName(name))
-//   }
-// }
-
-export default connect()(Name)
-// mapStateToProps,
-// mapDispatchToProps
+export default connect(
+  null,
+  mapDispatchToProps
+)(Name)

@@ -1,10 +1,12 @@
 import axios from 'axios'
+import { AsyncStorage } from 'react-native'
 
 /**
  * ACTION TYPES
  */
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
+const UPDATE_USER = 'UPDATE_USER'
 
 /**
  * INITIAL STATE
@@ -16,7 +18,7 @@ const defaultUser = {}
  */
 const getUser = user => ({ type: GET_USER, user })
 const removeUser = () => ({ type: REMOVE_USER })
-
+const updateUser = user => ({ type: UPDATE_USER, user })
 /**
  * THUNK CREATORS
  */
@@ -74,10 +76,38 @@ export const authSignUp = (
 
 export const logout = () => async dispatch => {
   try {
-    await axios.post(`https://jubjub-server.herokuapp.com/auth/logout`)
+    await AsyncStorage.removeItem('USERID')
+    // await axios.post(`https://jubjub-server.herokuapp.com/auth/logout`)
     dispatch(removeUser())
   } catch (err) {
     console.error(err)
+  }
+}
+
+export const putUser = (field, update) => async dispatch => {
+  try {
+    const { data } = await axios.put(
+      `https://jubjub-server.herokuapp.com/api/users/${field}`,
+      update
+    )
+    const action = updateUser(data)
+    dispatch(action)
+  } catch (err) {
+    console.log('this error is in the auth-reducer', err)
+  }
+}
+
+export const asyncStorageLookup = userId => async dispatch => {
+  console.log('inside the async thunk', userId, typeof userId)
+  try {
+    const { data } = await axios.get(
+      `https://jubjub-server.herokuapp.com/api/users/${userId}`
+    )
+    console.log('user data', data)
+    const action = getUser(data)
+    dispatch(action)
+  } catch (err) {
+    console.log(err)
   }
 }
 
@@ -90,6 +120,8 @@ export default function(state = defaultUser, action) {
       return action.user
     case REMOVE_USER:
       return defaultUser
+    case UPDATE_USER:
+      return action.user
     default:
       return state
   }

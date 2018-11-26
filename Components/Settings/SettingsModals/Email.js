@@ -8,14 +8,15 @@ import {
   TouchableOpacity
 } from 'react-native'
 import { connect } from 'react-redux'
+import { putUser } from '../../store/auth-reducer'
 
 class Email extends React.Component {
   state = {
-    email: ''
+    email: this.props.email
   }
 
   putEmail = () => {
-    // this.updateEmail(this.state.email)
+    this.props.updateEmail('email', this.state)
     this.props.toggle()
   }
 
@@ -26,15 +27,14 @@ class Email extends React.Component {
   }
 
   render() {
-    console.log('email', this.props)
     return (
       <Modal visible={this.props.visibility}>
         <View style={styles.container}>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
-              placeholder={`Email`}
-              placeholderTextColor="#2f95dc"
+              placeholder={this.state.email}
+              placeholderTextColor="black"
               value={this.state.email}
               onChangeText={this.emailChangeHandler}
               keyboardType="email-address"
@@ -54,7 +54,7 @@ class Email extends React.Component {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={this.putEmail}
-                disabled={!this.state.email.includes('@')}
+                disabled={this.state.email && !this.state.email.includes('@')}
                 style={styles.submitButtonContainer}
               >
                 <View>
@@ -73,7 +73,7 @@ class Email extends React.Component {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    backgroundColor: 'lightgray',
+    backgroundColor: 'black',
     justifyContent: 'center',
     height: '100%'
   },
@@ -143,12 +143,13 @@ const styles = StyleSheet.create({
 //   }
 // }
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     updateEmail: email => dispatch(updateEmail(email))
-//   }
-// }
+const mapDispatchToProps = dispatch => {
+  return {
+    updateEmail: (field, email) => dispatch(putUser(field, email))
+  }
+}
 
-export default connect()(Email)
-// mapStateToProps,
-// mapDispatchToProps
+export default connect(
+  null,
+  mapDispatchToProps
+)(Email)

@@ -5,14 +5,18 @@ import {
   Text,
   View,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  AsyncStorage
 } from 'react-native'
 import SettingsList from 'react-native-settings-list'
 import Email from './SettingsModals/Email'
 import Name from './SettingsModals/Name'
 import PhoneNumber from './SettingsModals/PhoneNumber'
 import Password from './SettingsModals/Password'
+import Logout from './SettingsModals/Logout'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { connect } from 'react-redux'
+import { asyncStorageLookup, logout } from '../store/auth-reducer'
 
 class Settings extends React.Component {
   state = {
@@ -42,9 +46,36 @@ class Settings extends React.Component {
   toggleLogout = () => {
     this.setState({ logoutViz: !this.state.logoutViz })
   }
+  componentDidMount() {
+    this._StoreData()
+  }
+  _StoreData = async () => {
+    try {
+      console.log(this.props.user.id)
+      if (this.props.user.id) {
+        const data = await AsyncStorage.setItem(
+          'USERID',
+          JSON.stringify(this.props.user.id)
+        )
+        console.log('data', data)
+        return data
+      }
+    } catch (err) {
+      console.log('inside the setUserID', err)
+    }
+  }
 
   render() {
-    var bgColor = '#DCE3F4'
+    const email = this.props.user.email
+    const first = this.props.user.firstName
+    const last = this.props.user.lastName
+    let phone
+    console.log('this is the user', this.props.user)
+    if (this.props.user.phone) {
+      phone = this.props.user.phone
+    } else {
+      phone = 'Enter your Phone Number'
+    }
     return (
       <View style={{ backgroundColor: '#EFEFF4', flex: 1 }}>
         <View
@@ -87,32 +118,47 @@ class Settings extends React.Component {
 
             <SettingsList.Item
               icon={
-                <Image
-                //style={styles.imageStyle}
-                //source={require('./images/wifi.png')}
+                <MaterialCommunityIcons
+                  name="crosshairs-gps"
+                  style={{
+                    color: 'black',
+                    fontSize: 12,
+                    marginLeft: 10,
+                    marginTop: 20
+                  }}
                 />
               }
               title="Name"
-              titleInfo="Auto Populate UserName"
+              titleInfo={`${first} ${last}`}
               //titleInfoStyle={styles.titleInfoStyle}
               onPress={() => this.toggleName()}
             />
             <SettingsList.Item
               icon={
-                <Image
-                //style={styles.imageStyle}
-                //source={require('./images/cellular.png')}
+                <MaterialCommunityIcons
+                  name="crosshairs-gps"
+                  style={{
+                    color: 'black',
+                    fontSize: 12,
+                    marginLeft: 10,
+                    marginTop: 20
+                  }}
                 />
               }
               title="Email"
-              titleInfo="Auto Populate Email"
+              titleInfo={`${email}`}
               onPress={() => this.toggleEmail()}
             />
             <SettingsList.Item
               icon={
-                <Image
-                //style={styles.imageStyle}
-                //source={require('./images/cellular.png')}
+                <MaterialCommunityIcons
+                  name="crosshairs-gps"
+                  style={{
+                    color: 'black',
+                    fontSize: 12,
+                    marginLeft: 10,
+                    marginTop: 20
+                  }}
                 />
               }
               title="Password"
@@ -121,36 +167,62 @@ class Settings extends React.Component {
             />
             <SettingsList.Item
               icon={
-                <Image
-                //style={styles.imageStyle}
-                //source={require('./images/cellular.png')}
+                <MaterialCommunityIcons
+                  name="crosshairs-gps"
+                  style={{
+                    color: 'black',
+                    fontSize: 12,
+                    marginLeft: 10,
+                    marginTop: 20
+                  }}
                 />
               }
               title="Phone Number"
-              titleInfo="Auto Populate Number"
+              titleInfo={phone}
               onPress={() => this.togglePhone()}
             />
             <SettingsList.Item
               icon={
-                <Image
-                //style={styles.imageStyle}
-                //source={require('./images/cellular.png')}
+                <MaterialCommunityIcons
+                  name="crosshairs-gps"
+                  style={{
+                    color: 'black',
+                    fontSize: 12,
+                    marginLeft: 10,
+                    marginTop: 20
+                  }}
                 />
               }
               title="Logout"
-              onPress={() => alert('Route To Logout Page')}
+              onPress={() => this.toggleLogout()}
             />
           </SettingsList>
         </View>
-        <Name visibility={this.state.nameViz} toggle={this.toggleName} />
-        <Email visibility={this.state.emailViz} toggle={this.toggleEmail} />
+        <Name
+          visibility={this.state.nameViz}
+          toggle={this.toggleName}
+          first={first}
+          last={last}
+        />
+        <Email
+          visibility={this.state.emailViz}
+          toggle={this.toggleEmail}
+          email={email}
+        />
+
         <PhoneNumber
           visibility={this.state.phoneViz}
           toggle={this.togglePhone}
+          phone={phone}
         />
         <Password
           visibility={this.state.passwordViz}
           toggle={this.togglePassword}
+        />
+        <Logout
+          visibility={this.state.logoutViz}
+          toggle={this.toggleLogout}
+          name={first}
         />
 
         {/* Navigator buttons */}
@@ -198,4 +270,10 @@ class Settings extends React.Component {
   }
 }
 
-export default Settings
+const mapStateToProps = state => {
+  return {
+    user: state.auth
+  }
+}
+
+export default connect(mapStateToProps)(Settings)
