@@ -75,7 +75,7 @@ class Password extends React.Component {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    backgroundColor: 'lightgray',
+    backgroundColor: 'black',
     justifyContent: 'center',
     height: '100%'
   },
