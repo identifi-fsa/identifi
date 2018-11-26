@@ -68,7 +68,13 @@ class Root extends Component {
     } else if (!this.props.user.id) {
       return <Auth />
     } else {
-      return <HomePage fetchRecent={() => this.props.fetchRecent()} />
+      return (
+        <HomePage
+          fetchRecent={() => this.props.fetchRecent()}
+          lat={this.state.location.coords.latitude}
+          lng={this.state.location.coords.longitude}
+        />
+      )
     }
   }
 }

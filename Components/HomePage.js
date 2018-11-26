@@ -48,6 +48,8 @@ export default class HomePage extends Component {
     } else if (this.state.location) {
       text = JSON.stringify(this.state.location)
     }
+    const lat = this.props.lat
+    const lng = this.props.lng
     return (
       <Content>
         <Swiper
@@ -59,7 +61,11 @@ export default class HomePage extends Component {
           bounces={false}
         >
           <View style={styles.slideDefault}>
-            <Places changePage={refScroll => this.changePage(refScroll)} />
+            <Places
+              changePage={refScroll => this.changePage(refScroll)}
+              lat={lat}
+              lng={lng}
+            />
           </View>
           <View style={{ flex: 1 }}>
             <Camera changePage={refScroll => this.changePage(refScroll)} />
