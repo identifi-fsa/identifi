@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { AsyncStorage } from 'react-native'
 
 /**
  * ACTION TYPES
@@ -75,7 +76,8 @@ export const authSignUp = (
 
 export const logout = () => async dispatch => {
   try {
-    await axios.post(`https://jubjub-server.herokuapp.com/auth/logout`)
+    await AsyncStorage.removeItem('USERID')
+    // await axios.post(`https://jubjub-server.herokuapp.com/auth/logout`)
     dispatch(removeUser())
   } catch (err) {
     console.error(err)
@@ -92,6 +94,20 @@ export const putUser = (field, update) => async dispatch => {
     dispatch(action)
   } catch (err) {
     console.log('this error is in the auth-reducer', err)
+  }
+}
+
+export const asyncStorageLookup = userId => async dispatch => {
+  console.log('inside the async thunk', userId, typeof userId)
+  try {
+    const { data } = await axios.get(
+      `https://jubjub-server.herokuapp.com/api/users/${userId}`
+    )
+    console.log('user data', data)
+    const action = getUser(data)
+    dispatch(action)
+  } catch (err) {
+    console.log(err)
   }
 }
 

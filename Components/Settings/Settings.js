@@ -5,15 +5,18 @@ import {
   Text,
   View,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  AsyncStorage
 } from 'react-native'
 import SettingsList from 'react-native-settings-list'
 import Email from './SettingsModals/Email'
 import Name from './SettingsModals/Name'
 import PhoneNumber from './SettingsModals/PhoneNumber'
 import Password from './SettingsModals/Password'
+import Logout from './SettingsModals/Logout'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { connect } from 'react-redux'
+import { asyncStorageLookup, logout } from '../store/auth-reducer'
 
 class Settings extends React.Component {
   state = {
@@ -42,6 +45,24 @@ class Settings extends React.Component {
 
   toggleLogout = () => {
     this.setState({ logoutViz: !this.state.logoutViz })
+  }
+  componentDidMount() {
+    this._StoreData()
+  }
+  _StoreData = async () => {
+    try {
+      console.log(this.props.user.id)
+      if (this.props.user.id) {
+        const data = await AsyncStorage.setItem(
+          'USERID',
+          JSON.stringify(this.props.user.id)
+        )
+        console.log('data', data)
+        return data
+      }
+    } catch (err) {
+      console.log('inside the setUserID', err)
+    }
   }
 
   render() {
@@ -97,9 +118,14 @@ class Settings extends React.Component {
 
             <SettingsList.Item
               icon={
-                <Image
-                //style={styles.imageStyle}
-                //source={require('./images/wifi.png')}
+                <MaterialCommunityIcons
+                  name="crosshairs-gps"
+                  style={{
+                    color: 'black',
+                    fontSize: 12,
+                    marginLeft: 10,
+                    marginTop: 20
+                  }}
                 />
               }
               title="Name"
@@ -109,9 +135,14 @@ class Settings extends React.Component {
             />
             <SettingsList.Item
               icon={
-                <Image
-                //style={styles.imageStyle}
-                //source={require('./images/cellular.png')}
+                <MaterialCommunityIcons
+                  name="crosshairs-gps"
+                  style={{
+                    color: 'black',
+                    fontSize: 12,
+                    marginLeft: 10,
+                    marginTop: 20
+                  }}
                 />
               }
               title="Email"
@@ -120,9 +151,14 @@ class Settings extends React.Component {
             />
             <SettingsList.Item
               icon={
-                <Image
-                //style={styles.imageStyle}
-                //source={require('./images/cellular.png')}
+                <MaterialCommunityIcons
+                  name="crosshairs-gps"
+                  style={{
+                    color: 'black',
+                    fontSize: 12,
+                    marginLeft: 10,
+                    marginTop: 20
+                  }}
                 />
               }
               title="Password"
@@ -131,9 +167,14 @@ class Settings extends React.Component {
             />
             <SettingsList.Item
               icon={
-                <Image
-                //style={styles.imageStyle}
-                //source={require('./images/cellular.png')}
+                <MaterialCommunityIcons
+                  name="crosshairs-gps"
+                  style={{
+                    color: 'black',
+                    fontSize: 12,
+                    marginLeft: 10,
+                    marginTop: 20
+                  }}
                 />
               }
               title="Phone Number"
@@ -142,13 +183,18 @@ class Settings extends React.Component {
             />
             <SettingsList.Item
               icon={
-                <Image
-                //style={styles.imageStyle}
-                //source={require('./images/cellular.png')}
+                <MaterialCommunityIcons
+                  name="crosshairs-gps"
+                  style={{
+                    color: 'black',
+                    fontSize: 12,
+                    marginLeft: 10,
+                    marginTop: 20
+                  }}
                 />
               }
               title="Logout"
-              onPress={() => alert('Route To Logout Page')}
+              onPress={() => this.toggleLogout()}
             />
           </SettingsList>
         </View>
@@ -172,6 +218,11 @@ class Settings extends React.Component {
         <Password
           visibility={this.state.passwordViz}
           toggle={this.togglePassword}
+        />
+        <Logout
+          visibility={this.state.logoutViz}
+          toggle={this.toggleLogout}
+          name={first}
         />
 
         {/* Navigator buttons */}
