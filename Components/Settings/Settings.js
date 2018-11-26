@@ -13,6 +13,7 @@ import Name from './SettingsModals/Name'
 import PhoneNumber from './SettingsModals/PhoneNumber'
 import Password from './SettingsModals/Password'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { connect } from 'react-redux'
 
 class Settings extends React.Component {
   state = {
@@ -45,6 +46,16 @@ class Settings extends React.Component {
 
   render() {
     var bgColor = '#DCE3F4'
+    const email = this.props.user.email
+    const first = this.props.user.firstName
+    const last = this.props.user.lastName
+    let phone
+    console.log('this is the user', this.props.user)
+    if (this.props.user.phone) {
+      phone = this.props.user.phone
+    } else {
+      phone = 'Enter your Phone Number'
+    }
     return (
       <View style={{ backgroundColor: '#EFEFF4', flex: 1 }}>
         <View
@@ -93,7 +104,7 @@ class Settings extends React.Component {
                 />
               }
               title="Name"
-              titleInfo="Auto Populate UserName"
+              titleInfo={`${first} ${last}`}
               //titleInfoStyle={styles.titleInfoStyle}
               onPress={() => this.toggleName()}
             />
@@ -105,7 +116,7 @@ class Settings extends React.Component {
                 />
               }
               title="Email"
-              titleInfo="Auto Populate Email"
+              titleInfo={`${email}`}
               onPress={() => this.toggleEmail()}
             />
             <SettingsList.Item
@@ -127,7 +138,7 @@ class Settings extends React.Component {
                 />
               }
               title="Phone Number"
-              titleInfo="Auto Populate Number"
+              titleInfo={phone}
               onPress={() => this.togglePhone()}
             />
             <SettingsList.Item
@@ -142,11 +153,22 @@ class Settings extends React.Component {
             />
           </SettingsList>
         </View>
-        <Name visibility={this.state.nameViz} toggle={this.toggleName} />
-        <Email visibility={this.state.emailViz} toggle={this.toggleEmail} />
+        <Name
+          visibility={this.state.nameViz}
+          toggle={this.toggleName}
+          first={first}
+          last={last}
+        />
+        <Email
+          visibility={this.state.emailViz}
+          toggle={this.toggleEmail}
+          email={email}
+        />
+
         <PhoneNumber
           visibility={this.state.phoneViz}
           toggle={this.togglePhone}
+          phone={phone}
         />
         <Password
           visibility={this.state.passwordViz}
@@ -198,4 +220,10 @@ class Settings extends React.Component {
   }
 }
 
-export default Settings
+const mapStateToProps = state => {
+  return {
+    user: state.auth
+  }
+}
+
+export default connect(mapStateToProps)(Settings)

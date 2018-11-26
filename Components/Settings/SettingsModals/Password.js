@@ -8,6 +8,7 @@ import {
   TouchableOpacity
 } from 'react-native'
 import { connect } from 'react-redux'
+import { putUser } from '../../store/auth-reducer'
 
 class Password extends React.Component {
   state = {
@@ -15,7 +16,7 @@ class Password extends React.Component {
   }
 
   putPassword = () => {
-    // this.updatepassword(this.state.password)
+    this.props.updatepassword('password', this.state.password)
     this.props.toggle()
   }
 
@@ -55,7 +56,7 @@ class Password extends React.Component {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={this.putPassword}
-                disabled={!this.state.password.includes('@')}
+                disabled={!this.state.password}
                 style={styles.submitButtonContainer}
               >
                 <View>
@@ -138,18 +139,13 @@ const styles = StyleSheet.create({
   }
 })
 
-// const mapStateToProps = state => {
-//   return {
-//     password: state.user.password
-//   }
-// }
+const mapDispatchToProps = dispatch => {
+  return {
+    updatepassword: (field, password) => dispatch(putUser(field, password))
+  }
+}
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     updatepassword: password => dispatch(updatepassword(password))
-//   }
-// }
-
-export default connect()(Password)
-// mapStateToProps,
-// mapDispatchToProps
+export default connect(
+  null,
+  mapDispatchToProps
+)(Password)

@@ -7,10 +7,10 @@ const Splash = () => {
   return (
     <View style={styles.container}>
       <View>
-        <Bubbles size={10} color="#FFF" />
-        <Bars size={10} color="#FDAAFF" />
-        <Pulse size={10} color="#52AB42" />
-        <DoubleBounce size={10} color="#1CAFF6" />
+        {/* <Bubbles size={10} color="red" />
+        <Bars size={20} color="red" /> */}
+        <Pulse size={30} color="red" />
+        {/* <DoubleBounce size={40} color="red" /> */}
       </View>
     </View>
   )

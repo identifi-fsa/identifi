@@ -8,35 +8,36 @@ import {
   TouchableOpacity
 } from 'react-native'
 import { connect } from 'react-redux'
+import { putUser } from '../../store/auth-reducer'
 
 class PhoneNumber extends React.Component {
   state = {
-    phoneNumber: ''
+    phone: ''
   }
 
   putPhoneNumber = () => {
-    // this.updatePhoneNumber(this.state.phoneNumber)
+    this.props.updatePhoneNumber('phone', this.state)
     this.props.toggle()
   }
 
   phoneNumberChangeHandler = event => {
     this.setState({
-      phoneNumber: event
+      phone: event
     })
   }
 
   render() {
-    console.log('phoneNumber', this.props)
+    console.log('phone', this.props)
     return (
       <Modal visible={this.props.visibility}>
         <View style={styles.container}>
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
-              placeholder={`PhoneNumber`}
-              dataDetectorTypes="phoneNumber"
-              placeholderTextColor="#2f95dc"
-              value={this.state.phoneNumber}
+              placeholder={this.state.phone}
+              dataDetectorTypes="phone"
+              placeholderTextColor="black"
+              value={this.state.phone}
               onChangeText={this.phoneNumberChangeHandler}
               keyboardType="numeric"
               returnKeyType="next"
@@ -55,7 +56,7 @@ class PhoneNumber extends React.Component {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={this.putPhoneNumber}
-                disabled={!this.state.phoneNumber.includes('@')}
+                disabled={this.state.phone.length !== 10}
                 style={styles.submitButtonContainer}
               >
                 <View>
@@ -74,7 +75,7 @@ class PhoneNumber extends React.Component {
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    backgroundColor: 'lightgray',
+    backgroundColor: 'black',
     justifyContent: 'center',
     height: '100%'
   },
@@ -138,18 +139,13 @@ const styles = StyleSheet.create({
   }
 })
 
-// const mapStateToProps = state => {
-//   return {
-//     phoneNumber: state.user.phoneNumber
-//   }
-// }
+const mapDispatchToProps = dispatch => {
+  return {
+    updatePhoneNumber: (field, phone) => dispatch(putUser(field, phone))
+  }
+}
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     updatePhoneNumber: phoneNumber => dispatch(updatePhoneNumber(phoneNumber))
-//   }
-// }
-
-export default connect()(PhoneNumber)
-// mapStateToProps,
-// mapDispatchToProps
+export default connect(
+  null,
+  mapDispatchToProps
+)(PhoneNumber)
