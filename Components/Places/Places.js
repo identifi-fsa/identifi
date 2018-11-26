@@ -12,6 +12,7 @@ import { fetchRecent, fetchNearby } from '../store/places-reducer'
 import SinglePlace from './SinglePlace'
 import SinglePlaceRecent from './SinglePlaceRecent'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { MapView } from 'expo'
 
 class Places extends React.Component {
   state = {
@@ -150,6 +151,15 @@ class Places extends React.Component {
             </TouchableOpacity>
           </View>
         </Header>
+        <MapView
+          style={{ flex: 1 }}
+          initialRegion={{
+            latitude: 40.7047495,
+            longitude: -74.0089186,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421
+          }}
+        />
         <View style={styles.cardContainer}>
           {this.state.view === 'nearby' ? (
             <FlatList
