@@ -45,7 +45,6 @@ class Settings extends React.Component {
   }
 
   render() {
-    var bgColor = '#DCE3F4'
     const email = this.props.user.email
     const first = this.props.user.firstName
     const last = this.props.user.lastName
