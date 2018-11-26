@@ -151,27 +151,53 @@ class Places extends React.Component {
             </TouchableOpacity>
           </View>
         </Header>
-        <MapView
-          style={{ flex: 1 }}
-          initialRegion={{
-            latitude: this.props.lat,
-            longitude: this.props.lng,
-            latitudeDelta: 0.0025, //zoom
-            longitudeDelta: 0.0025 //zoom
-          }}
-        >
-          {this.state.data.map(marker => (
-            <Marker
-              key={marker.id}
-              coordinate={{
-                latitude: marker.coordinates.latitude,
-                longitude: marker.coordinates.longitude
-              }}
-              title={marker.name}
-              description={marker.description}
-            />
-          ))}
-        </MapView>
+        {this.state.view === 'nearby' && (
+          <MapView
+            style={{ flex: 1 }}
+            initialRegion={{
+              latitude: this.props.lat, //40.7047584413614
+              longitude: this.props.lng, //-74.0085431188345
+              latitudeDelta: 0.0025, //zoom
+              longitudeDelta: 0.0025 //zoom
+            }}
+          >
+            {this.state.data.map(marker => (
+              <Marker
+                key={marker.id}
+                coordinate={{
+                  latitude: marker.coordinates.latitude,
+                  longitude: marker.coordinates.longitude
+                }}
+                title={marker.name}
+                description={marker.description}
+              />
+            ))}
+          </MapView>
+        )}
+
+        {this.state.view === 'recent' && (
+          <MapView
+            style={{ flex: 1 }}
+            initialRegion={{
+              latitude: this.props.lat, //40.7047584413614
+              longitude: this.props.lng, //-74.0085431188345
+              latitudeDelta: 0.0025, //zoom
+              longitudeDelta: 0.0025 //zoom
+            }}
+          >
+            {this.state.data[0].map(marker => (
+              <Marker
+                key={marker.id}
+                coordinate={{
+                  latitude: marker.lat,
+                  longitude: marker.lng
+                }}
+                // title={marker.name}
+                // description={marker.description}
+              />
+            ))}
+          </MapView>
+        )}
         <View style={styles.cardContainer}>
           {this.state.view === 'nearby' ? (
             <FlatList
