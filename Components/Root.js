@@ -62,6 +62,8 @@ class Root extends Component {
       return (
         <HomePage
           fetchRecent={() => this.props.fetchRecent()}
+          lat={this.state.location.coords.latitude}
+          lng={this.state.location.coords.longitude}
           // errorMessage={this.state.errorMessage}
           // location={this.state.location}
         />
