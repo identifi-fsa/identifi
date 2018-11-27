@@ -35,7 +35,7 @@ class PhoneNumber extends React.Component {
             <TextInput
               style={styles.input}
               placeholder={this.state.phone}
-              dataDetectorTypes="phone"
+              dataDetectorTypes="phoneNumber"
               placeholderTextColor="black"
               value={this.state.phone}
               onChangeText={this.phoneNumberChangeHandler}
