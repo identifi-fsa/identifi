@@ -189,7 +189,7 @@ class Places extends React.Component {
               longitudeDelta: 0.0025 //zoom
             }}
           >
-            {this.state.data[0].map(marker => (
+            {this.state.data.map(marker => (
               <Marker
                 key={marker.id}
                 coordinate={{
@@ -202,16 +202,15 @@ class Places extends React.Component {
             ))}
           </MapView>
         )}
-        {console.log('THEDATAAA', this.state.data)}
         <View style={styles.cardContainer}>
           {this.state.view === 'nearby' ? (
             <FlatList
               data={this.state.data}
               renderItem={({ item }) => <SinglePlace data={item} />}
             />
-          ) : this.state.data[0] ? (
+          ) : this.state.data.length !== 0 ? (
             <FlatList
-              data={this.state.data[0]}
+              data={this.state.data}
               renderItem={({ item }) => <SinglePlaceRecent data={item} />}
             />
           ) : (
