@@ -7,6 +7,7 @@ import { AsyncStorage } from 'react-native'
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
 const UPDATE_USER = 'UPDATE_USER'
+const UPDATE_AVATAR = 'UPDATE_AVATAR'
 
 /**
  * INITIAL STATE
@@ -19,6 +20,7 @@ const defaultUser = {}
 const getUser = user => ({ type: GET_USER, user })
 const removeUser = () => ({ type: REMOVE_USER })
 const updateUser = user => ({ type: UPDATE_USER, user })
+const updateAvatar = user => ({ type: UPDATE_AVATAR, user })
 /**
  * THUNK CREATORS
  */
@@ -99,6 +101,20 @@ export const putUser = (field, update) => async dispatch => {
   }
 }
 
+export const putAvatar = image => async dispatch => {
+  try {
+    const { data } = await axios.put(
+      `https://jubjub-server.herokuapp.com/api/users/avatar`,
+      image
+    )
+    const action = updateAvatar(data)
+    dispatch(action)
+  } catch (err) {
+    console.log('this error is in post-avatar auth-reducer', err)
+  }
+}
+
+//this thunk runs if a userId is found from AsyncStorage. It returns the full user object
 export const asyncStorageLookup = userId => async dispatch => {
   console.log('inside the async thunk', userId, typeof userId)
   try {
@@ -123,6 +139,8 @@ export default function(state = defaultUser, action) {
     case REMOVE_USER:
       return defaultUser
     case UPDATE_USER:
+      return action.user
+    case UPDATE_AVATAR:
       return action.user
     default:
       return state
