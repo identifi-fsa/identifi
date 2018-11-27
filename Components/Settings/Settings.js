@@ -14,6 +14,7 @@ import Name from './SettingsModals/Name'
 import PhoneNumber from './SettingsModals/PhoneNumber'
 import Password from './SettingsModals/Password'
 import Logout from './SettingsModals/Logout'
+import ProfilePic from './SettingsModals/ProfilePicture'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { connect } from 'react-redux'
 import { asyncStorageLookup, logout } from '../store/auth-reducer'
@@ -24,7 +25,8 @@ class Settings extends React.Component {
     phoneViz: false,
     nameViz: false,
     passwordViz: false,
-    logoutViz: false
+    logoutViz: false,
+    profilePicViz: false
   }
   toggleName = () => {
     this.setState({ nameViz: !this.state.nameViz })
@@ -46,6 +48,11 @@ class Settings extends React.Component {
   toggleLogout = () => {
     this.setState({ logoutViz: !this.state.logoutViz })
   }
+
+  toggleProfilePic = () => {
+    this.setState({ profilePicViz: !this.state.profilePicViz })
+  }
+
   componentDidMount() {
     this._StoreData()
   }
@@ -62,6 +69,15 @@ class Settings extends React.Component {
       }
     } catch (err) {
       console.log('inside the setUserID', err)
+    }
+  }
+
+  _getProfilePicture = () => {
+    if (this.props.user.avatar) {
+      console.log(this.props.user.avatar)
+      return this.props.user.avatar
+    } else {
+      return require('../../assets/fakeuser.png')
     }
   }
 
@@ -108,11 +124,11 @@ class Settings extends React.Component {
                     marginTop: 10,
                     marginBottom: 10
                   }}
-                  source={require('../../assets/fakeuser.png')}
+                  source={this._getProfilePicture()}
                 />
               }
               title="Profile Picture"
-              onPress={() => alert('Route to Picture Page')}
+              onPress={() => this.toggleProfilePic()}
             />
             <SettingsList.Header headerStyle={{ marginTop: 15 }} />
 
@@ -222,6 +238,11 @@ class Settings extends React.Component {
         <Logout
           visibility={this.state.logoutViz}
           toggle={this.toggleLogout}
+          name={first}
+        />
+        <ProfilePic
+          visibility={this.state.profilePicViz}
+          toggle={this.toggleProfilePic}
           name={first}
         />
 
