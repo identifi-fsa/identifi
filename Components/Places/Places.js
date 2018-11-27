@@ -164,17 +164,18 @@ class Places extends React.Component {
               longitudeDelta: 0.0025 //zoom
             }}
           >
-            {this.state.data.map(marker => (
-              <Marker
-                key={marker.id}
-                coordinate={{
-                  latitude: marker.coordinates.latitude,
-                  longitude: marker.coordinates.longitude
-                }}
-                title={marker.name}
-                description={marker.description}
-              />
-            ))}
+            {this.state.data.length &&
+              this.state.data.map(marker => (
+                <Marker
+                  key={marker.id}
+                  coordinate={{
+                    latitude: marker.coordinates.latitude,
+                    longitude: marker.coordinates.longitude
+                  }}
+                  title={marker.name}
+                  description={marker.description}
+                />
+              ))}
           </MapView>
         )}
 
