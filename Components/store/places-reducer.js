@@ -72,7 +72,7 @@ const placesReducer = (state = placesState, action) => {
         let textB = b.dateVisited.toUpperCase()
         return textA < textB ? 1 : textA > textB ? -1 : 0
       })
-      return { ...state, recent: [action.recent] }
+      return { ...state, recent: action.recent }
     case GET_NEARBY:
       let hashMap = {}
       let results = action.nearby

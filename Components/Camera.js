@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import { Camera, Permissions } from 'expo'
 import { connect } from 'react-redux'
 import ResultModal from './ResultModal'
+import Splash from './Screens/Splash'
 import { compareToHash } from '../utils'
 import {
   Container,
@@ -146,11 +147,7 @@ class CameraComponent extends Component {
 
     //if user has not set permission yet
     if (hasCameraPermission === null) {
-      return (
-        <View>
-          <Text>Hey Loren, if you see this. We know why!</Text>
-        </View>
-      )
+      return <Splash />
     } else if (hasCameraPermission === false) {
       return <Text> No access to camera</Text>
     } else {
