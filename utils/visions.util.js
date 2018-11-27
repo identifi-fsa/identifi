@@ -1,8 +1,8 @@
 import axios from 'axios'
 
-export const compareToHash = async (text, hashMap, nearby) => {
+export const compareToHash = async (text, hashMap, nearby, userId) => {
   let index = 0
-  const countObj = {} //create object that will store occurances
+  let countObj = {} //create object that will store occurances
 
   //1 - first, check to see if theres an exact match
   for (let i = 0; i < nearby.length; i++) {
@@ -14,7 +14,8 @@ export const compareToHash = async (text, hashMap, nearby) => {
     if (modifiedText === nearbyPlace) {
       console.log('found exact match')
       console.log('THIS IS THE EXACT MATCH: ', nearby[i])
-      await postToDb(nearby[i])
+      countObj = {}
+      await postToDb(nearby[i], userId)
       return nearby[i]
     }
   }
@@ -53,17 +54,18 @@ export const compareToHash = async (text, hashMap, nearby) => {
     console.log(`key ${index} has the largest value`)
     // this.setState({ imageData: nearby[index] })
     console.log('THIS IS THE BEST MATCH: ', nearby[index])
-    await postToDb(nearby[index])
+    countObj = {}
+    await postToDb(nearby[index], userId)
     return nearby[index]
   }
 }
 
 //POST route to database
-const postToDb = async placeObj => {
+const postToDb = async (placeObj, userId) => {
   try {
     console.log('Posting to DB...')
     await axios.post(
-      'https://jubjub-server.herokuapp.com/api/places/recent',
+      `https://jubjub-server.herokuapp.com/api/places/${userId}/recent`,
       placeObj
     )
   } catch (err) {

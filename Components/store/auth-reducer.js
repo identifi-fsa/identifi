@@ -43,6 +43,7 @@ export const authLogin = (email, password) => async dispatch => {
   }
 
   try {
+    console.log('this is the login res.data inside the reducer', res.data)
     dispatch(getUser(res.data))
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
@@ -68,6 +69,7 @@ export const authSignUp = (
   }
 
   try {
+    console.log('this is the signup res.data inside the reducer', res.data)
     dispatch(getUser(res.data))
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)

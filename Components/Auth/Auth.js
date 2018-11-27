@@ -44,8 +44,7 @@ class Auth extends React.Component {
     return (
       <Modal>
         <View style={styles.container}>
-          {/* once we have a logo.... */}
-          {/* <Image source={} /> */}
+          <Image source={require('../../assets/identifi-logo.png')} />
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               onPress={this.setSignupModalVisible}
@@ -92,7 +91,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '97.5%'
+    width: '97.5%',
+    marginTop: 100
   },
   loginButton: {
     flex: 1,

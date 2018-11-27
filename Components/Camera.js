@@ -97,47 +97,35 @@ class CameraComponent extends Component {
         imageData: null
       })
       if (photo.base64) {
-        const body = {
-          requests: [
-            {
-              image: {
-                content: photo.base64
-              },
-              features: [
-                {
-                  type: 'DOCUMENT_TEXT_DETECTION',
-                  maxResults: 1
-                }
-              ]
-            }
-          ]
-        }
         console.log('fetch google vision initiated')
-
-        const response = await fetch(
-          `https://jubjub-server.herokuapp.com/api/visions/`,
-          {
-            method: 'POST',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(photo)
+        try {
+          const response = await fetch(
+            `https://jubjub-server.herokuapp.com/api/visions/`,
+            {
+              method: 'POST',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(photo)
+            }
+          )
+          console.log('this is the response', response)
+          const parsed = await response.json()
+          console.log('parsed', parsed)
+          if (parsed) {
+            this.setState({
+              text: parsed
+            })
           }
-        )
-
-        const parsed = await response.json()
-
-        if (parsed) {
-          this.setState({
-            text: parsed
-          })
+        } catch (err) {
+          console.log('this is the errror', err)
         }
-
         const res = await compareToHash(
           this.state.text,
           this.props.hashMap,
-          this.props.nearby
+          this.props.nearby,
+          this.props.user.id
         )
 
         console.log('THE RESPONSE: ', res)

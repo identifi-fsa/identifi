@@ -77,11 +77,11 @@ class Settings extends React.Component {
       phone = 'Enter your Phone Number'
     }
     return (
-      <View style={{ backgroundColor: '#EFEFF4', flex: 1 }}>
+      <View style={{ backgroundColor: 'white', flex: 1 }}>
         <View
           style={{
             borderBottomWidth: 1,
-            backgroundColor: '#f7f7f8',
+            backgroundColor: 'white',
             borderColor: '#c8c7cc'
           }}
         >
@@ -119,9 +119,9 @@ class Settings extends React.Component {
             <SettingsList.Item
               icon={
                 <MaterialCommunityIcons
-                  name="crosshairs-gps"
+                  name="account-edit"
                   style={{
-                    color: 'black',
+                    color: 'red',
                     fontSize: 12,
                     marginLeft: 10,
                     marginTop: 20
@@ -136,9 +136,9 @@ class Settings extends React.Component {
             <SettingsList.Item
               icon={
                 <MaterialCommunityIcons
-                  name="crosshairs-gps"
+                  name="email-plus-outline"
                   style={{
-                    color: 'black',
+                    color: 'red',
                     fontSize: 12,
                     marginLeft: 10,
                     marginTop: 20
@@ -152,9 +152,9 @@ class Settings extends React.Component {
             <SettingsList.Item
               icon={
                 <MaterialCommunityIcons
-                  name="crosshairs-gps"
+                  name="lock-plus"
                   style={{
-                    color: 'black',
+                    color: 'red',
                     fontSize: 12,
                     marginLeft: 10,
                     marginTop: 20
@@ -168,9 +168,9 @@ class Settings extends React.Component {
             <SettingsList.Item
               icon={
                 <MaterialCommunityIcons
-                  name="crosshairs-gps"
+                  name="cellphone-basic"
                   style={{
-                    color: 'black',
+                    color: 'red',
                     fontSize: 12,
                     marginLeft: 10,
                     marginTop: 20
@@ -184,9 +184,9 @@ class Settings extends React.Component {
             <SettingsList.Item
               icon={
                 <MaterialCommunityIcons
-                  name="crosshairs-gps"
+                  name="logout"
                   style={{
-                    color: 'black',
+                    color: 'red',
                     fontSize: 12,
                     marginLeft: 10,
                     marginTop: 20
