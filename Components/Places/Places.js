@@ -4,7 +4,8 @@ import {
   Text,
   View,
   FlatList,
-  TouchableOpacity
+  TouchableOpacity,
+  Image
 } from 'react-native'
 import { connect } from 'react-redux'
 import { Header } from 'native-base'
@@ -158,12 +159,25 @@ class Places extends React.Component {
           <MapView
             style={{ flex: 0.3, margin: '2.5%', borderRadius: 10 }}
             initialRegion={{
-              latitude: this.props.lat, //40.7047584413614
-              longitude: this.props.lng, //-74.0085431188345
+              latitude: this.props.lat, //40.7047584413614,
+              longitude: this.props.lng, //-74.0085431188345,
               latitudeDelta: 0.0025, //zoom
               longitudeDelta: 0.0025 //zoom
             }}
           >
+            <Marker
+              coordinate={{
+                latitude: this.props.lat,
+                longitude: this.props.lng
+              }}
+              title={'YOU ARE HERE'}
+              pinColor={'#000000'}
+            >
+              <MaterialCommunityIcons
+                name="map-marker-outline"
+                style={{ color: 'red', fontSize: 36 }}
+              />
+            </Marker>
             {this.state.data.length &&
               this.state.data.map(marker => (
                 <Marker
@@ -174,7 +188,12 @@ class Places extends React.Component {
                   }}
                   title={marker.name}
                   description={marker.description}
-                />
+                >
+                  <MaterialCommunityIcons
+                    name="crosshairs-gps"
+                    style={{ color: 'red', fontSize: 16 }}
+                  />
+                </Marker>
               ))}
           </MapView>
         )}
@@ -190,6 +209,19 @@ class Places extends React.Component {
               longitudeDelta: 0.0025 //zoom
             }}
           >
+            <Marker
+              coordinate={{
+                latitude: this.props.lat,
+                longitude: this.props.lng
+              }}
+              title={'YOU ARE HERE'}
+              pinColor={'#000000'}
+            >
+              <MaterialCommunityIcons
+                name="map-marker-outline"
+                style={{ color: 'red', fontSize: 36 }}
+              />
+            </Marker>
             {this.state.data.map(marker => (
               <Marker
                 key={marker.id}
@@ -197,9 +229,14 @@ class Places extends React.Component {
                   latitude: marker.lat,
                   longitude: marker.lng
                 }}
-                // title={marker.name}
-                // description={marker.description}
-              />
+                title={marker.name}
+                description={marker.description}
+              >
+                <MaterialCommunityIcons
+                  name="crosshairs-gps"
+                  style={{ color: 'red', fontSize: 16 }}
+                />
+              </Marker>
             ))}
           </MapView>
         )}
