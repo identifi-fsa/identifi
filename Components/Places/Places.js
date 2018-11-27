@@ -151,9 +151,11 @@ class Places extends React.Component {
             </TouchableOpacity>
           </View>
         </Header>
+
+        {/********* NEARBY MAP VIEW *********/}
         {this.state.view === 'nearby' && (
           <MapView
-            style={{ flex: 1 }}
+            style={{ flex: 0.3, margin: '2.5%', borderRadius: 10 }}
             initialRegion={{
               latitude: this.props.lat, //40.7047584413614
               longitude: this.props.lng, //-74.0085431188345
@@ -175,6 +177,7 @@ class Places extends React.Component {
           </MapView>
         )}
 
+        {/********* RECENT MAP VIEW *********/}
         {this.state.view === 'recent' && (
           <MapView
             style={{ flex: 1 }}
