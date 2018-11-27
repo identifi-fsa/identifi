@@ -54,6 +54,7 @@ class LoginForm extends React.Component {
               returnKeyType="next"
               textContentType="emailAddress"
               autoFocus={true}
+              autoCapitalize="none"
             />
             <Text style={styles.inputLabel}>Enter Password</Text>
             <TextInput
@@ -67,6 +68,7 @@ class LoginForm extends React.Component {
               textContentType="password"
               autoFocus={true}
               secureTextEntry={true}
+              autoCapitalize="none"
             />
             <View style={styles.buttonContainer}>
               <TouchableOpacity

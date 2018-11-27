@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import { Camera, Permissions } from 'expo'
 import { connect } from 'react-redux'
 import ResultModal from './ResultModal'
+import NothingModal from './NothingModal'
 import Splash from './Screens/Splash'
 import { compareToHash } from '../utils'
 import {
@@ -31,6 +32,7 @@ class CameraComponent extends Component {
     text: null,
     resultModal: false,
     loading: false,
+    nothingModal: false,
     displayDelayCount: 0
   }
 
@@ -60,6 +62,7 @@ class CameraComponent extends Component {
           })
           console.log('No match found. Please take a better picture next time')
           // alert('No match found. Please take a better picture next time')
+          this.setState({ nothingModal: true })
         } else if (this.state.displayDelayCount >= 4) {
           console.log('Taking longer than expected....')
           this.submitPicture()
@@ -76,6 +79,9 @@ class CameraComponent extends Component {
 
   closeResultModal = () => {
     this.setState({ resultModal: false })
+  }
+  closeNothingModal = () => {
+    this.setState({ nothingModal: false })
   }
   //look at Expo camera docs
   async componentDidMount() {
@@ -120,7 +126,7 @@ class CameraComponent extends Component {
             })
           }
         } catch (err) {
-          console.log('this is the errror', err)
+          console.log('this is the error', err)
         }
         const res = await compareToHash(
           this.state.text,
@@ -253,6 +259,10 @@ class CameraComponent extends Component {
             data={this.state.imageData}
           />
           <LoadingScreen visibility={this.state.loading} />
+          <NothingModal
+            visibility={this.state.nothingModal}
+            closeModal={this.closeNothingModal}
+          />
         </View>
       )
     }

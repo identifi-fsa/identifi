@@ -4,8 +4,7 @@ import {
   Text,
   View,
   FlatList,
-  TouchableOpacity,
-  Image
+  TouchableOpacity
 } from 'react-native'
 import { connect } from 'react-redux'
 import { Header } from 'native-base'
