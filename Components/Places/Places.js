@@ -11,6 +11,7 @@ import { Header } from 'native-base'
 import { fetchRecent, fetchNearby } from '../store/places-reducer'
 import SinglePlace from './SinglePlace'
 import SinglePlaceRecent from './SinglePlaceRecent'
+import NoPlaces from './NoPlaces'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import MapView, { Marker } from 'react-native-maps'
 
@@ -180,7 +181,7 @@ class Places extends React.Component {
         {/********* RECENT MAP VIEW *********/}
         {this.state.view === 'recent' && (
           <MapView
-            style={{ flex: 1 }}
+            style={{ flex: 0.3, margin: '2.5%', borderRadius: 10 }}
             initialRegion={{
               latitude: this.props.lat, //40.7047584413614
               longitude: this.props.lng, //-74.0085431188345
@@ -201,16 +202,22 @@ class Places extends React.Component {
             ))}
           </MapView>
         )}
+        {console.log('THEDATAAA', this.state.data)}
         <View style={styles.cardContainer}>
           {this.state.view === 'nearby' ? (
             <FlatList
               data={this.state.data}
               renderItem={({ item }) => <SinglePlace data={item} />}
             />
-          ) : (
+          ) : this.state.data[0] ? (
             <FlatList
               data={this.state.data[0]}
               renderItem={({ item }) => <SinglePlaceRecent data={item} />}
+            />
+          ) : (
+            <FlatList
+              data={[{ blurb: 'NOTHING TO SEE HERE' }]}
+              renderItem={({ item }) => <NoPlaces data={item} />}
             />
           )}
         </View>
