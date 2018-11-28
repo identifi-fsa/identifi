@@ -8,9 +8,14 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'
 import { Header } from 'native-base'
-import { fetchRecent, fetchNearby } from '../store/places-reducer'
+import {
+  fetchRecent,
+  fetchNearby,
+  getRecentInfo
+} from '../store/places-reducer'
 import SinglePlace from './SinglePlace'
 import SinglePlaceRecent from './SinglePlaceRecent'
+import ResultModal from '../ResultModal'
 import NoPlaces from './NoPlaces'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import MapView, { Marker } from 'react-native-maps'
@@ -18,7 +23,9 @@ import MapView, { Marker } from 'react-native-maps'
 class Places extends React.Component {
   state = {
     view: '',
-    data: this.props.recent
+    data: this.props.recent,
+    mapResultModalVisibility: false,
+    mapResult: {}
   }
 
   recentButton = () => {
@@ -105,7 +112,30 @@ class Places extends React.Component {
     }
   }
 
-  componentDidMount() {
+  showSinglePlace = markerPlace => {
+    this.setState({
+      mapResult: markerPlace,
+      mapResultModalVisibility: true
+    })
+  }
+
+  showSinglePlaceRecent = async markerPlace => {
+    try {
+      await this.props.getRecentInfo(markerPlace.yelpId)
+      this.setState({
+        mapResult: this.props.recentPlaceView,
+        mapResultModalVisibility: true
+      })
+    } catch (err) {
+      console.err('ERROR IN PLACES GETTING RECENT INFO (Places.js)...', err)
+    }
+  }
+
+  closeMapResultModal = () => {
+    this.setState({ mapResultModalVisibility: false, mapResult: {} })
+  }
+
+  componentDidMount = () => {
     let nearby = this.props.nearby
     this.setState({
       view: 'nearby',
@@ -187,12 +217,8 @@ class Places extends React.Component {
                   }}
                   title={marker.name}
                   description={marker.description}
-                >
-                  <MaterialCommunityIcons
-                    name="crosshairs-gps"
-                    style={{ color: 'red', fontSize: 16 }}
-                  />
-                </Marker>
+                  onPress={() => this.showSinglePlace(marker)}
+                />
               ))}
           </MapView>
         )}
@@ -202,8 +228,8 @@ class Places extends React.Component {
           <MapView
             style={{ flex: 0.3, margin: '2.5%', borderRadius: 10 }}
             initialRegion={{
-              latitude: this.props.lat, //40.7047584413614
-              longitude: this.props.lng, //-74.0085431188345
+              latitude: this.props.lat, //40.7047584413614,
+              longitude: this.props.lng, //-74.0085431188345,
               latitudeDelta: 0.0025, //zoom
               longitudeDelta: 0.0025 //zoom
             }}
@@ -225,17 +251,13 @@ class Places extends React.Component {
               <Marker
                 key={marker.id}
                 coordinate={{
-                  latitude: marker.lat,
-                  longitude: marker.lng
+                  latitude: +marker.lat,
+                  longitude: +marker.lng
                 }}
                 title={marker.name}
                 description={marker.description}
-              >
-                <MaterialCommunityIcons
-                  name="crosshairs-gps"
-                  style={{ color: 'red', fontSize: 16 }}
-                />
-              </Marker>
+                onPress={() => this.showSinglePlaceRecent(marker)}
+              />
             ))}
           </MapView>
         )}
@@ -295,6 +317,11 @@ class Places extends React.Component {
             onPress={() => this.props.changePage(2)}
           />
         </View>
+        <ResultModal
+          visibility={this.state.mapResultModalVisibility}
+          closeModal={this.closeMapResultModal}
+          data={this.state.mapResult}
+        />
       </View>
     ) : (
       <View />
@@ -305,14 +332,16 @@ class Places extends React.Component {
 const mapStateToProps = state => {
   return {
     nearby: state.places.nearby,
-    recent: state.places.recent
+    recent: state.places.recent,
+    recentPlaceView: state.places.recentPlaceView
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     fetchRecent: () => dispatch(fetchRecent()),
-    fetchNearby: (lat, lng) => dispatch(fetchNearby(lat, lng))
+    fetchNearby: (lat, lng) => dispatch(fetchNearby(lat, lng)),
+    getRecentInfo: yelpId => dispatch(getRecentInfo(yelpId))
   }
 }
 

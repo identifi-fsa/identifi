@@ -61,7 +61,6 @@ class CameraComponent extends Component {
             imageUri: null
           })
           console.log('No match found. Please take a better picture next time')
-          // alert('No match found. Please take a better picture next time')
           this.setState({ nothingModal: true })
         } else if (this.state.displayDelayCount >= 4) {
           console.log('Taking longer than expected....')
@@ -80,9 +79,11 @@ class CameraComponent extends Component {
   closeResultModal = () => {
     this.setState({ resultModal: false })
   }
+
   closeNothingModal = () => {
     this.setState({ nothingModal: false })
   }
+
   //look at Expo camera docs
   async componentDidMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA)
