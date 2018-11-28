@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Platform, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { Constants, Location, Permissions } from 'expo'
 import Camera from './Camera'
 import { Content } from 'native-base'
