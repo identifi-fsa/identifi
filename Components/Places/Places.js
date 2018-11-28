@@ -186,7 +186,7 @@ class Places extends React.Component {
         {/********* NEARBY MAP VIEW *********/}
         {this.state.view === 'nearby' && (
           <MapView
-            style={{ flex: 0.3, margin: '2.5%', borderRadius: 10 }}
+            style={{ flex: 0.3, margin: '1%', borderRadius: 10 }}
             initialRegion={{
               latitude: this.props.lat, //40.7047584413614,
               longitude: this.props.lng, //-74.0085431188345,
@@ -226,7 +226,7 @@ class Places extends React.Component {
         {/********* RECENT MAP VIEW *********/}
         {this.state.view === 'recent' && (
           <MapView
-            style={{ flex: 0.3, margin: '2.5%', borderRadius: 10 }}
+            style={{ flex: 0.3, borderRadius: 10 }}
             initialRegion={{
               latitude: this.props.lat, //40.7047584413614,
               longitude: this.props.lng, //-74.0085431188345,
@@ -263,20 +263,26 @@ class Places extends React.Component {
         )}
         <View style={styles.cardContainer}>
           {this.state.view === 'nearby' ? (
-            <FlatList
-              data={this.state.data}
-              renderItem={({ item }) => <SinglePlace data={item} />}
-            />
+            <View>
+              <FlatList
+                data={this.state.data}
+                renderItem={({ item }) => <SinglePlace data={item} />}
+              />
+            </View>
           ) : this.state.data.length !== 0 ? (
-            <FlatList
-              data={this.state.data}
-              renderItem={({ item }) => <SinglePlaceRecent data={item} />}
-            />
+            <View>
+              <FlatList
+                data={this.state.data}
+                renderItem={({ item }) => <SinglePlaceRecent data={item} />}
+              />
+            </View>
           ) : (
-            <FlatList
-              data={[{ blurb: 'NOTHING TO SEE HERE' }]}
-              renderItem={({ item }) => <NoPlaces data={item} />}
-            />
+            <View>
+              <FlatList
+                data={[{ blurb: 'NOTHING TO SEE HERE' }]}
+                renderItem={({ item }) => <NoPlaces data={item} />}
+              />
+            </View>
           )}
         </View>
         {/* Navigator buttons */}
@@ -353,7 +359,7 @@ export default connect(
 const styles = StyleSheet.create({
   cardContainer: {
     flex: 1,
-    width: '100%',
+    width: '97.5%',
     alignItems: 'center'
   },
   text: {
