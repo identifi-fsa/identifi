@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import ResultModal from '../ResultModal'
+import { colors } from '../../constants/colors'
 
 export default class SinglePlace extends Component {
   state = {
@@ -60,12 +61,13 @@ export default class SinglePlace extends Component {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    width: '99%',
+    width: '100%',
     height: 100,
     backgroundColor: 'white',
     justifyContent: 'space-between',
     flexDirection: 'row',
-    borderWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: colors.border,
     alignItems: 'center'
   },
   cardIconContainer: {

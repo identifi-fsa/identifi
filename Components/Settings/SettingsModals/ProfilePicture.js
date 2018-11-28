@@ -74,22 +74,27 @@ class ProfilePicture extends React.Component {
     let { image } = this.state
 
     return (
-      <Modal visible={this.props.visibility}>
-        <View
-          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-        >
-          <Button
-            title="Pick an image from camera roll"
-            onPress={this.onPickImageButtonPress.bind(this)}
-          />
-          <Button title="Submit" onPress={this.submitPicture} />
-          <Button title="Cancel" onPress={this.props.toggle} />
+      <Modal visible={this.props.visibility} transparent={true}>
+        <View style={styles.container}>
           {image && (
             <Image
               source={{ uri: image }}
-              style={{ width: 200, height: 200 }}
+              style={{
+                width: 250,
+                height: 250,
+                borderRadius: 250 / 2,
+                marginBottom: 70
+              }}
             />
           )}
+          <View style={styles.buttonContainer}>
+            <Button
+              title="Choose Profile Picture"
+              onPress={this.onPickImageButtonPress.bind(this)}
+            />
+            <Button title="Submit" onPress={this.submitPicture} />
+            <Button title="Cancel" onPress={this.props.toggle} />
+          </View>
         </View>
       </Modal>
     )
@@ -105,3 +110,27 @@ export default connect(
   null,
   mapDispatchToProps
 )(ProfilePicture)
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0,0,0,0.7)'
+  },
+  buttonContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    borderColor: 'black',
+    borderTopWidth: 1,
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    height: '20%',
+    marginBottom: 20,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    backgroundColor: 'white',
+    width: '101%'
+  }
+})

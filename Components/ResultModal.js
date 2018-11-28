@@ -163,8 +163,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    // borderColor: 'black',
-    // borderWidth: 2,
+    borderColor: 'black',
+    borderWidth: 2,
     backgroundColor: 'black'
   },
   poweredByContainer: {

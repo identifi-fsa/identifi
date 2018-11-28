@@ -19,6 +19,7 @@ import ResultModal from '../ResultModal'
 import NoPlaces from './NoPlaces'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import MapView, { Marker } from 'react-native-maps'
+import { colors } from '../../constants/colors'
 
 class Places extends React.Component {
   state = {
@@ -48,7 +49,7 @@ class Places extends React.Component {
         width: '50%',
         zIndex: 100,
         alignItems: 'center',
-        borderColor: 'red',
+        borderColor: colors.primary,
         borderWidth: 2,
         height: '100%',
         display: 'flex',
@@ -72,7 +73,7 @@ class Places extends React.Component {
         width: '50%',
         zIndex: 100,
         alignItems: 'center',
-        borderColor: 'red',
+        borderColor: colors.primary,
         borderWidth: 2,
         height: '100%',
         display: 'flex',
@@ -93,7 +94,7 @@ class Places extends React.Component {
   getNearbyButtonTextColor = () => {
     if (this.state.data === this.props.nearby) {
       return {
-        color: 'red',
+        color: colors.primary,
         fontWeight: 'bold'
       }
     } else {
@@ -104,7 +105,7 @@ class Places extends React.Component {
   getRecentButtonTextColor = () => {
     if (this.state.data === this.props.recent) {
       return {
-        color: 'red',
+        color: colors.primary,
         fontWeight: 'bold'
       }
     } else {
@@ -159,7 +160,7 @@ class Places extends React.Component {
         >
           <View
             style={{
-              backgroundColor: 'white',
+              backgroundColor: colors.backgroundColor,
               height: 35,
               width: '60%',
               zIndex: 100,
@@ -204,7 +205,7 @@ class Places extends React.Component {
             >
               <MaterialCommunityIcons
                 name="map-marker-outline"
-                style={{ color: 'red', fontSize: 36 }}
+                style={{ color: colors.primary, fontSize: 36 }}
               />
             </Marker>
             {this.state.data.length &&
@@ -244,7 +245,7 @@ class Places extends React.Component {
             >
               <MaterialCommunityIcons
                 name="map-marker-outline"
-                style={{ color: 'red', fontSize: 36 }}
+                style={{ color: colors.primary, fontSize: 36 }}
               />
             </Marker>
             {this.state.data.map(marker => (
@@ -297,7 +298,7 @@ class Places extends React.Component {
         >
           <MaterialCommunityIcons
             name="crosshairs-gps"
-            style={{ color: 'red', fontSize: 36 }}
+            style={{ color: colors.primary, fontSize: 36 }}
             onPress={this.props.goToPlaces}
           />
 
@@ -306,20 +307,16 @@ class Places extends React.Component {
               <MaterialCommunityIcons
                 name="circle-outline"
                 style={{
-                  color: 'black',
+                  color: colors.disabledNavButton,
                   fontSize: 60,
                   marginBottom: 5
                 }}
               />
             </TouchableOpacity>
-            {/* <Icon
-                    name="ios-images"
-                    style={{ color: 'white', fontSize: 36 }}
-                  /> */}
           </View>
           <MaterialCommunityIcons
             name="google-circles-communities"
-            style={{ color: 'black', fontSize: 36 }}
+            style={{ color: colors.disabledNavButton, fontSize: 36 }}
             onPress={() => this.props.changePage(2)}
           />
         </View>
@@ -359,8 +356,9 @@ export default connect(
 const styles = StyleSheet.create({
   cardContainer: {
     flex: 1,
-    width: '97.5%',
-    alignItems: 'center'
+    width: '100%',
+    alignItems: 'center',
+    backgroundColor: colors.primary
   },
   text: {
     color: 'white',
