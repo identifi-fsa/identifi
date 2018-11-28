@@ -251,8 +251,8 @@ class Places extends React.Component {
               <Marker
                 key={marker.id}
                 coordinate={{
-                  latitude: marker.lat,
-                  longitude: marker.lng
+                  latitude: +marker.lat,
+                  longitude: +marker.lng
                 }}
                 title={marker.name}
                 description={marker.description}
