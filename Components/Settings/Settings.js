@@ -107,19 +107,21 @@ class Settings extends React.Component {
               marginTop: 40,
               marginBottom: 10,
               fontWeight: 'bold',
-              fontSize: 50
+              fontSize: 20
             }}
-          />
+          >
+            Settings
+          </Text>
         </View>
-        <View style={{ backgroundColor: '#EFEFF4', flex: 1 }}>
-          <SettingsList borderColor="#c8c7cc" defaultItemSize={50}>
+        <View style={{ backgroundColor: 'white', flex: 1 }}>
+          <SettingsList borderColor="#c8c7cc" defaultItemSize={65}>
             <SettingsList.Header headerStyle={{ marginTop: 15 }} />
             <SettingsList.Item
               icon={
                 <Image
                   style={{
-                    height: 80,
-                    width: 80,
+                    height: 100,
+                    width: 100,
                     marginLeft: 10,
                     marginTop: 10,
                     marginBottom: 10
@@ -138,9 +140,9 @@ class Settings extends React.Component {
                   name="account-edit"
                   style={{
                     color: 'red',
-                    fontSize: 12,
-                    marginLeft: 10,
-                    marginTop: 20
+                    fontSize: 20,
+                    marginLeft: 13,
+                    marginTop: 24
                   }}
                 />
               }
@@ -155,9 +157,9 @@ class Settings extends React.Component {
                   name="email-plus-outline"
                   style={{
                     color: 'red',
-                    fontSize: 12,
-                    marginLeft: 10,
-                    marginTop: 20
+                    fontSize: 20,
+                    marginLeft: 13,
+                    marginTop: 24
                   }}
                 />
               }
@@ -171,9 +173,9 @@ class Settings extends React.Component {
                   name="lock-plus"
                   style={{
                     color: 'red',
-                    fontSize: 12,
-                    marginLeft: 10,
-                    marginTop: 20
+                    fontSize: 20,
+                    marginLeft: 13,
+                    marginTop: 24
                   }}
                 />
               }
@@ -187,9 +189,9 @@ class Settings extends React.Component {
                   name="cellphone-basic"
                   style={{
                     color: 'red',
-                    fontSize: 12,
-                    marginLeft: 10,
-                    marginTop: 20
+                    fontSize: 20,
+                    marginLeft: 13,
+                    marginTop: 24
                   }}
                 />
               }
@@ -203,9 +205,9 @@ class Settings extends React.Component {
                   name="logout"
                   style={{
                     color: 'red',
-                    fontSize: 12,
-                    marginLeft: 10,
-                    marginTop: 20
+                    fontSize: 20,
+                    marginLeft: 13,
+                    marginTop: 24
                   }}
                 />
               }

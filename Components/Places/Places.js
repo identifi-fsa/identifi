@@ -359,7 +359,7 @@ export default connect(
 const styles = StyleSheet.create({
   cardContainer: {
     flex: 1,
-    width: '97.5%',
+    width: '100%',
     alignItems: 'center'
   },
   text: {
