@@ -228,8 +228,8 @@ class Places extends React.Component {
           <MapView
             style={{ flex: 0.3, margin: '2.5%', borderRadius: 10 }}
             initialRegion={{
-              latitude: 40.7047584413614, //this.props.lat, //
-              longitude: -74.0085431188345, //this.props.lng, //
+              latitude: this.props.lat, //40.7047584413614,
+              longitude: this.props.lng, //-74.0085431188345,
               latitudeDelta: 0.0025, //zoom
               longitudeDelta: 0.0025 //zoom
             }}
