@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import ResultModal from '../ResultModal'
 import { connect } from 'react-redux'
 import { getRecentInfo } from '../store/places-reducer'
+import { colors } from '../../constants/colors'
 
 class SinglePlaceRecent extends Component {
   state = {
@@ -45,8 +46,7 @@ class SinglePlaceRecent extends Component {
             </View>
             <View style={styles.cardDesc}>
               <Text style={styles.nameText}>{name}</Text>
-              <Text>{dateVisited}</Text>
-              {/* <Text>Currently {isClosed}</Text> */}
+              <Text style={styles.text}>{dateVisited}</Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -80,11 +80,11 @@ const styles = StyleSheet.create({
   cardContainer: {
     width: '100%',
     height: 100,
-    backgroundColor: 'white',
+    backgroundColor: colors.backgroundColor,
     justifyContent: 'space-between',
     flexDirection: 'row',
     borderBottomWidth: 1,
-    borderColor: '#c8c7cc',
+    borderColor: colors.border,
     alignItems: 'center'
   },
   cardIconContainer: {
@@ -102,17 +102,16 @@ const styles = StyleSheet.create({
   cardDesc: {
     width: '70%',
     height: 90,
-    backgroundColor: 'white',
+    backgroundColor: colors.backgroundColor,
     justifyContent: 'center',
     flexDirection: 'column'
   },
   text: {
-    color: 'white',
-    fontSize: 30,
-    fontWeight: 'bold'
+    color: colors.text
   },
   nameText: {
     fontWeight: 'bold',
-    fontSize: 18
+    fontSize: 18,
+    color: colors.text
   }
 })

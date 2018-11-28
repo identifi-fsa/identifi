@@ -1,8 +1,35 @@
-export const colors = {
-  primary: '#41f48f',
-  border: '#c8c7cc',
-  disabledNavButton: 'lightgray',
-  backgroundColor: 'white'
-}
+import React from 'react'
+import { connect } from 'react-redux'
+import { View } from 'react-native'
+console.log('colorrrrrs', this.state)
+// export const colors = {
+//   primary: this.state.primary,
+//   backgroundColor: this.state.backgroundColor,
+//   text: this.state.text,
+//   border: this.state.border,
+//   disabledNavButton: this.state.disabledNavButton
+// }
 
-export const sizes = {}
+class Colors extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      primary: 'red',
+      backgroundColor: 'white',
+      text: 'black',
+      border: 'black',
+      disabledNavButton: 'gray'
+    }
+  }
+  export colors = {
+    primary: this.state.primary,
+    backgroundColor: this.state.backgroundColor,
+    text: this.state.text,
+    border: this.state.border,
+    disabledNavButton: this.state.disabledNavButton
+  }
+  render() {
+    return <View />
+  }
+}
+export const colors

@@ -7,6 +7,7 @@ import Auth from './Auth/Auth'
 import Splash from './Screens/Splash'
 import { me, asyncStorageLookup } from './store/auth-reducer'
 import { fetchRecent, fetchNearby } from './store/places-reducer'
+import { fetchStyles } from './store/style-reducer'
 
 class Root extends Component {
   state = {
@@ -56,6 +57,7 @@ class Root extends Component {
       console.log('inside the checkuser', val)
       if (val !== null) {
         this.props.asyncCheck(val)
+        this.props.fetchStyle(val)
       }
     } catch (err) {
       console.log(err)
@@ -92,7 +94,8 @@ const mapDispatchToProps = dispatch => {
     loadInitialUserData: () => dispatch(me()),
     asyncCheck: id => dispatch(asyncStorageLookup(id)),
     fetchRecent: () => dispatch(fetchRecent()),
-    fetchNearby: (lat, lng) => dispatch(fetchNearby(lat, lng))
+    fetchNearby: (lat, lng) => dispatch(fetchNearby(lat, lng)),
+    fetchStyle: id => dispatch(fetchStyles(id))
   }
 }
 

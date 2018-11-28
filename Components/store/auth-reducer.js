@@ -116,7 +116,6 @@ export const putAvatar = image => async dispatch => {
 
 //this thunk runs if a userId is found from AsyncStorage. It returns the full user object
 export const asyncStorageLookup = userId => async dispatch => {
-  console.log('inside the async thunk', userId, typeof userId)
   try {
     const { data } = await axios.get(
       `https://jubjub-server.herokuapp.com/api/users/${userId}`

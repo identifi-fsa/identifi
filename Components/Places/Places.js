@@ -98,7 +98,7 @@ class Places extends React.Component {
         fontWeight: 'bold'
       }
     } else {
-      return {}
+      return { color: colors.text }
     }
   }
 
@@ -109,7 +109,7 @@ class Places extends React.Component {
         fontWeight: 'bold'
       }
     } else {
-      return {}
+      return { color: colors.text }
     }
   }
 
@@ -144,6 +144,7 @@ class Places extends React.Component {
     })
   }
   render() {
+    console.log('inside places', colors)
     return this.state.data ? (
       <View>
         <Header
@@ -201,7 +202,7 @@ class Places extends React.Component {
                 longitude: this.props.lng
               }}
               title={'YOU ARE HERE'}
-              pinColor={'#000000'}
+              pinColor={colors.primary}
             >
               <MaterialCommunityIcons
                 name="map-marker-outline"
@@ -241,7 +242,7 @@ class Places extends React.Component {
                 longitude: this.props.lng
               }}
               title={'YOU ARE HERE'}
-              pinColor={'#000000'}
+              pinColor={colors.primary}
             >
               <MaterialCommunityIcons
                 name="map-marker-outline"
@@ -336,7 +337,8 @@ const mapStateToProps = state => {
   return {
     nearby: state.places.nearby,
     recent: state.places.recent,
-    recentPlaceView: state.places.recentPlaceView
+    recentPlaceView: state.places.recentPlaceView,
+    styles: state.styles
   }
 }
 
