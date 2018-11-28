@@ -215,8 +215,8 @@ class Places extends React.Component {
                     latitude: marker.coordinates.latitude,
                     longitude: marker.coordinates.longitude
                   }}
-                  title={marker.name}
-                  description={marker.description}
+                  // title={marker.name}
+                  // description={marker.description}
                   onPress={() => this.showSinglePlace(marker)}
                 />
               ))}
@@ -254,8 +254,8 @@ class Places extends React.Component {
                   latitude: +marker.lat,
                   longitude: +marker.lng
                 }}
-                title={marker.name}
-                description={marker.description}
+                // title={marker.name}
+                // description={marker.description}
                 onPress={() => this.showSinglePlaceRecent(marker)}
               />
             ))}

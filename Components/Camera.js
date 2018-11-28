@@ -119,22 +119,36 @@ class CameraComponent extends Component {
             }
           )
           console.log('this is the response', response)
-          const parsed = await response.json()
+          const parsed = await JSON.parse(response) //await response.json()
           console.log('parsed', parsed)
           if (parsed) {
             this.setState({
               text: parsed
             })
+          } else {
+            this.setState({
+              text: 'parse error'
+            })
           }
         } catch (err) {
-          console.log('this is the error', err)
+          this.setState({
+            text: 'parse error'
+          })
+          console.log('Error trying to Parse(Camera.js)...', err)
         }
-        const res = await compareToHash(
-          this.state.text,
-          this.props.hashMap,
-          this.props.nearby,
-          this.props.user.id
-        )
+
+        let res = {}
+        if (this.state.text === 'parse error') {
+          console.log('PARSE ERROR... Defaulting to closest Place')
+          res = this.props.nearby[0]
+        } else {
+          res = await compareToHash(
+            this.state.text,
+            this.props.hashMap,
+            this.props.nearby,
+            this.props.user.id
+          )
+        }
 
         console.log('THE RESPONSE: ', res)
         if (res) {
