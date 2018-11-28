@@ -18,6 +18,7 @@ import ProfilePic from './SettingsModals/ProfilePicture'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { connect } from 'react-redux'
 import { asyncStorageLookup, logout } from '../store/auth-reducer'
+import { colors } from '../../constants/colors'
 
 class Settings extends React.Component {
   state = {
@@ -74,8 +75,7 @@ class Settings extends React.Component {
 
   _getProfilePicture = () => {
     if (this.props.user.avatar) {
-      console.log(this.props.user.avatar)
-      return this.props.user.avatar
+      return { uri: this.props.user.avatar }
     } else {
       return require('../../assets/fakeuser.png')
     }
@@ -98,7 +98,7 @@ class Settings extends React.Component {
           style={{
             borderBottomWidth: 1,
             backgroundColor: 'white',
-            borderColor: '#c8c7cc'
+            borderColor: colors.border
           }}
         >
           <Text
@@ -114,7 +114,7 @@ class Settings extends React.Component {
           </Text>
         </View>
         <View style={{ backgroundColor: 'white', flex: 1 }}>
-          <SettingsList borderColor="#c8c7cc" defaultItemSize={65}>
+          <SettingsList borderColor={colors.border} defaultItemSize={65}>
             <SettingsList.Header headerStyle={{ marginTop: 15 }} />
             <SettingsList.Item
               icon={
@@ -124,7 +124,8 @@ class Settings extends React.Component {
                     width: 100,
                     marginLeft: 10,
                     marginTop: 10,
-                    marginBottom: 10
+                    marginBottom: 10,
+                    borderRadius: 100 / 2
                   }}
                   source={this._getProfilePicture()}
                 />
@@ -139,7 +140,7 @@ class Settings extends React.Component {
                 <MaterialCommunityIcons
                   name="account-edit"
                   style={{
-                    color: 'red',
+                    color: colors.primary,
                     fontSize: 20,
                     marginLeft: 13,
                     marginTop: 24
@@ -156,7 +157,7 @@ class Settings extends React.Component {
                 <MaterialCommunityIcons
                   name="email-plus-outline"
                   style={{
-                    color: 'red',
+                    color: colors.primary,
                     fontSize: 20,
                     marginLeft: 13,
                     marginTop: 24
@@ -172,7 +173,7 @@ class Settings extends React.Component {
                 <MaterialCommunityIcons
                   name="lock-plus"
                   style={{
-                    color: 'red',
+                    color: colors.primary,
                     fontSize: 20,
                     marginLeft: 13,
                     marginTop: 24
@@ -188,7 +189,7 @@ class Settings extends React.Component {
                 <MaterialCommunityIcons
                   name="cellphone-basic"
                   style={{
-                    color: 'red',
+                    color: colors.primary,
                     fontSize: 20,
                     marginLeft: 13,
                     marginTop: 24
@@ -204,7 +205,7 @@ class Settings extends React.Component {
                 <MaterialCommunityIcons
                   name="logout"
                   style={{
-                    color: 'red',
+                    color: colors.primary,
                     fontSize: 20,
                     marginLeft: 13,
                     marginTop: 24
@@ -260,7 +261,7 @@ class Settings extends React.Component {
         >
           <MaterialCommunityIcons
             name="crosshairs-gps"
-            style={{ color: 'black', fontSize: 36 }}
+            style={{ color: colors.disabledNavButton, fontSize: 36 }}
             onPress={() => this.props.changePage(-2)}
           />
 
@@ -269,7 +270,7 @@ class Settings extends React.Component {
               <MaterialCommunityIcons
                 name="circle-outline"
                 style={{
-                  color: 'black',
+                  color: colors.disabledNavButton,
                   fontSize: 60,
                   marginBottom: 5
                 }}
@@ -282,7 +283,7 @@ class Settings extends React.Component {
           </View>
           <MaterialCommunityIcons
             name="google-circles-communities"
-            style={{ color: 'red', fontSize: 36 }}
+            style={{ color: colors.primary, fontSize: 36 }}
           />
         </View>
       </View>

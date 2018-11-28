@@ -6,12 +6,14 @@ import { Content } from 'native-base'
 import Swiper from 'react-native-swiper'
 import Places from './Places/Places'
 import Settings from './Settings/Settings'
+import { colors } from '../constants/colors'
 
 const styles = StyleSheet.create({
   slideDefault: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: colors.backgroundColor
   },
   text: {
     color: 'white',

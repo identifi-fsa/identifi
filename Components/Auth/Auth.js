@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 import LoginForm from './Login'
 import SignupForm from './Signup'
+import { colors } from '../../constants/colors'
 
 class Auth extends React.Component {
   state = {
@@ -103,12 +104,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10,
-    backgroundColor: 'red'
+    backgroundColor: colors.primary
   },
   signUpButton: {
     flex: 1,
     height: 25,
-    borderColor: 'red',
+    borderColor: colors.primary,
     borderWidth: 1,
     width: '75%',
     alignItems: 'center',
@@ -120,7 +121,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   signUpButtonText: {
-    color: 'red',
+    color: colors.primary,
     fontWeight: 'bold'
   }
 })
