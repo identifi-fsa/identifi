@@ -136,6 +136,20 @@ class Places extends React.Component {
     this.setState({ mapResultModalVisibility: false, mapResult: {} })
   }
 
+  randomSelection = async () => {
+    console.log('LOOOOOONG PRESS. Randmized selection of Data')
+    try {
+      const randomIndex = Math.floor(Math.random() * 21)
+      await this.props.getRecentInfo(this.props.nearby[randomIndex].id)
+      this.setState({
+        mapResult: this.props.recentPlaceView,
+        mapResultModalVisibility: true
+      })
+    } catch (err) {
+      console.err('ERROR RANDOMIZING (Places.js)...', err)
+    }
+  }
+
   componentDidMount = () => {
     let nearby = this.props.nearby
     this.setState({
@@ -300,6 +314,7 @@ class Places extends React.Component {
             name="crosshairs-gps"
             style={{ color: colors.primary, fontSize: 36 }}
             onPress={this.props.goToPlaces}
+            onLongPress={() => this.randomSelection()}
           />
 
           <View style={{ alignItems: 'center' }}>

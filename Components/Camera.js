@@ -119,7 +119,7 @@ class CameraComponent extends Component {
             }
           )
           console.log('this is the response', response)
-          const parsed = await JSON.parse(response) //await response.json()
+          const parsed = await response.json()
           console.log('parsed', parsed)
           if (parsed) {
             this.setState({
