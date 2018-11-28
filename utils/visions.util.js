@@ -58,7 +58,6 @@ export const compareToHash = async (text, hashMap, nearby, userId) => {
   console.log('we will be searching these partials', partialArr)
   partialArr.forEach(partialWord => {
     for (let key in hashMap) {
-      // console.log('THIS KEY: ', key, partialWord)
       if (key.includes(partialWord)) {
         hashMap[key].forEach(index => {
           if (!countObj[index]) {
@@ -80,7 +79,7 @@ export const compareToHash = async (text, hashMap, nearby, userId) => {
         mostOccurances = countObj[key]
         matchedKey = key
         console.log('most occurances has changed...', mostOccurances)
-      } //EDGE CASE - if there are same amount of occurances for more than one matchedIndex, it will take the closest place
+      } //if there are same amount of occurances for more than one matchedIndex, it will take the closest place
     }
     console.log(`key ${matchedKey} has the largest value`)
     // this.setState({ imageData: nearby[matchedIndex] })
@@ -105,8 +104,7 @@ const postToDb = async (placeObj, userId) => {
   }
 }
 
-//Split value by every 4 characters
+//Split value by every 3 characters
 function splitValue(value) {
   return value.match(/.{1,3}/g)
-  // return value.substring(0, 4) + ' ' + value.substring(4)
 }
