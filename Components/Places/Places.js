@@ -198,6 +198,16 @@ class Places extends React.Component {
             >
               <Text style={this.getNearbyButtonTextColor()}>NEARBY</Text>
             </TouchableOpacity>
+            <TouchableOpacity onLongPress={() => this.randomSelection()}>
+              <MaterialCommunityIcons
+                name="dice-multiple"
+                style={{
+                  color: colors.primary,
+                  fontSize: 36,
+                  marginLeft: 40
+                }}
+              />
+            </TouchableOpacity>
           </View>
         </Header>
 
@@ -326,7 +336,6 @@ class Places extends React.Component {
             name="crosshairs-gps"
             style={{ color: colors.primary, fontSize: 36 }}
             onPress={this.props.goToPlaces}
-            onLongPress={() => this.randomSelection()}
           />
 
           <View style={{ alignItems: 'center' }}>
