@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import ResultModal from '../ResultModal'
-import { colors } from '../../constants/colors'
+import { connect } from 'react-redux'
 
-export default class SinglePlace extends Component {
+class SinglePlace extends Component {
   state = {
     resultModal: false
   }
@@ -17,6 +17,7 @@ export default class SinglePlace extends Component {
   }
 
   render() {
+    colors = this.props.styles
     let imageUrl
     let name
     let address
@@ -33,7 +34,18 @@ export default class SinglePlace extends Component {
     return (
       <View>
         <TouchableOpacity onPress={this.displayResult}>
-          <View style={styles.cardContainer}>
+          <View
+            style={{
+              width: '100%',
+              height: 100,
+              backgroundColor: colors.backgroundColor,
+              justifyContent: 'space-between',
+              flexDirection: 'row',
+              borderBottomWidth: 1,
+              borderColor: colors.border,
+              alignItems: 'center'
+            }}
+          >
             <View style={styles.cardIconContainer}>
               <Image
                 // style={{ width: 90, height: 90 }}
@@ -41,10 +53,38 @@ export default class SinglePlace extends Component {
                 source={{ uri: imageUrl }}
               />
             </View>
-            <View style={styles.cardDesc}>
-              <Text style={styles.nameText}>{name}</Text>
-              <Text>{address}</Text>
-              <Text>Currently {isClosed}</Text>
+            <View
+              style={{
+                width: '70%',
+                height: 90,
+                backgroundColor: colors.backgroundColor,
+                justifyContent: 'center',
+                flexDirection: 'column'
+              }}
+            >
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: 18,
+                  color: colors.text
+                }}
+              >
+                {name}
+              </Text>
+              <Text
+                style={{
+                  color: colors.text
+                }}
+              >
+                {address}
+              </Text>
+              <Text
+                style={{
+                  color: colors.text
+                }}
+              >
+                Currently {isClosed}
+              </Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -59,17 +99,15 @@ export default class SinglePlace extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    user: state.auth,
+    styles: state.styles
+  }
+}
+export default connect(mapStateToProps)(SinglePlace)
+
 const styles = StyleSheet.create({
-  cardContainer: {
-    width: '100%',
-    height: 100,
-    backgroundColor: 'white',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderColor: colors.border,
-    alignItems: 'center'
-  },
   cardIconContainer: {
     display: 'flex',
     height: 90,
@@ -81,21 +119,5 @@ const styles = StyleSheet.create({
   cardIcon: {
     height: 85,
     width: 85
-  },
-  cardDesc: {
-    width: '70%',
-    height: 90,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    flexDirection: 'column'
-  },
-  text: {
-    color: 'white',
-    fontSize: 30,
-    fontWeight: 'bold'
-  },
-  nameText: {
-    fontWeight: 'bold',
-    fontSize: 18
   }
 })
