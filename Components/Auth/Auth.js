@@ -45,7 +45,12 @@ class Auth extends React.Component {
     return (
       <Modal>
         <View style={styles.container}>
-          <Image source={require('../../assets/identifi-logo.png')} />
+          <Image
+            style={{ height: 300, width: 300 }}
+            source={{
+              uri: `https://identifi-jubjub.s3.amazonaws.com/assets/identifi.svg`
+            }}
+          />
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               onPress={this.setSignupModalVisible}

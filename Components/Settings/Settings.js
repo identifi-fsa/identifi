@@ -15,22 +15,40 @@ import PhoneNumber from './SettingsModals/PhoneNumber'
 import Password from './SettingsModals/Password'
 import Logout from './SettingsModals/Logout'
 import ProfilePic from './SettingsModals/ProfilePicture'
+import Themes from './SettingsModals/Themes'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { connect } from 'react-redux'
 import { asyncStorageLookup, logout } from '../store/auth-reducer'
-import { colors } from '../../constants/colors'
+import { putUserStyle } from '../store/style-reducer'
 
 class Settings extends React.Component {
-  state = {
-    emailViz: false,
-    phoneViz: false,
-    nameViz: false,
-    passwordViz: false,
-    logoutViz: false,
-    profilePicViz: false
+  constructor() {
+    super()
+    this.state = {
+      emailViz: false,
+      phoneViz: false,
+      nameViz: false,
+      passwordViz: false,
+      logoutViz: false,
+      profilePicViz: false,
+      switchValue: false,
+      themesViz: false
+    }
+  }
+
+  onValueChange = value => {
+    console.log('value', value)
+    this.setState({ switchValue: value })
+    this.props.putStyle('darkMode', this.props.user.id, {
+      darkMode: value
+    })
   }
   toggleName = () => {
     this.setState({ nameViz: !this.state.nameViz })
+  }
+
+  toggleThemes = () => {
+    this.setState({ themesViz: !this.state.themesViz })
   }
 
   toggleEmail = () => {
@@ -55,7 +73,9 @@ class Settings extends React.Component {
   }
 
   componentDidMount() {
+    console.log('hey', this.props.styles.darkMode)
     this._StoreData()
+    this.setState({ switchValue: this.props.styles.darkMode })
   }
   _StoreData = async () => {
     try {
@@ -86,18 +106,20 @@ class Settings extends React.Component {
     const first = this.props.user.firstName
     const last = this.props.user.lastName
     let phone
-    console.log('this is the user', this.props.user)
+    let colors = this.props.styles
+    // colors.primary = 'red'
+    console.log('this is the styles', this.props.styles)
     if (this.props.user.phone) {
       phone = this.props.user.phone
     } else {
       phone = 'Enter your Phone Number'
     }
     return (
-      <View style={{ backgroundColor: 'white', flex: 1 }}>
+      <View style={{ backgroundColor: colors.backgroundColor, flex: 1 }}>
         <View
           style={{
             borderBottomWidth: 1,
-            backgroundColor: 'white',
+            backgroundColor: colors.backgroundColor,
             borderColor: colors.border
           }}
         >
@@ -107,13 +129,14 @@ class Settings extends React.Component {
               marginTop: 40,
               marginBottom: 10,
               fontWeight: 'bold',
-              fontSize: 20
+              fontSize: 20,
+              color: colors.text
             }}
           >
             Settings
           </Text>
         </View>
-        <View style={{ backgroundColor: 'white', flex: 1 }}>
+        <View style={{ backgroundColor: colors.backgroundColor, flex: 1 }}>
           <SettingsList borderColor={colors.border} defaultItemSize={65}>
             <SettingsList.Header headerStyle={{ marginTop: 15 }} />
             <SettingsList.Item
@@ -130,8 +153,10 @@ class Settings extends React.Component {
                   source={this._getProfilePicture()}
                 />
               }
-              title="Profile Picture"
+              // title="Profile Picture"
               onPress={() => this.toggleProfilePic()}
+              backgroundColor={colors.backgroundColor}
+              titleStyle={{ color: colors.text }}
             />
             <SettingsList.Header headerStyle={{ marginTop: 15 }} />
 
@@ -149,8 +174,12 @@ class Settings extends React.Component {
               }
               title="Name"
               titleInfo={`${first} ${last}`}
+              backgroundColor={colors.backgroundColor}
+              titleStyle={{ color: colors.text }}
               //titleInfoStyle={styles.titleInfoStyle}
               onPress={() => this.toggleName()}
+              titleStyle={{ color: colors.text }}
+              backgroundColor={colors.backgroundColor}
             />
             <SettingsList.Item
               icon={
@@ -166,7 +195,11 @@ class Settings extends React.Component {
               }
               title="Email"
               titleInfo={`${email}`}
+              backgroundColor={colors.backgroundColor}
+              titleStyle={{ color: colors.text }}
               onPress={() => this.toggleEmail()}
+              titleStyle={{ color: colors.text }}
+              backgroundColor={colors.backgroundColor}
             />
             <SettingsList.Item
               icon={
@@ -182,7 +215,11 @@ class Settings extends React.Component {
               }
               title="Password"
               titleInfo="***********"
+              backgroundColor={colors.backgroundColor}
+              titleStyle={{ color: colors.text }}
               onPress={() => this.togglePassword()}
+              titleStyle={{ color: colors.text }}
+              backgroundColor={colors.backgroundColor}
             />
             <SettingsList.Item
               icon={
@@ -197,8 +234,51 @@ class Settings extends React.Component {
                 />
               }
               title="Phone Number"
+              backgroundColor={colors.backgroundColor}
+              titleStyle={{ color: colors.text }}
+              arrowStyle={{ color: colors.text }}
               titleInfo={phone}
               onPress={() => this.togglePhone()}
+              titleStyle={{ color: colors.text }}
+              backgroundColor={colors.backgroundColor}
+            />
+            <SettingsList.Item
+              icon={
+                <MaterialCommunityIcons
+                  name="cellphone-basic"
+                  style={{
+                    color: colors.primary,
+                    fontSize: 20,
+                    marginLeft: 13,
+                    marginTop: 24
+                  }}
+                />
+              }
+              hasNavArrow={false}
+              switchState={this.state.switchValue}
+              switchOnValueChange={this.onValueChange}
+              hasSwitch={true}
+              backgroundColor={colors.backgroundColor}
+              titleStyle={{ color: colors.text }}
+              title="Enable Dark Mode"
+            />
+            <SettingsList.Item
+              icon={
+                <MaterialCommunityIcons
+                  name="cellphone-basic"
+                  style={{
+                    color: colors.primary,
+                    fontSize: 20,
+                    marginLeft: 13,
+                    marginTop: 24
+                  }}
+                />
+              }
+              title="Theme"
+              backgroundColor={colors.backgroundColor}
+              titleStyle={{ color: colors.text }}
+              arrowStyle={{ color: colors.text }}
+              onPress={() => this.toggleThemes()}
             />
             <SettingsList.Item
               icon={
@@ -213,7 +293,11 @@ class Settings extends React.Component {
                 />
               }
               title="Logout"
+              backgroundColor={colors.backgroundColor}
+              titleStyle={{ color: colors.text }}
               onPress={() => this.toggleLogout()}
+              titleStyle={{ color: colors.text }}
+              backgroundColor={colors.backgroundColor}
             />
           </SettingsList>
         </View>
@@ -246,6 +330,11 @@ class Settings extends React.Component {
         <ProfilePic
           visibility={this.state.profilePicViz}
           toggle={this.toggleProfilePic}
+          name={first}
+        />
+        <Themes
+          visibility={this.state.themesViz}
+          toggle={this.toggleThemes}
           name={first}
         />
 
@@ -289,15 +378,23 @@ class Settings extends React.Component {
       </View>
     )
   }
-  onValueChange(value) {
-    this.setState({ switchValue: value })
-  }
 }
 
 const mapStateToProps = state => {
   return {
-    user: state.auth
+    user: state.auth,
+    styles: state.styles
   }
 }
 
-export default connect(mapStateToProps)(Settings)
+const mapDispatchToProps = dispatch => {
+  return {
+    putStyle: (field, userId, update) =>
+      dispatch(putUserStyle(field, userId, update))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Settings)

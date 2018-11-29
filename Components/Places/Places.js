@@ -19,7 +19,9 @@ import ResultModal from '../ResultModal'
 import NoPlaces from './NoPlaces'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import MapView, { Marker } from 'react-native-maps'
-import { colors } from '../../constants/colors'
+// import { colors } from '../../constants/colors'
+
+let colors
 
 class Places extends React.Component {
   state = {
@@ -98,7 +100,7 @@ class Places extends React.Component {
         fontWeight: 'bold'
       }
     } else {
-      return {}
+      return { color: colors.text }
     }
   }
 
@@ -109,7 +111,7 @@ class Places extends React.Component {
         fontWeight: 'bold'
       }
     } else {
-      return {}
+      return { color: colors.text }
     }
   }
 
@@ -158,13 +160,14 @@ class Places extends React.Component {
     })
   }
   render() {
+    colors = this.props.styles
     return this.state.data ? (
       <View>
         <Header
           searchBar
           rounded
           style={{
-            backgroundColor: 'transparent',
+            backgroundColor: colors.backgroundColor,
             height: 70,
             zIndex: 100,
             alignItems: 'center',
@@ -215,7 +218,7 @@ class Places extends React.Component {
                 longitude: this.props.lng
               }}
               title={'YOU ARE HERE'}
-              pinColor={'#000000'}
+              pinColor={colors.primary}
             >
               <MaterialCommunityIcons
                 name="map-marker-outline"
@@ -233,6 +236,7 @@ class Places extends React.Component {
                   // title={marker.name}
                   // description={marker.description}
                   onPress={() => this.showSinglePlace(marker)}
+                  pinColor={colors.primary}
                 />
               ))}
           </MapView>
@@ -255,7 +259,7 @@ class Places extends React.Component {
                 longitude: this.props.lng
               }}
               title={'YOU ARE HERE'}
-              pinColor={'#000000'}
+              pinColor={colors.primary}
             >
               <MaterialCommunityIcons
                 name="map-marker-outline"
@@ -272,11 +276,19 @@ class Places extends React.Component {
                 // title={marker.name}
                 // description={marker.description}
                 onPress={() => this.showSinglePlaceRecent(marker)}
+                pinColor={colors.primary}
               />
             ))}
           </MapView>
         )}
-        <View style={styles.cardContainer}>
+        <View
+          style={{
+            flex: 1,
+            width: '100%',
+            alignItems: 'center',
+            backgroundColor: colors.backgroundColor
+          }}
+        >
           {this.state.view === 'nearby' ? (
             <View>
               <FlatList
@@ -351,7 +363,8 @@ const mapStateToProps = state => {
   return {
     nearby: state.places.nearby,
     recent: state.places.recent,
-    recentPlaceView: state.places.recentPlaceView
+    recentPlaceView: state.places.recentPlaceView,
+    styles: state.styles
   }
 }
 
@@ -369,12 +382,6 @@ export default connect(
 )(Places)
 
 const styles = StyleSheet.create({
-  cardContainer: {
-    flex: 1,
-    width: '100%',
-    alignItems: 'center',
-    backgroundColor: colors.primary
-  },
   text: {
     color: 'white',
     fontSize: 30,

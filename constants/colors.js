@@ -1,8 +1,7 @@
 export const colors = {
-  primary: '#41f48f',
-  border: '#c8c7cc',
-  disabledNavButton: 'lightgray',
-  backgroundColor: 'white'
+  primary: 'red',
+  backgroundColor: 'white',
+  text: 'black',
+  border: 'black',
+  disabledNavButton: 'gray'
 }
-
-export const sizes = {}
