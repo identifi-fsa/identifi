@@ -19,7 +19,9 @@ import ResultModal from '../ResultModal'
 import NoPlaces from './NoPlaces'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import MapView, { Marker } from 'react-native-maps'
-import { colors } from '../../constants/colors'
+// import { colors } from '../../constants/colors'
+
+let colors
 
 class Places extends React.Component {
   state = {
@@ -144,14 +146,14 @@ class Places extends React.Component {
     })
   }
   render() {
-    console.log('inside places', colors)
+    colors = this.props.styles
     return this.state.data ? (
       <View>
         <Header
           searchBar
           rounded
           style={{
-            backgroundColor: 'transparent',
+            backgroundColor: colors.backgroundColor,
             height: 70,
             zIndex: 100,
             alignItems: 'center',
@@ -263,7 +265,14 @@ class Places extends React.Component {
             ))}
           </MapView>
         )}
-        <View style={styles.cardContainer}>
+        <View
+          style={{
+            flex: 1,
+            width: '100%',
+            alignItems: 'center',
+            backgroundColor: colors.backgroundColor
+          }}
+        >
           {this.state.view === 'nearby' ? (
             <View>
               <FlatList
@@ -356,12 +365,6 @@ export default connect(
 )(Places)
 
 const styles = StyleSheet.create({
-  cardContainer: {
-    flex: 1,
-    width: '100%',
-    alignItems: 'center',
-    backgroundColor: colors.primary
-  },
   text: {
     color: 'white',
     fontSize: 30,

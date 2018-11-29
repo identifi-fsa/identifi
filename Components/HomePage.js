@@ -6,23 +6,12 @@ import { Content } from 'native-base'
 import Swiper from 'react-native-swiper'
 import Places from './Places/Places'
 import Settings from './Settings/Settings'
-import { colors } from '../constants/colors'
+// import { colors } from '../constants/colors'
+import { connect } from 'react-redux'
 
-const styles = StyleSheet.create({
-  slideDefault: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.backgroundColor
-  },
-  text: {
-    color: 'white',
-    fontSize: 30,
-    fontWeight: 'bold'
-  }
-})
+let colors
 
-export default class HomePage extends Component {
+class HomePage extends Component {
   constructor() {
     super()
     this.state = {
@@ -44,6 +33,7 @@ export default class HomePage extends Component {
   }
 
   render() {
+    colors = this.props.styles
     let text = 'Waiting...'
     if (this.state.errorMessage) {
       text = this.state.errorMessage
@@ -62,7 +52,14 @@ export default class HomePage extends Component {
           ref="sliderX"
           bounces={false}
         >
-          <View style={styles.slideDefault}>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: colors.backgroundColor
+            }}
+          >
             <Places
               changePage={refScroll => this.changePage(refScroll)}
               lat={lat}
@@ -80,3 +77,19 @@ export default class HomePage extends Component {
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    user: state.auth,
+    styles: state.styles
+  }
+}
+export default connect(mapStateToProps)(HomePage)
+
+const styles = StyleSheet.create({
+  text: {
+    color: 'white',
+    fontSize: 30,
+    fontWeight: 'bold'
+  }
+})

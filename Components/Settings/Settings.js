@@ -15,6 +15,7 @@ import PhoneNumber from './SettingsModals/PhoneNumber'
 import Password from './SettingsModals/Password'
 import Logout from './SettingsModals/Logout'
 import ProfilePic from './SettingsModals/ProfilePicture'
+import Themes from './SettingsModals/Themes'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { connect } from 'react-redux'
 import { asyncStorageLookup, logout } from '../store/auth-reducer'
@@ -30,7 +31,8 @@ class Settings extends React.Component {
       passwordViz: false,
       logoutViz: false,
       profilePicViz: false,
-      switchValue: false
+      switchValue: false,
+      themesViz: false
     }
   }
 
@@ -43,6 +45,10 @@ class Settings extends React.Component {
   }
   toggleName = () => {
     this.setState({ nameViz: !this.state.nameViz })
+  }
+
+  toggleThemes = () => {
+    this.setState({ themesViz: !this.state.themesViz })
   }
 
   toggleEmail = () => {
@@ -101,7 +107,8 @@ class Settings extends React.Component {
     const last = this.props.user.lastName
     let phone
     let colors = this.props.styles
-    // console.log('this is the styles', this.props.styles)
+    // colors.primary = 'red'
+    console.log('this is the styles', this.props.styles)
     if (this.props.user.phone) {
       phone = this.props.user.phone
     } else {
@@ -146,7 +153,7 @@ class Settings extends React.Component {
                   source={this._getProfilePicture()}
                 />
               }
-              title="Profile Picture"
+              // title="Profile Picture"
               onPress={() => this.toggleProfilePic()}
               backgroundColor={colors.backgroundColor}
               titleStyle={{ color: colors.text }}
@@ -250,6 +257,24 @@ class Settings extends React.Component {
             <SettingsList.Item
               icon={
                 <MaterialCommunityIcons
+                  name="cellphone-basic"
+                  style={{
+                    color: colors.primary,
+                    fontSize: 20,
+                    marginLeft: 13,
+                    marginTop: 24
+                  }}
+                />
+              }
+              title="Theme"
+              backgroundColor={colors.backgroundColor}
+              titleStyle={{ color: colors.text }}
+              arrowStyle={{ color: colors.text }}
+              onPress={() => this.toggleThemes()}
+            />
+            <SettingsList.Item
+              icon={
+                <MaterialCommunityIcons
                   name="logout"
                   style={{
                     color: colors.primary,
@@ -295,6 +320,11 @@ class Settings extends React.Component {
         <ProfilePic
           visibility={this.state.profilePicViz}
           toggle={this.toggleProfilePic}
+          name={first}
+        />
+        <Themes
+          visibility={this.state.themesViz}
+          toggle={this.toggleThemes}
           name={first}
         />
 

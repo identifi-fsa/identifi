@@ -35,11 +35,13 @@ export const fetchStyles = userId => async dispatch => {
 
 //changing the route to match putAvatar in auth-reducer
 export const putUserStyle = (field, userId, update) => async dispatch => {
+  console.log('update', update)
   try {
     const res = await axios.put(
       `https://jubjub-server.herokuapp.com/api/styles/${field}/${userId}`,
       update
     )
+    console.log('inside the thunk', res.data)
     dispatch(getStyles(res.data))
   } catch (err) {
     console.error(err)

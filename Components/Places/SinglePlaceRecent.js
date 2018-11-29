@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import ResultModal from '../ResultModal'
 import { connect } from 'react-redux'
 import { getRecentInfo } from '../store/places-reducer'
-import { colors } from '../../constants/colors'
 
 class SinglePlaceRecent extends Component {
   state = {
@@ -24,6 +23,7 @@ class SinglePlaceRecent extends Component {
   }
 
   render() {
+    let colors = this.props.styles
     let yelpId
     let imageUrl
     let name
@@ -40,13 +40,46 @@ class SinglePlaceRecent extends Component {
     return (
       <View>
         <TouchableOpacity onPress={() => this.displayResult(yelpId)}>
-          <View style={styles.cardContainer}>
+          <View
+            style={{
+              width: '100%',
+              height: 100,
+              backgroundColor: colors.backgroundColor,
+              justifyContent: 'space-between',
+              flexDirection: 'row',
+              borderBottomWidth: 1,
+              borderColor: colors.border,
+              alignItems: 'center'
+            }}
+          >
             <View style={styles.cardIconContainer}>
               <Image style={styles.cardIcon} source={{ uri: imageUrl }} />
             </View>
-            <View style={styles.cardDesc}>
-              <Text style={styles.nameText}>{name}</Text>
-              <Text style={styles.text}>{dateVisited}</Text>
+            <View
+              style={{
+                width: '70%',
+                height: 90,
+                backgroundColor: colors.backgroundColor,
+                justifyContent: 'center',
+                flexDirection: 'column'
+              }}
+            >
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: 18,
+                  color: colors.text
+                }}
+              >
+                {name}
+              </Text>
+              <Text
+                style={{
+                  color: colors.text
+                }}
+              >
+                {dateVisited}
+              </Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -63,7 +96,8 @@ class SinglePlaceRecent extends Component {
 
 const mapStateToProps = state => {
   return {
-    recentPlaceView: state.places.recentPlaceView
+    recentPlaceView: state.places.recentPlaceView,
+    styles: state.styles
   }
 }
 
@@ -77,16 +111,6 @@ export default connect(
 )(SinglePlaceRecent)
 
 const styles = StyleSheet.create({
-  cardContainer: {
-    width: '100%',
-    height: 100,
-    backgroundColor: colors.backgroundColor,
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderColor: colors.border,
-    alignItems: 'center'
-  },
   cardIconContainer: {
     display: 'flex',
     height: 90,
@@ -98,20 +122,5 @@ const styles = StyleSheet.create({
   cardIcon: {
     height: 85,
     width: 85
-  },
-  cardDesc: {
-    width: '70%',
-    height: 90,
-    backgroundColor: colors.backgroundColor,
-    justifyContent: 'center',
-    flexDirection: 'column'
-  },
-  text: {
-    color: colors.text
-  },
-  nameText: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    color: colors.text
   }
 })
