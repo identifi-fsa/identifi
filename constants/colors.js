@@ -34,8 +34,15 @@
 // }
 export const colors = {
   primary: 'red',
+<<<<<<< HEAD
   backgroundColor: 'white',
   text: 'black',
   border: 'black',
   disabledNavButton: 'gray'
+=======
+  border: '#c8c7cc',
+  disabledNavButton: 'grey',
+  backgroundColor: 'black',
+  text: 'white'
+>>>>>>> master
 }

@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import ResultModal from '../ResultModal'
 import { connect } from 'react-redux'
 import { getRecentInfo } from '../store/places-reducer'
+import { colors } from '../../constants/colors'
 
 class SinglePlaceRecent extends Component {
   state = {

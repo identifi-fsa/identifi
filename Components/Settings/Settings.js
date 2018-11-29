@@ -178,6 +178,8 @@ class Settings extends React.Component {
               titleStyle={{ color: colors.text }}
               //titleInfoStyle={styles.titleInfoStyle}
               onPress={() => this.toggleName()}
+              titleStyle={{ color: colors.text }}
+              backgroundColor={colors.backgroundColor}
             />
             <SettingsList.Item
               icon={
@@ -196,6 +198,8 @@ class Settings extends React.Component {
               backgroundColor={colors.backgroundColor}
               titleStyle={{ color: colors.text }}
               onPress={() => this.toggleEmail()}
+              titleStyle={{ color: colors.text }}
+              backgroundColor={colors.backgroundColor}
             />
             <SettingsList.Item
               icon={
@@ -214,6 +218,8 @@ class Settings extends React.Component {
               backgroundColor={colors.backgroundColor}
               titleStyle={{ color: colors.text }}
               onPress={() => this.togglePassword()}
+              titleStyle={{ color: colors.text }}
+              backgroundColor={colors.backgroundColor}
             />
             <SettingsList.Item
               icon={
@@ -233,6 +239,8 @@ class Settings extends React.Component {
               arrowStyle={{ color: colors.text }}
               titleInfo={phone}
               onPress={() => this.togglePhone()}
+              titleStyle={{ color: colors.text }}
+              backgroundColor={colors.backgroundColor}
             />
             <SettingsList.Item
               icon={
@@ -288,6 +296,8 @@ class Settings extends React.Component {
               backgroundColor={colors.backgroundColor}
               titleStyle={{ color: colors.text }}
               onPress={() => this.toggleLogout()}
+              titleStyle={{ color: colors.text }}
+              backgroundColor={colors.backgroundColor}
             />
           </SettingsList>
         </View>
