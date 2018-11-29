@@ -98,7 +98,9 @@ class Places extends React.Component {
         fontWeight: 'bold'
       }
     } else {
-      return {}
+      return {
+        color: colors.text
+      }
     }
   }
 
@@ -109,7 +111,9 @@ class Places extends React.Component {
         fontWeight: 'bold'
       }
     } else {
-      return {}
+      return {
+        color: colors.text
+      }
     }
   }
 
@@ -215,7 +219,7 @@ class Places extends React.Component {
                 longitude: this.props.lng
               }}
               title={'YOU ARE HERE'}
-              pinColor={'#000000'}
+              pinColor={colors.primary}
             >
               <MaterialCommunityIcons
                 name="map-marker-outline"
@@ -233,6 +237,7 @@ class Places extends React.Component {
                   // title={marker.name}
                   // description={marker.description}
                   onPress={() => this.showSinglePlace(marker)}
+                  pinColor={colors.primary}
                 />
               ))}
           </MapView>
@@ -255,7 +260,7 @@ class Places extends React.Component {
                 longitude: this.props.lng
               }}
               title={'YOU ARE HERE'}
-              pinColor={'#000000'}
+              pinColor={colors.primary}
             >
               <MaterialCommunityIcons
                 name="map-marker-outline"
@@ -272,6 +277,7 @@ class Places extends React.Component {
                 // title={marker.name}
                 // description={marker.description}
                 onPress={() => this.showSinglePlaceRecent(marker)}
+                pinColor={colors.primary}
               />
             ))}
           </MapView>
@@ -373,7 +379,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     alignItems: 'center',
-    backgroundColor: colors.primary
+    backgroundColor: colors.backgroundColor
   },
   text: {
     color: 'white',

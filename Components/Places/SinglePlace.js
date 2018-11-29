@@ -43,8 +43,8 @@ export default class SinglePlace extends Component {
             </View>
             <View style={styles.cardDesc}>
               <Text style={styles.nameText}>{name}</Text>
-              <Text>{address}</Text>
-              <Text>Currently {isClosed}</Text>
+              <Text style={styles.text}>{address}</Text>
+              <Text style={styles.text}>Currently {isClosed}</Text>
             </View>
           </View>
         </TouchableOpacity>
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     width: '100%',
     height: 100,
-    backgroundColor: 'white',
+    backgroundColor: colors.backgroundColor,
     justifyContent: 'space-between',
     flexDirection: 'row',
     borderBottomWidth: 1,
@@ -85,17 +85,16 @@ const styles = StyleSheet.create({
   cardDesc: {
     width: '70%',
     height: 90,
-    backgroundColor: 'white',
+    backgroundColor: colors.backgroundColor,
     justifyContent: 'center',
     flexDirection: 'column'
   },
   text: {
-    color: 'white',
-    fontSize: 30,
-    fontWeight: 'bold'
+    color: colors.text
   },
   nameText: {
     fontWeight: 'bold',
-    fontSize: 18
+    fontSize: 18,
+    color: colors.text
   }
 })

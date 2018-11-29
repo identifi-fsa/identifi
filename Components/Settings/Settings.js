@@ -93,11 +93,11 @@ class Settings extends React.Component {
       phone = 'Enter your Phone Number'
     }
     return (
-      <View style={{ backgroundColor: 'white', flex: 1 }}>
+      <View style={{ backgroundColor: colors.backgroundColor, flex: 1 }}>
         <View
           style={{
             borderBottomWidth: 1,
-            backgroundColor: 'white',
+            backgroundColor: colors.backgroundColor,
             borderColor: colors.border
           }}
         >
@@ -107,13 +107,14 @@ class Settings extends React.Component {
               marginTop: 40,
               marginBottom: 10,
               fontWeight: 'bold',
-              fontSize: 20
+              fontSize: 20,
+              color: colors.text
             }}
           >
             Settings
           </Text>
         </View>
-        <View style={{ backgroundColor: 'white', flex: 1 }}>
+        <View style={{ backgroundColor: colors.backgroundColor, flex: 1 }}>
           <SettingsList borderColor={colors.border} defaultItemSize={65}>
             <SettingsList.Header headerStyle={{ marginTop: 15 }} />
             <SettingsList.Item
@@ -132,6 +133,8 @@ class Settings extends React.Component {
               }
               title="Profile Picture"
               onPress={() => this.toggleProfilePic()}
+              titleStyle={{ color: colors.text }}
+              backgroundColor={colors.backgroundColor}
             />
             <SettingsList.Header headerStyle={{ marginTop: 15 }} />
 
@@ -151,6 +154,8 @@ class Settings extends React.Component {
               titleInfo={`${first} ${last}`}
               //titleInfoStyle={styles.titleInfoStyle}
               onPress={() => this.toggleName()}
+              titleStyle={{ color: colors.text }}
+              backgroundColor={colors.backgroundColor}
             />
             <SettingsList.Item
               icon={
@@ -167,6 +172,8 @@ class Settings extends React.Component {
               title="Email"
               titleInfo={`${email}`}
               onPress={() => this.toggleEmail()}
+              titleStyle={{ color: colors.text }}
+              backgroundColor={colors.backgroundColor}
             />
             <SettingsList.Item
               icon={
@@ -183,6 +190,8 @@ class Settings extends React.Component {
               title="Password"
               titleInfo="***********"
               onPress={() => this.togglePassword()}
+              titleStyle={{ color: colors.text }}
+              backgroundColor={colors.backgroundColor}
             />
             <SettingsList.Item
               icon={
@@ -199,6 +208,8 @@ class Settings extends React.Component {
               title="Phone Number"
               titleInfo={phone}
               onPress={() => this.togglePhone()}
+              titleStyle={{ color: colors.text }}
+              backgroundColor={colors.backgroundColor}
             />
             <SettingsList.Item
               icon={
@@ -214,6 +225,8 @@ class Settings extends React.Component {
               }
               title="Logout"
               onPress={() => this.toggleLogout()}
+              titleStyle={{ color: colors.text }}
+              backgroundColor={colors.backgroundColor}
             />
           </SettingsList>
         </View>
