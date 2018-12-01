@@ -10,7 +10,7 @@ export const compareToHash = async (text, hashMap, nearby, userId) => {
   for (let i = 0; i < nearby.length; i++) {
     let modifiedText = text
       .replace(/\n/g, ' ')
-      .slice(0, -1)
+      // .slice(0, -1)
       .toLowerCase()
 
     let nearbyPlace = nearby[i].name.toLowerCase()

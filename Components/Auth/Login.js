@@ -41,7 +41,15 @@ class LoginForm extends React.Component {
         <View style={styles.container}>
           <View style={styles.inputContainer}>
             {/* once we have a logo.... */}
-            <Image source={require('../../assets/identifi-logo.png')} />
+            <Image
+              source={{
+                uri: `https://identifi-jubjub.s3.amazonaws.com/assets/identifi-logo.png`
+              }}
+              style={{
+                width: 275,
+                height: 100
+              }}
+            />
             <Text style={styles.inputLabel}>Enter Email</Text>
 
             <TextInput

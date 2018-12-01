@@ -46,9 +46,9 @@ class Auth extends React.Component {
       <Modal>
         <View style={styles.container}>
           <Image
-            style={{ height: 300, width: 300 }}
+            style={{ height: 100, width: 275 }}
             source={{
-              uri: `https://identifi-jubjub.s3.amazonaws.com/assets/identifi.svg`
+              uri: `https://identifi-jubjub.s3.amazonaws.com/assets/identifi-logo.png`
             }}
           />
           <View style={styles.buttonContainer}>

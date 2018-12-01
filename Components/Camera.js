@@ -54,7 +54,7 @@ class CameraComponent extends Component {
         this.state.displayDelayCount
       )
       displayTimeout = setTimeout(() => {
-        if (this.state.displayDelayCount >= 8) {
+        if (this.state.displayDelayCount >= 15) {
           this.setState({
             loading: false,
             displayDelayCount: 0,
